@@ -40,6 +40,5 @@ jobs:
       env:
         DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
       run: vendor/bin/phpunit
-  php-static-check:
     - name: Execute PHPStan
       run: vendor/bin/phpstan analyse src
