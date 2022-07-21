@@ -38,12 +38,18 @@ class Skill
      * @ORM\OneToMany(targetEntity=SkillUserXP::class, mappedBy="skill")
      */
     private $skillUserXPs;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=QuizPart::class, mappedBy="valideCompetence")
+     */
+    private $quizParts;
     
 
     public function __construct()
     {
         $this->user = new ArrayCollection();
         $this->skillUserXPs = new ArrayCollection();
+        $this->quizParts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -112,6 +118,33 @@ class Skill
             if ($skillUserXP->getSkill() === $this) {
                 $skillUserXP->setSkill(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, QuizPart>
+     */
+    public function getQuizParts(): Collection
+    {
+        return $this->quizParts;
+    }
+
+    public function addQuizPart(QuizPart $quizPart): self
+    {
+        if (!$this->quizParts->contains($quizPart)) {
+            $this->quizParts[] = $quizPart;
+            $quizPart->addValideCompetence($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuizPart(QuizPart $quizPart): self
+    {
+        if ($this->quizParts->removeElement($quizPart)) {
+            $quizPart->removeValideCompetence($this);
         }
 
         return $this;

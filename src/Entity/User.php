@@ -77,6 +77,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $skillUserXPs;
 
+    /**
+     * @ORM\OneToMany(targetEntity=QuizPartPerform::class, mappedBy="user")
+     */
+    private $quizPartPerforms;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ReadLater::class, mappedBy="user")
+     */
+    private $readLaters;
+
+    /**
+     * @ORM\OneToMany(targetEntity=FavoriteCourse::class, mappedBy="user")
+     */
+    private $favoriteCourses;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Speaker::class, mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $speaker;
+
 
     public function __construct()
     {
@@ -84,6 +104,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->badges = new ArrayCollection();
         $this->skills = new ArrayCollection();
         $this->skillUserXPs = new ArrayCollection();
+        $this->quizPartPerforms = new ArrayCollection();
+        $this->readLaters = new ArrayCollection();
+        $this->favoriteCourses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -346,6 +369,118 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $skillUserXP->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, QuizPartPerform>
+     */
+    public function getQuizPartPerforms(): Collection
+    {
+        return $this->quizPartPerforms;
+    }
+
+    public function addQuizPartPerform(QuizPartPerform $quizPartPerform): self
+    {
+        if (!$this->quizPartPerforms->contains($quizPartPerform)) {
+            $this->quizPartPerforms[] = $quizPartPerform;
+            $quizPartPerform->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuizPartPerform(QuizPartPerform $quizPartPerform): self
+    {
+        if ($this->quizPartPerforms->removeElement($quizPartPerform)) {
+            // set the owning side to null (unless already changed)
+            if ($quizPartPerform->getUser() === $this) {
+                $quizPartPerform->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ReadLater>
+     */
+    public function getReadLaters(): Collection
+    {
+        return $this->readLaters;
+    }
+
+    public function addReadLater(ReadLater $readLater): self
+    {
+        if (!$this->readLaters->contains($readLater)) {
+            $this->readLaters[] = $readLater;
+            $readLater->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReadLater(ReadLater $readLater): self
+    {
+        if ($this->readLaters->removeElement($readLater)) {
+            // set the owning side to null (unless already changed)
+            if ($readLater->getUser() === $this) {
+                $readLater->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FavoriteCourse>
+     */
+    public function getFavoriteCourses(): Collection
+    {
+        return $this->favoriteCourses;
+    }
+
+    public function addFavoriteCourse(FavoriteCourse $favoriteCourse): self
+    {
+        if (!$this->favoriteCourses->contains($favoriteCourse)) {
+            $this->favoriteCourses[] = $favoriteCourse;
+            $favoriteCourse->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteCourse(FavoriteCourse $favoriteCourse): self
+    {
+        if ($this->favoriteCourses->removeElement($favoriteCourse)) {
+            // set the owning side to null (unless already changed)
+            if ($favoriteCourse->getUser() === $this) {
+                $favoriteCourse->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getSpeaker(): ?Speaker
+    {
+        return $this->speaker;
+    }
+
+    public function setSpeaker(?Speaker $speaker): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($speaker === null && $this->speaker !== null) {
+            $this->speaker->setUser(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($speaker !== null && $speaker->getUser() !== $this) {
+            $speaker->setUser($this);
+        }
+
+        $this->speaker = $speaker;
 
         return $this;
     }

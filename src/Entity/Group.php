@@ -26,13 +26,19 @@ class Group
     private $nom;
 
     /**
-     * @ORM\OneToMany(targetEntity=student::class, mappedBy="groupReference")
+     * @ORM\OneToMany(targetEntity=Student::class, mappedBy="groupReference")
      */
     private $student;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Course::class, mappedBy="groupFilter")
+     */
+    private $courses;
 
     public function __construct()
     {
         $this->student = new ArrayCollection();
+        $this->courses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -77,6 +83,33 @@ class Group
             if ($student->getGroupReference() === $this) {
                 $student->setGroupReference(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Course>
+     */
+    public function getCourses(): Collection
+    {
+        return $this->courses;
+    }
+
+    public function addCourse(Course $course): self
+    {
+        if (!$this->courses->contains($course)) {
+            $this->courses[] = $course;
+            $course->addGroupFilter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCourse(Course $course): self
+    {
+        if ($this->courses->removeElement($course)) {
+            $course->removeGroupFilter($this);
         }
 
         return $this;
