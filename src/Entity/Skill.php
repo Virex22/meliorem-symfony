@@ -47,7 +47,6 @@ class Skill
 
     public function __construct()
     {
-        $this->user = new ArrayCollection();
         $this->skillUserXPs = new ArrayCollection();
         $this->quizParts = new ArrayCollection();
     }

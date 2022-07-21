@@ -2,9 +2,9 @@ name: Symfony
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: ["dev","preprod","prod"]
   pull_request:
-    branches: [ "dev" ]
+    branches: ["dev","preprod","prod"]
 
 permissions:
   contents: read
@@ -40,3 +40,6 @@ jobs:
       env:
         DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
       run: vendor/bin/phpunit
+  php-static-check:
+    - name: Execute PHPStan
+      run: vendor/bin/phpstan analyse src

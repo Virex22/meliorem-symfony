@@ -102,7 +102,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->receivedNotifications = new ArrayCollection();
         $this->badges = new ArrayCollection();
-        $this->skills = new ArrayCollection();
         $this->skillUserXPs = new ArrayCollection();
         $this->quizPartPerforms = new ArrayCollection();
         $this->readLaters = new ArrayCollection();
@@ -267,7 +266,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $student->setUser($this);
         }
 
-        $this->Student = $student;
+        $this->student = $student;
 
         return $this;
     }
@@ -333,14 +332,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
-    }
-
-    /**
-     * @return Collection<int, Skill>
-     */
-    public function getSkills(): Collection
-    {
-        return $this->skills;
     }
 
     /**
