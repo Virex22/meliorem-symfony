@@ -8,3 +8,8 @@ JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem
 JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem
 JWT_PASSPHRASE=[YourRandomPassphrase]
 ```
+
+dont forget the allow access origin :
+```
+allow_origin: ['API_FRONT']
+```
