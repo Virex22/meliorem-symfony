@@ -47,5 +47,21 @@ class UserService
         $this->em->persist($speaker);
         $this->em->flush();
     }
+
+    /**
+     * @param User $user
+     * @return void
+     * 
+     * delete a User entity
+     */
+    public function deleteStudent(User $user)
+    {
+        if($user->getStudent() !== null)
+            $this->em->remove($user->getStudent());
+            
+        $this->em->remove($user);
+        $this->em->flush();
+    }
+
 }
 ?>
