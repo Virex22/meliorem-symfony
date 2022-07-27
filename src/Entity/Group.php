@@ -59,9 +59,9 @@ class Group
     }
 
     /**
-     * @return Collection<int, student>
+     * @return Collection<int, Student>
      */
-    public function getstudent(): Collection
+    public function getStudent(): Collection
     {
         return $this->student;
     }

@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\QuizPartRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
+
 
 /**
  * @ORM\Entity(repositoryClass=QuizPartRepository::class)
@@ -28,6 +29,11 @@ class QuizPart
      * @ORM\Column(type="text")
      */
     private $choice;
+    
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $answer;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -46,6 +52,7 @@ class QuizPart
 
     /**
      * @ORM\ManyToOne(targetEntity=Quiz::class, inversedBy="quizParts")
+     * @Ignore
      */
     private $quiz;
 
@@ -58,6 +65,11 @@ class QuizPart
     {
         $this->quizPartPerforms = new ArrayCollection();
         $this->valideCompetence = new ArrayCollection();
+    } 
+    
+    public function getQuizId(): ?int
+    {
+        return $this->quiz->getId();
     }
 
     public function getId(): ?int
@@ -175,6 +187,26 @@ class QuizPart
     public function removeValideCompetence(Skill $valideCompetence): self
     {
         $this->valideCompetence->removeElement($valideCompetence);
+
+        return $this;
+    }
+
+    /**
+     * Get the value of answer
+     */ 
+    public function getAnswer()
+    {
+        return $this->answer;
+    }
+
+    /**
+     * Set the value of answer
+     *
+     * @return  self
+     */ 
+    public function setAnswer($answer)
+    {
+        $this->answer = $answer;
 
         return $this;
     }

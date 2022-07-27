@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220720221116 extends AbstractMigration
+final class Version20220727114702 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -34,8 +34,8 @@ final class Version20220720221116 extends AbstractMigration
         $this->addSql('CREATE TABLE favorite_course (id INT AUTO_INCREMENT NOT NULL, user_id INT DEFAULT NULL, course_id INT DEFAULT NULL, add_date DATETIME NOT NULL, INDEX IDX_2A2B0343A76ED395 (user_id), INDEX IDX_2A2B0343591CC992 (course_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE `group` (id INT AUTO_INCREMENT NOT NULL, nom VARCHAR(100) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE notification (id INT AUTO_INCREMENT NOT NULL, title LONGTEXT NOT NULL, description LONGTEXT NOT NULL, interaction LONGTEXT DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE quiz (id INT AUTO_INCREMENT NOT NULL, description LONGTEXT NOT NULL, public TINYINT(1) NOT NULL, created_at DATETIME NOT NULL, time_to_perform_all TIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE quiz_part (id INT AUTO_INCREMENT NOT NULL, quiz_id INT DEFAULT NULL, question LONGTEXT NOT NULL, choice LONGTEXT NOT NULL, time_max_to_response INT DEFAULT NULL, quiz_order INT NOT NULL, INDEX IDX_83FE8C9D853CD175 (quiz_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE quiz (id INT AUTO_INCREMENT NOT NULL, description LONGTEXT NOT NULL, public TINYINT(1) NOT NULL, created_at DATETIME NOT NULL, time_to_perform_all INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE quiz_part (id INT AUTO_INCREMENT NOT NULL, quiz_id INT DEFAULT NULL, question LONGTEXT NOT NULL, choice LONGTEXT NOT NULL, answer LONGTEXT NOT NULL, time_max_to_response INT DEFAULT NULL, quiz_order INT NOT NULL, INDEX IDX_83FE8C9D853CD175 (quiz_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE quiz_part_skill (quiz_part_id INT NOT NULL, skill_id INT NOT NULL, INDEX IDX_842194A85EB9E64C (quiz_part_id), INDEX IDX_842194A85585C142 (skill_id), PRIMARY KEY(quiz_part_id, skill_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE quiz_part_perform (id INT AUTO_INCREMENT NOT NULL, user_id INT DEFAULT NULL, quiz_part_id INT DEFAULT NULL, time_to_response TIME NOT NULL, date DATE NOT NULL, score INT NOT NULL, INDEX IDX_8F4672B0A76ED395 (user_id), INDEX IDX_8F4672B05EB9E64C (quiz_part_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE read_later (id INT AUTO_INCREMENT NOT NULL, user_id INT DEFAULT NULL, course_id INT DEFAULT NULL, add_date DATETIME NOT NULL, position_order INT NOT NULL, INDEX IDX_B383CE9DA76ED395 (user_id), INDEX IDX_B383CE9D591CC992 (course_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');

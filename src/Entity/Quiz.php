@@ -35,7 +35,7 @@ class Quiz
     private $createdAt;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="integer")
      */
     private $timeToPerformAll;
 
@@ -89,19 +89,19 @@ class Quiz
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getTimeToPerformAll(): ?\DateTimeInterface
+    public function getTimeToPerformAll(): ?int
     {
         return $this->timeToPerformAll;
     }
 
-    public function setTimeToPerformAll(\DateTimeInterface $timeToPerformAll): self
+    public function setTimeToPerformAll(?int $timeToPerformAll): self
     {
         $this->timeToPerformAll = $timeToPerformAll;
 

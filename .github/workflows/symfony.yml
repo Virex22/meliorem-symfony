@@ -41,4 +41,4 @@ jobs:
         DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
       run: vendor/bin/phpunit
     - name: Execute PHPStan
-      run: vendor/bin/phpstan analyse src
+      run: vendor/bin/phpstan analyse src --level 3

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\StudentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @ORM\Entity(repositoryClass=StudentRepository::class)
@@ -17,8 +18,10 @@ class Student
      */
     private $id;
 
+    
     /**
      * @ORM\OneToOne(targetEntity=User::class, inversedBy="Student", cascade={"persist", "remove"})
+     * @Ignore
      */
     private $user;
 
@@ -54,5 +57,13 @@ class Student
         $this->groupReference = $groupReference;
 
         return $this;
+    }
+
+    /**
+     * Get auto user id
+     */ 
+    public function getUserId()
+    {
+        return $this->user->getId();
     }
 }
