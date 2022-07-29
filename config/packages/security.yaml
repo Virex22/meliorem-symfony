@@ -25,6 +25,8 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+    role_hierarchy:
+        ROLE_SUPERADMIN: [ROLE_STUDENT, ROLE_SPEAKER, ROLE_USER]
     access_control:
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/test/ping, roles: PUBLIC_ACCESS }

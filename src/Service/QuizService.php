@@ -34,6 +34,21 @@ class QuizService
 
         return $quiz;
     }
+
+    function editQuiz(Quiz $quiz, Array $quizData) : Quiz
+    {
+        if (isset($quizData['description']))
+            $quiz->setDescription($quizData['description']);
+        if (isset($quizData['public']))
+            $quiz->setPublic($quizData['public']);
+        if (isset($quizData['timeToPerformAll']))
+            $quiz->setTimeToPerformAll($quizData['timeToPerformAll']);
+
+        $this->em->persist($quiz);
+        $this->em->flush();
+
+        return $quiz;
+    }
     
     
 }

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Quiz;
 use App\Repository\QuizRepository;
 use App\Service\QuizService;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -29,7 +30,7 @@ class QuizController extends AbstractController
     /**
      * @Route("/{id}", name="get_quiz", methods={"GET"})
      */
-    public function getByID(Quiz $quiz): JsonResponse
+    public function getByID(?Quiz $quiz): JsonResponse
     {
         if ($quiz === null)
             return new JsonResponse(['error' => 'Quiz not found'], Response::HTTP_NOT_FOUND);
@@ -54,7 +55,38 @@ class QuizController extends AbstractController
         return $this->json($quiz, Response::HTTP_CREATED);
     }
 
+    /**
+     * @Route("/{id}", name="delete_quiz", methods={"DELETE"})
+     */
+    public function delete(?Quiz $quiz, Security $security,EntityManager $entityManager): JsonResponse
+    {
+        if (!$security->isGranted('ROLE_SPEAKER'))
+            return new JsonResponse(['error' => 'You are not authorized to delete a user'], Response::HTTP_UNAUTHORIZED);
+        if ($quiz === null)
+            return new JsonResponse(['error' => 'Quiz not found'], Response::HTTP_NOT_FOUND);
+        
+        $entityManager->remove($quiz);
+        $entityManager->flush();
+        return new JsonResponse(['success' => 'Quiz deleted'], Response::HTTP_OK);
+    }
 
+    /**
+     * @Route("/{id}", name="update_quiz", methods={"PATCH"})
+     */
+    public function update(?Quiz $quiz, Request $request, Security $security, QuizService $quizService): JsonResponse
+    {
+        if (!$security->isGranted('ROLE_SPEAKER'))
+            return new JsonResponse(['error' => 'You are not authorized to update a user'], Response::HTTP_UNAUTHORIZED);
+        if ($quiz === null)
+            return new JsonResponse(['error' => 'Quiz not found'], Response::HTTP_NOT_FOUND);
+        $data = json_decode($request->getContent(), true);
+        try {
+            $quiz = $quizService->editQuiz($quiz, $data);
+        } catch (\Throwable $th) {
+            return new JsonResponse(['error' => $th->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
+        return $this->json($quiz, Response::HTTP_OK);
+    }
 
 
 }
