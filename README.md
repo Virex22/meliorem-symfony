@@ -13,3 +13,8 @@ dont forget the allow access origin :
 ```
 allow_origin: ['API_FRONT']
 ```
+
+launch test with html coverage
+```
+./vendor/bin/phpunit --coverage-html ./coverage
+```

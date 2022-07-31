@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\QuizPartRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -57,19 +58,21 @@ class QuizPart
     private $quiz;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Skill::class, inversedBy="quizParts")
+     * @ORM\ManyToOne(targetEntity=Skill::class, inversedBy="competence")
      */
-    private $valideCompetence;
+    private $skill;
+
 
     public function __construct()
     {
         $this->quizPartPerforms = new ArrayCollection();
-        $this->valideCompetence = new ArrayCollection();
     } 
     
     public function getQuizId(): ?int
     {
-        return $this->quiz->getId();
+        if ($this->quiz != null)
+            return $this->quiz->getId();
+        return null;
     }
 
     public function getId(): ?int
@@ -168,30 +171,6 @@ class QuizPart
     }
 
     /**
-     * @return Collection<int, Skill>
-     */
-    public function getValideCompetence(): Collection
-    {
-        return $this->valideCompetence;
-    }
-
-    public function addValideCompetence(Skill $valideCompetence): self
-    {
-        if (!$this->valideCompetence->contains($valideCompetence)) {
-            $this->valideCompetence[] = $valideCompetence;
-        }
-
-        return $this;
-    }
-
-    public function removeValideCompetence(Skill $valideCompetence): self
-    {
-        $this->valideCompetence->removeElement($valideCompetence);
-
-        return $this;
-    }
-
-    /**
      * Get the value of answer
      */ 
     public function getAnswer()
@@ -207,6 +186,18 @@ class QuizPart
     public function setAnswer($answer)
     {
         $this->answer = $answer;
+
+        return $this;
+    }
+
+    public function getSkill(): ?Skill
+    {
+        return $this->skill;
+    }
+
+    public function setSkill(?Skill $skill): self
+    {
+        $this->skill = $skill;
 
         return $this;
     }

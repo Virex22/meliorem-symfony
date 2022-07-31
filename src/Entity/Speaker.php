@@ -6,6 +6,7 @@ use App\Repository\SpeakerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @ORM\Entity(repositoryClass=SpeakerRepository::class)
@@ -21,6 +22,7 @@ class Speaker
 
     /**
      * @ORM\OneToOne(targetEntity=User::class, inversedBy="speaker", cascade={"persist", "remove"})
+     * @Ignore
      */
     private $user;
 

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,10 +19,10 @@ class TestController extends AbstractController
     /**
      * @Route("/ping", name="ping")
      */
-    public function ping(): JsonResponse
+    public function ping(UserRepository $userRepository): JsonResponse
     {
         return $this->json([
-            "message" => "success"
+            "message" => "success",
         ]);
     }
     /**
@@ -29,13 +30,9 @@ class TestController extends AbstractController
      */
     public function loginPing(Security $security): JsonResponse
     {
-        $user = $security->getUser();
-        if($user instanceof User)
-            return $this->json([
-                "message" => "success with login"
-            ]);
+        echo "request login ping ok"; // test ok 
         return $this->json([
-            "message" => "error : user not found"
-        ],500);
+            "message" => "success with login"
+        ]);
     }
 }

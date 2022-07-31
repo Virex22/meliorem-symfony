@@ -22,7 +22,7 @@ class Skill
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $nom;
+    private $name;
 
     /**
      * @ORM\Column(type="text")
@@ -40,7 +40,7 @@ class Skill
     private $skillUserXPs;
 
     /**
-     * @ORM\ManyToMany(targetEntity=QuizPart::class, mappedBy="valideCompetence")
+     * @ORM\OneToMany(targetEntity=QuizPart::class, mappedBy="skill")
      */
     private $quizParts;
     
@@ -49,6 +49,7 @@ class Skill
     {
         $this->skillUserXPs = new ArrayCollection();
         $this->quizParts = new ArrayCollection();
+        $this->quizParts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -56,14 +57,14 @@ class Skill
         return $this->id;
     }
 
-    public function getNom(): ?string
+    public function getName(): ?string
     {
-        return $this->nom;
+        return $this->name;
     }
 
-    public function setNom(?string $nom): self
+    public function setName(?string $name): self
     {
-        $this->nom = $nom;
+        $this->name = $name;
 
         return $this;
     }
@@ -125,25 +126,28 @@ class Skill
     /**
      * @return Collection<int, QuizPart>
      */
-    public function getQuizParts(): Collection
+    public function getCompetence(): Collection
     {
         return $this->quizParts;
     }
 
-    public function addQuizPart(QuizPart $quizPart): self
+    public function addCompetence(QuizPart $quizParts): self
     {
-        if (!$this->quizParts->contains($quizPart)) {
-            $this->quizParts[] = $quizPart;
-            $quizPart->addValideCompetence($this);
+        if (!$this->quizParts->contains($quizParts)) {
+            $this->quizParts[] = $quizParts;
+            $quizParts->setSkill($this);
         }
 
         return $this;
     }
 
-    public function removeQuizPart(QuizPart $quizPart): self
+    public function removeCompetence(QuizPart $quizParts): self
     {
-        if ($this->quizParts->removeElement($quizPart)) {
-            $quizPart->removeValideCompetence($this);
+        if ($this->quizParts->removeElement($quizParts)) {
+            // set the owning side to null (unless already changed)
+            if ($quizParts->getSkill() === $this) {
+                $quizParts->setSkill(null);
+            }
         }
 
         return $this;

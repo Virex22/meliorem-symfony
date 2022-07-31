@@ -60,7 +60,7 @@ class QuizController extends AbstractController
      */
     public function delete(?Quiz $quiz, Security $security,EntityManager $entityManager): JsonResponse
     {
-        if (!$security->isGranted('ROLE_SPEAKER'))
+        if (!$security->isGranted('ROLE_SUPERADMIN'))
             return new JsonResponse(['error' => 'You are not authorized to delete a user'], Response::HTTP_UNAUTHORIZED);
         if ($quiz === null)
             return new JsonResponse(['error' => 'Quiz not found'], Response::HTTP_NOT_FOUND);
@@ -75,7 +75,7 @@ class QuizController extends AbstractController
      */
     public function update(?Quiz $quiz, Request $request, Security $security, QuizService $quizService): JsonResponse
     {
-        if (!$security->isGranted('ROLE_SPEAKER'))
+        if (!$security->isGranted('ROLE_SUPERADMIN'))
             return new JsonResponse(['error' => 'You are not authorized to update a user'], Response::HTTP_UNAUTHORIZED);
         if ($quiz === null)
             return new JsonResponse(['error' => 'Quiz not found'], Response::HTTP_NOT_FOUND);
@@ -86,6 +86,14 @@ class QuizController extends AbstractController
             return new JsonResponse(['error' => $th->getMessage()], Response::HTTP_BAD_REQUEST);
         }
         return $this->json($quiz, Response::HTTP_OK);
+    }
+    /**
+     * @Route("/api/quiz/{id}/quiz-part", name="quiz_part", methods={"GET"})
+     */
+    public function getAllQuizParts(Quiz $quiz): JsonResponse
+    {
+        $quizParts = $quiz->getQuizParts();
+        return $this->json($quizParts,Response::HTTP_OK);
     }
 
 

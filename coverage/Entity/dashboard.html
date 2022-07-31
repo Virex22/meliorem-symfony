@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for C:\Users\Vincent\Desktop\Personnel\meliorem\src\Entity</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../_css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="../_css/nv.d3.min.css" rel="stylesheet" type="text/css">
+  <link href="../_css/style.css" rel="stylesheet" type="text/css">
+  <link href="../_css/custom.css" rel="stylesheet" type="text/css">
+ </head>
+ <body>
+  <header>
+   <div class="container-fluid">
+    <div class="row">
+     <div class="col-md-12">
+      <nav aria-label="breadcrumb">
+       <ol class="breadcrumb">
+         <li class="breadcrumb-item"><a href="../index.html">C:\Users\Vincent\Desktop\Personnel\meliorem\src</a></li>
+         <li class="breadcrumb-item"><a href="index.html">Entity</a></li>
+         <li class="breadcrumb-item active">(Dashboard)</li>
+
+       </ol>
+      </nav>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container-fluid">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Badge.php.html#13">App\Entity\Badge</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Contact.php.html#11">App\Entity\Contact</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Speaker.php.html#14">App\Entity\Speaker</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SkillUserXP.php.html#11">App\Entity\SkillUserXP</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Skill.php.html#13">App\Entity\Skill</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReceivedNotification.php.html#11">App\Entity\ReceivedNotification</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReadLater.php.html#11">App\Entity\ReadLater</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="QuizPartPerform.php.html#11">App\Entity\QuizPartPerform</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TypeContact.php.html#13">App\Entity\TypeContact</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Notification.php.html#13">App\Entity\Notification</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Student.php.html#12">App\Entity\Student</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Group.php.html#14">App\Entity\Group</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="FavoriteCourse.php.html#11">App\Entity\FavoriteCourse</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CourseSection.php.html#13">App\Entity\CourseSection</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CoursePartQuiz.php.html#11">App\Entity\CoursePartQuiz</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CoursePartDocument.php.html#10">App\Entity\CoursePartDocument</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CoursePart.php.html#11">App\Entity\CoursePart</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CourseCategory.php.html#13">App\Entity\CourseCategory</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#13">App\Entity\Course</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Speciality.php.html#11">App\Entity\Speciality</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="User.php.html#15">App\Entity\User</a></td><td class="text-right">36%</td></tr>
+       <tr><td><a href="QuizPart.php.html#15">App\Entity\QuizPart</a></td><td class="text-right">62%</td></tr>
+       <tr><td><a href="Quiz.php.html#13">App\Entity\Quiz</a></td><td class="text-right">72%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Course.php.html#13">App\Entity\Course</a></td><td class="text-right">1806</td></tr>
+       <tr><td><a href="User.php.html#15">App\Entity\User</a></td><td class="text-right">1359</td></tr>
+       <tr><td><a href="Skill.php.html#13">App\Entity\Skill</a></td><td class="text-right">420</td></tr>
+       <tr><td><a href="Speaker.php.html#14">App\Entity\Speaker</a></td><td class="text-right">272</td></tr>
+       <tr><td><a href="Group.php.html#14">App\Entity\Group</a></td><td class="text-right">240</td></tr>
+       <tr><td><a href="CourseSection.php.html#13">App\Entity\CourseSection</a></td><td class="text-right">210</td></tr>
+       <tr><td><a href="Notification.php.html#13">App\Entity\Notification</a></td><td class="text-right">210</td></tr>
+       <tr><td><a href="Badge.php.html#13">App\Entity\Badge</a></td><td class="text-right">156</td></tr>
+       <tr><td><a href="CourseCategory.php.html#13">App\Entity\CourseCategory</a></td><td class="text-right">132</td></tr>
+       <tr><td><a href="TypeContact.php.html#13">App\Entity\TypeContact</a></td><td class="text-right">110</td></tr>
+       <tr><td><a href="QuizPart.php.html#15">App\Entity\QuizPart</a></td><td class="text-right">53</td></tr>
+       <tr><td><a href="Quiz.php.html#13">App\Entity\Quiz</a></td><td class="text-right">31</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Badge.php.html#42"><abbr title="App\Entity\Badge::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReceivedNotification.php.html#64"><abbr title="App\Entity\ReceivedNotification::getUser">getUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReadLater.php.html#62"><abbr title="App\Entity\ReadLater::setPositionOrder">setPositionOrder</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReadLater.php.html#69"><abbr title="App\Entity\ReadLater::getUser">getUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReadLater.php.html#74"><abbr title="App\Entity\ReadLater::setUser">setUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReadLater.php.html#81"><abbr title="App\Entity\ReadLater::getCourse">getCourse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReadLater.php.html#86"><abbr title="App\Entity\ReadLater::setCourse">setCourse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReceivedNotification.php.html#35"><abbr title="App\Entity\ReceivedNotification::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReceivedNotification.php.html#40"><abbr title="App\Entity\ReceivedNotification::isViewed">isViewed</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReceivedNotification.php.html#45"><abbr title="App\Entity\ReceivedNotification::setViewed">setViewed</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReceivedNotification.php.html#52"><abbr title="App\Entity\ReceivedNotification::getNotification">getNotification</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReceivedNotification.php.html#57"><abbr title="App\Entity\ReceivedNotification::setNotification">setNotification</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReceivedNotification.php.html#69"><abbr title="App\Entity\ReceivedNotification::setUser">setUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReadLater.php.html#50"><abbr title="App\Entity\ReadLater::setAddDate">setAddDate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Skill.php.html#48"><abbr title="App\Entity\Skill::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Skill.php.html#55"><abbr title="App\Entity\Skill::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Skill.php.html#60"><abbr title="App\Entity\Skill::getName">getName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Skill.php.html#65"><abbr title="App\Entity\Skill::setName">setName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Skill.php.html#72"><abbr title="App\Entity\Skill::getXpRequiredForLevels">getXpRequiredForLevels</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Skill.php.html#77"><abbr title="App\Entity\Skill::setXpRequiredForLevels">setXpRequiredForLevels</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Skill.php.html#84"><abbr title="App\Entity\Skill::getDescription">getDescription</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Skill.php.html#89"><abbr title="App\Entity\Skill::setDescription">setDescription</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Skill.php.html#99"><abbr title="App\Entity\Skill::getSkillUserXPs">getSkillUserXPs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Skill.php.html#104"><abbr title="App\Entity\Skill::addSkillUserXP">addSkillUserXP</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Skill.php.html#114"><abbr title="App\Entity\Skill::removeSkillUserXP">removeSkillUserXP</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReadLater.php.html#57"><abbr title="App\Entity\ReadLater::getPositionOrder">getPositionOrder</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReadLater.php.html#45"><abbr title="App\Entity\ReadLater::getAddDate">getAddDate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Skill.php.html#134"><abbr title="App\Entity\Skill::addCompetence">addCompetence</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="QuizPart.php.html#193"><abbr title="App\Entity\QuizPart::getSkill">getSkill</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Notification.php.html#76"><abbr title="App\Entity\Notification::getInteraction">getInteraction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Notification.php.html#81"><abbr title="App\Entity\Notification::setInteraction">setInteraction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Notification.php.html#91"><abbr title="App\Entity\Notification::getReceivedNotifications">getReceivedNotifications</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Notification.php.html#96"><abbr title="App\Entity\Notification::addReceivedNotification">addReceivedNotification</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Notification.php.html#106"><abbr title="App\Entity\Notification::removeReceivedNotification">removeReceivedNotification</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Quiz.php.html#144"><abbr title="App\Entity\Quiz::getCoursePartQuizzes">getCoursePartQuizzes</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Quiz.php.html#149"><abbr title="App\Entity\Quiz::addCoursePartQuiz">addCoursePartQuiz</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Quiz.php.html#159"><abbr title="App\Entity\Quiz::removeCoursePartQuiz">removeCoursePartQuiz</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="QuizPart.php.html#134"><abbr title="App\Entity\QuizPart::getQuizPartPerforms">getQuizPartPerforms</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="QuizPart.php.html#139"><abbr title="App\Entity\QuizPart::addQuizPartPerform">addQuizPartPerform</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="QuizPart.php.html#149"><abbr title="App\Entity\QuizPart::removeQuizPartPerform">removeQuizPartPerform</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="QuizPart.php.html#198"><abbr title="App\Entity\QuizPart::setSkill">setSkill</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReadLater.php.html#40"><abbr title="App\Entity\ReadLater::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="QuizPartPerform.php.html#45"><abbr title="App\Entity\QuizPartPerform::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="QuizPartPerform.php.html#50"><abbr title="App\Entity\QuizPartPerform::getTimeToResponse">getTimeToResponse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="QuizPartPerform.php.html#55"><abbr title="App\Entity\QuizPartPerform::setTimeToResponse">setTimeToResponse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="QuizPartPerform.php.html#62"><abbr title="App\Entity\QuizPartPerform::getDate">getDate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="QuizPartPerform.php.html#67"><abbr title="App\Entity\QuizPartPerform::setDate">setDate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="QuizPartPerform.php.html#74"><abbr title="App\Entity\QuizPartPerform::getScore">getScore</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="QuizPartPerform.php.html#79"><abbr title="App\Entity\QuizPartPerform::setScore">setScore</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="QuizPartPerform.php.html#86"><abbr title="App\Entity\QuizPartPerform::getUser">getUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="QuizPartPerform.php.html#91"><abbr title="App\Entity\QuizPartPerform::setUser">setUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="QuizPartPerform.php.html#98"><abbr title="App\Entity\QuizPartPerform::getQuizPart">getQuizPart</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="QuizPartPerform.php.html#103"><abbr title="App\Entity\QuizPartPerform::setQuizPart">setQuizPart</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Skill.php.html#129"><abbr title="App\Entity\Skill::getCompetence">getCompetence</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Skill.php.html#144"><abbr title="App\Entity\Skill::removeCompetence">removeCompetence</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Notification.php.html#64"><abbr title="App\Entity\Notification::getDescription">getDescription</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="User.php.html#230"><abbr title="App\Entity\User::addReceivedNotification">addReceivedNotification</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Student.php.html#65"><abbr title="App\Entity\Student::getUserId">getUserId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TypeContact.php.html#32"><abbr title="App\Entity\TypeContact::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TypeContact.php.html#37"><abbr title="App\Entity\TypeContact::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TypeContact.php.html#42"><abbr title="App\Entity\TypeContact::getName">getName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TypeContact.php.html#47"><abbr title="App\Entity\TypeContact::setName">setName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TypeContact.php.html#57"><abbr title="App\Entity\TypeContact::getContacts">getContacts</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TypeContact.php.html#62"><abbr title="App\Entity\TypeContact::addContact">addContact</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TypeContact.php.html#72"><abbr title="App\Entity\TypeContact::removeContact">removeContact</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="User.php.html#133"><abbr title="App\Entity\User::getUserIdentifier">getUserIdentifier</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="User.php.html#205"><abbr title="App\Entity\User::setContact">setContact</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="User.php.html#240"><abbr title="App\Entity\User::removeReceivedNotification">removeReceivedNotification</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Student.php.html#50"><abbr title="App\Entity\Student::getGroupReference">getGroupReference</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="User.php.html#257"><abbr title="App\Entity\User::setStudent">setStudent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="User.php.html#318"><abbr title="App\Entity\User::addBadge">addBadge</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="User.php.html#328"><abbr title="App\Entity\User::removeBadge">removeBadge</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="User.php.html#345"><abbr title="App\Entity\User::addSkillUserXP">addSkillUserXP</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="User.php.html#355"><abbr title="App\Entity\User::removeSkillUserXP">removeSkillUserXP</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="User.php.html#375"><abbr title="App\Entity\User::addQuizPartPerform">addQuizPartPerform</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="User.php.html#385"><abbr title="App\Entity\User::removeQuizPartPerform">removeQuizPartPerform</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="User.php.html#405"><abbr title="App\Entity\User::addReadLater">addReadLater</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="User.php.html#415"><abbr title="App\Entity\User::removeReadLater">removeReadLater</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="User.php.html#435"><abbr title="App\Entity\User::addFavoriteCourse">addFavoriteCourse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="User.php.html#445"><abbr title="App\Entity\User::removeFavoriteCourse">removeFavoriteCourse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Student.php.html#55"><abbr title="App\Entity\Student::setGroupReference">setGroupReference</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Student.php.html#43"><abbr title="App\Entity\Student::setUser">setUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SkillUserXP.php.html#35"><abbr title="App\Entity\SkillUserXP::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Speaker.php.html#71"><abbr title="App\Entity\Speaker::addSpeciality">addSpeciality</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SkillUserXP.php.html#40"><abbr title="App\Entity\SkillUserXP::getXp">getXp</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SkillUserXP.php.html#45"><abbr title="App\Entity\SkillUserXP::setXp">setXp</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SkillUserXP.php.html#52"><abbr title="App\Entity\SkillUserXP::getSkill">getSkill</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SkillUserXP.php.html#57"><abbr title="App\Entity\SkillUserXP::setSkill">setSkill</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SkillUserXP.php.html#64"><abbr title="App\Entity\SkillUserXP::getUser">getUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SkillUserXP.php.html#69"><abbr title="App\Entity\SkillUserXP::setUser">setUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Speaker.php.html#39"><abbr title="App\Entity\Speaker::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Speaker.php.html#46"><abbr title="App\Entity\Speaker::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Speaker.php.html#51"><abbr title="App\Entity\Speaker::getUser">getUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Speaker.php.html#56"><abbr title="App\Entity\Speaker::setUser">setUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Speaker.php.html#66"><abbr title="App\Entity\Speaker::getSpecialities">getSpecialities</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Speaker.php.html#81"><abbr title="App\Entity\Speaker::removeSpeciality">removeSpeciality</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Student.php.html#38"><abbr title="App\Entity\Student::getUser">getUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Speaker.php.html#96"><abbr title="App\Entity\Speaker::getCourses">getCourses</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Speaker.php.html#101"><abbr title="App\Entity\Speaker::addCourse">addCourse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Speaker.php.html#111"><abbr title="App\Entity\Speaker::removeCourse">removeCourse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Speciality.php.html#35"><abbr title="App\Entity\Speciality::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Speciality.php.html#40"><abbr title="App\Entity\Speciality::getName">getName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Speciality.php.html#45"><abbr title="App\Entity\Speciality::setName">setName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Speciality.php.html#52"><abbr title="App\Entity\Speciality::getBeginAt">getBeginAt</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Speciality.php.html#57"><abbr title="App\Entity\Speciality::setBeginAt">setBeginAt</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Speciality.php.html#64"><abbr title="App\Entity\Speciality::getSpeaker">getSpeaker</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Speciality.php.html#69"><abbr title="App\Entity\Speciality::setSpeaker">setSpeaker</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Student.php.html#33"><abbr title="App\Entity\Student::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Notification.php.html#69"><abbr title="App\Entity\Notification::setDescription">setDescription</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Notification.php.html#57"><abbr title="App\Entity\Notification::setTitle">setTitle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Badge.php.html#47"><abbr title="App\Entity\Badge::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#233"><abbr title="App\Entity\Course::setSpeaker">setSpeaker</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#144"><abbr title="App\Entity\Course::getImage">getImage</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#149"><abbr title="App\Entity\Course::setImage">setImage</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#156"><abbr title="App\Entity\Course::isIsPublic">isIsPublic</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#161"><abbr title="App\Entity\Course::setIsPublic">setIsPublic</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#171"><abbr title="App\Entity\Course::getFavoriteCourses">getFavoriteCourses</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#176"><abbr title="App\Entity\Course::addFavoriteCourse">addFavoriteCourse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#186"><abbr title="App\Entity\Course::removeFavoriteCourse">removeFavoriteCourse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#201"><abbr title="App\Entity\Course::getReadLaters">getReadLaters</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#206"><abbr title="App\Entity\Course::addReadLater">addReadLater</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#216"><abbr title="App\Entity\Course::removeReadLater">removeReadLater</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#228"><abbr title="App\Entity\Course::getSpeaker">getSpeaker</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#243"><abbr title="App\Entity\Course::getGroupFilter">getGroupFilter</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#132"><abbr title="App\Entity\Course::getLastEditDate">getLastEditDate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#248"><abbr title="App\Entity\Course::addGroupFilter">addGroupFilter</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#257"><abbr title="App\Entity\Course::removeGroupFilter">removeGroupFilter</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#267"><abbr title="App\Entity\Course::getCourseSections">getCourseSections</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#272"><abbr title="App\Entity\Course::addCourseSection">addCourseSection</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#282"><abbr title="App\Entity\Course::removeCourseSection">removeCourseSection</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#297"><abbr title="App\Entity\Course::getCategory">getCategory</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#302"><abbr title="App\Entity\Course::addCategory">addCategory</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#311"><abbr title="App\Entity\Course::removeCategory">removeCategory</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CourseCategory.php.html#37"><abbr title="App\Entity\CourseCategory::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CourseCategory.php.html#42"><abbr title="App\Entity\CourseCategory::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CourseCategory.php.html#47"><abbr title="App\Entity\CourseCategory::getName">getName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#137"><abbr title="App\Entity\Course::setLastEditDate">setLastEditDate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#125"><abbr title="App\Entity\Course::setPublishDate">setPublishDate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CourseCategory.php.html#59"><abbr title="App\Entity\CourseCategory::getColor">getColor</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Contact.php.html#50"><abbr title="App\Entity\Contact::setPhone">setPhone</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Badge.php.html#52"><abbr title="App\Entity\Badge::getNom">getNom</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Badge.php.html#57"><abbr title="App\Entity\Badge::setNom">setNom</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Badge.php.html#64"><abbr title="App\Entity\Badge::getImage">getImage</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Badge.php.html#69"><abbr title="App\Entity\Badge::setImage">setImage</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Badge.php.html#76"><abbr title="App\Entity\Badge::getDescription">getDescription</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Badge.php.html#81"><abbr title="App\Entity\Badge::setDescription">setDescription</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Badge.php.html#91"><abbr title="App\Entity\Badge::getUser">getUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Badge.php.html#96"><abbr title="App\Entity\Badge::addUser">addUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Badge.php.html#105"><abbr title="App\Entity\Badge::removeUser">removeUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Contact.php.html#40"><abbr title="App\Entity\Contact::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Contact.php.html#45"><abbr title="App\Entity\Contact::getPhone">getPhone</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Contact.php.html#57"><abbr title="App\Entity\Contact::getDescription">getDescription</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#120"><abbr title="App\Entity\Course::getPublishDate">getPublishDate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Contact.php.html#62"><abbr title="App\Entity\Contact::setDescription">setDescription</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Contact.php.html#69"><abbr title="App\Entity\Contact::getTypeContact">getTypeContact</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Contact.php.html#74"><abbr title="App\Entity\Contact::setTypeContact">setTypeContact</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Contact.php.html#81"><abbr title="App\Entity\Contact::getUser">getUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Contact.php.html#86"><abbr title="App\Entity\Contact::setUser">setUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#82"><abbr title="App\Entity\Course::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#91"><abbr title="App\Entity\Course::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#96"><abbr title="App\Entity\Course::getTitle">getTitle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#101"><abbr title="App\Entity\Course::setTitle">setTitle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#108"><abbr title="App\Entity\Course::getDescription">getDescription</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Course.php.html#113"><abbr title="App\Entity\Course::setDescription">setDescription</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CourseCategory.php.html#52"><abbr title="App\Entity\CourseCategory::setName">setName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CourseCategory.php.html#64"><abbr title="App\Entity\CourseCategory::setColor">setColor</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Notification.php.html#52"><abbr title="App\Entity\Notification::getTitle">getTitle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="FavoriteCourse.php.html#69"><abbr title="App\Entity\FavoriteCourse::setCourse">setCourse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CourseSection.php.html#81"><abbr title="App\Entity\CourseSection::setCourse">setCourse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CourseSection.php.html#91"><abbr title="App\Entity\CourseSection::getCourseParts">getCourseParts</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CourseSection.php.html#96"><abbr title="App\Entity\CourseSection::addCoursePart">addCoursePart</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CourseSection.php.html#106"><abbr title="App\Entity\CourseSection::removeCoursePart">removeCoursePart</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="FavoriteCourse.php.html#35"><abbr title="App\Entity\FavoriteCourse::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="FavoriteCourse.php.html#40"><abbr title="App\Entity\FavoriteCourse::getAddDate">getAddDate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="FavoriteCourse.php.html#45"><abbr title="App\Entity\FavoriteCourse::setAddDate">setAddDate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="FavoriteCourse.php.html#52"><abbr title="App\Entity\FavoriteCourse::getUser">getUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="FavoriteCourse.php.html#57"><abbr title="App\Entity\FavoriteCourse::setUser">setUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="FavoriteCourse.php.html#64"><abbr title="App\Entity\FavoriteCourse::getCourse">getCourse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Group.php.html#38"><abbr title="App\Entity\Group::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CourseSection.php.html#69"><abbr title="App\Entity\CourseSection::setCourseOrder">setCourseOrder</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Group.php.html#44"><abbr title="App\Entity\Group::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Group.php.html#49"><abbr title="App\Entity\Group::getNom">getNom</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Group.php.html#54"><abbr title="App\Entity\Group::setNom">setNom</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Group.php.html#64"><abbr title="App\Entity\Group::getStudent">getStudent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Group.php.html#69"><abbr title="App\Entity\Group::addStudent">addStudent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Group.php.html#79"><abbr title="App\Entity\Group::removeStudent">removeStudent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Group.php.html#94"><abbr title="App\Entity\Group::getCourses">getCourses</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Group.php.html#99"><abbr title="App\Entity\Group::addCourse">addCourse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Group.php.html#109"><abbr title="App\Entity\Group::removeCourse">removeCourse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Notification.php.html#42"><abbr title="App\Entity\Notification::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Notification.php.html#47"><abbr title="App\Entity\Notification::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CourseSection.php.html#76"><abbr title="App\Entity\CourseSection::getCourse">getCourse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CourseSection.php.html#64"><abbr title="App\Entity\CourseSection::getCourseOrder">getCourseOrder</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CourseCategory.php.html#74"><abbr title="App\Entity\CourseCategory::getCourses">getCourses</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CourseSection.php.html#57"><abbr title="App\Entity\CourseSection::setNom">setNom</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CourseCategory.php.html#79"><abbr title="App\Entity\CourseCategory::addCourse">addCourse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CourseCategory.php.html#89"><abbr title="App\Entity\CourseCategory::removeCourse">removeCourse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CoursePart.php.html#40"><abbr title="App\Entity\CoursePart::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CoursePart.php.html#45"><abbr title="App\Entity\CoursePart::getTitle">getTitle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CoursePart.php.html#50"><abbr title="App\Entity\CoursePart::setTitle">setTitle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CoursePart.php.html#57"><abbr title="App\Entity\CoursePart::getOrderPart">getOrderPart</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CoursePart.php.html#62"><abbr title="App\Entity\CoursePart::setOrderPart">setOrderPart</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CoursePart.php.html#69"><abbr title="App\Entity\CoursePart::getEstimatedTime">getEstimatedTime</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CoursePart.php.html#74"><abbr title="App\Entity\CoursePart::setEstimatedTime">setEstimatedTime</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CoursePart.php.html#81"><abbr title="App\Entity\CoursePart::getCourseSection">getCourseSection</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CoursePart.php.html#86"><abbr title="App\Entity\CoursePart::setCourseSection">setCourseSection</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CoursePartDocument.php.html#34"><abbr title="App\Entity\CoursePartDocument::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CoursePartDocument.php.html#39"><abbr title="App\Entity\CoursePartDocument::getLinkVideo">getLinkVideo</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CoursePartDocument.php.html#44"><abbr title="App\Entity\CoursePartDocument::setLinkVideo">setLinkVideo</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CoursePartDocument.php.html#51"><abbr title="App\Entity\CoursePartDocument::getContent">getContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CoursePartDocument.php.html#56"><abbr title="App\Entity\CoursePartDocument::setContent">setContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CoursePartDocument.php.html#63"><abbr title="App\Entity\CoursePartDocument::getFiles">getFiles</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CoursePartDocument.php.html#68"><abbr title="App\Entity\CoursePartDocument::setFiles">setFiles</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CoursePartQuiz.php.html#25"><abbr title="App\Entity\CoursePartQuiz::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CoursePartQuiz.php.html#30"><abbr title="App\Entity\CoursePartQuiz::getQuiz">getQuiz</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CoursePartQuiz.php.html#35"><abbr title="App\Entity\CoursePartQuiz::setQuiz">setQuiz</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CourseSection.php.html#42"><abbr title="App\Entity\CourseSection::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CourseSection.php.html#47"><abbr title="App\Entity\CourseSection::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CourseSection.php.html#52"><abbr title="App\Entity\CourseSection::getNom">getNom</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="User.php.html#462"><abbr title="App\Entity\User::setSpeaker">setSpeaker</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="QuizPart.php.html#71"><abbr title="App\Entity\QuizPart::getQuizId">getQuizId</abbr></a></td><td class="text-right">66%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="User.php.html#205"><abbr title="App\Entity\User::setContact">setContact</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="User.php.html#462"><abbr title="App\Entity\User::setSpeaker">setSpeaker</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="User.php.html#257"><abbr title="App\Entity\User::setStudent">setStudent</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Speaker.php.html#81"><abbr title="App\Entity\Speaker::removeSpeciality">removeSpeciality</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Skill.php.html#144"><abbr title="App\Entity\Skill::removeCompetence">removeCompetence</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Skill.php.html#114"><abbr title="App\Entity\Skill::removeSkillUserXP">removeSkillUserXP</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="TypeContact.php.html#72"><abbr title="App\Entity\TypeContact::removeContact">removeContact</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="QuizPart.php.html#149"><abbr title="App\Entity\QuizPart::removeQuizPartPerform">removeQuizPartPerform</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Quiz.php.html#159"><abbr title="App\Entity\Quiz::removeCoursePartQuiz">removeCoursePartQuiz</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="User.php.html#240"><abbr title="App\Entity\User::removeReceivedNotification">removeReceivedNotification</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Notification.php.html#106"><abbr title="App\Entity\Notification::removeReceivedNotification">removeReceivedNotification</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Group.php.html#79"><abbr title="App\Entity\Group::removeStudent">removeStudent</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="CourseSection.php.html#106"><abbr title="App\Entity\CourseSection::removeCoursePart">removeCoursePart</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="User.php.html#415"><abbr title="App\Entity\User::removeReadLater">removeReadLater</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Course.php.html#186"><abbr title="App\Entity\Course::removeFavoriteCourse">removeFavoriteCourse</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="User.php.html#445"><abbr title="App\Entity\User::removeFavoriteCourse">removeFavoriteCourse</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Course.php.html#216"><abbr title="App\Entity\Course::removeReadLater">removeReadLater</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Course.php.html#282"><abbr title="App\Entity\Course::removeCourseSection">removeCourseSection</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="User.php.html#385"><abbr title="App\Entity\User::removeQuizPartPerform">removeQuizPartPerform</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="User.php.html#355"><abbr title="App\Entity\User::removeSkillUserXP">removeSkillUserXP</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Speaker.php.html#111"><abbr title="App\Entity\Speaker::removeCourse">removeCourse</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="User.php.html#405"><abbr title="App\Entity\User::addReadLater">addReadLater</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="User.php.html#345"><abbr title="App\Entity\User::addSkillUserXP">addSkillUserXP</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="User.php.html#230"><abbr title="App\Entity\User::addReceivedNotification">addReceivedNotification</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="User.php.html#375"><abbr title="App\Entity\User::addQuizPartPerform">addQuizPartPerform</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="User.php.html#435"><abbr title="App\Entity\User::addFavoriteCourse">addFavoriteCourse</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="User.php.html#318"><abbr title="App\Entity\User::addBadge">addBadge</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="User.php.html#328"><abbr title="App\Entity\User::removeBadge">removeBadge</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="TypeContact.php.html#62"><abbr title="App\Entity\TypeContact::addContact">addContact</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Badge.php.html#96"><abbr title="App\Entity\Badge::addUser">addUser</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Speaker.php.html#101"><abbr title="App\Entity\Speaker::addCourse">addCourse</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Group.php.html#69"><abbr title="App\Entity\Group::addStudent">addStudent</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Course.php.html#206"><abbr title="App\Entity\Course::addReadLater">addReadLater</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Course.php.html#248"><abbr title="App\Entity\Course::addGroupFilter">addGroupFilter</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Course.php.html#272"><abbr title="App\Entity\Course::addCourseSection">addCourseSection</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Course.php.html#302"><abbr title="App\Entity\Course::addCategory">addCategory</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="CourseCategory.php.html#79"><abbr title="App\Entity\CourseCategory::addCourse">addCourse</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="CourseCategory.php.html#89"><abbr title="App\Entity\CourseCategory::removeCourse">removeCourse</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="CourseSection.php.html#96"><abbr title="App\Entity\CourseSection::addCoursePart">addCoursePart</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Group.php.html#99"><abbr title="App\Entity\Group::addCourse">addCourse</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Speaker.php.html#71"><abbr title="App\Entity\Speaker::addSpeciality">addSpeciality</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Group.php.html#109"><abbr title="App\Entity\Group::removeCourse">removeCourse</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Notification.php.html#96"><abbr title="App\Entity\Notification::addReceivedNotification">addReceivedNotification</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Quiz.php.html#149"><abbr title="App\Entity\Quiz::addCoursePartQuiz">addCoursePartQuiz</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="QuizPart.php.html#139"><abbr title="App\Entity\QuizPart::addQuizPartPerform">addQuizPartPerform</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Course.php.html#176"><abbr title="App\Entity\Course::addFavoriteCourse">addFavoriteCourse</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Skill.php.html#134"><abbr title="App\Entity\Skill::addCompetence">addCompetence</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Skill.php.html#104"><abbr title="App\Entity\Skill::addSkillUserXP">addSkillUserXP</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="QuizPart.php.html#71"><abbr title="App\Entity\QuizPart::getQuizId">getQuizId</abbr></a></td><td class="text-right">2</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 9.2.15</a> using <a href="https://secure.php.net/" target="_top">PHP 7.4.26</a> and <a href="https://phpunit.de/">PHPUnit 9.5.21</a> at Sun Jul 31 16:33:45 UTC 2022.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="../_js/jquery.min.js" type="text/javascript"></script>
+  <script src="../_js/d3.min.js" type="text/javascript"></script>
+  <script src="../_js/nv.d3.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([20,0,0,0,1,0,0,1,1,0,0,0], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([220,0,0,0,0,0,0,1,0,0,0,53], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[0,12,"<a href=\"Badge.php.html#13\">App\\Entity\\Badge<\/a>"],[0,9,"<a href=\"Contact.php.html#11\">App\\Entity\\Contact<\/a>"],[0,42,"<a href=\"Course.php.html#13\">App\\Entity\\Course<\/a>"],[0,11,"<a href=\"CourseCategory.php.html#13\">App\\Entity\\CourseCategory<\/a>"],[0,9,"<a href=\"CoursePart.php.html#11\">App\\Entity\\CoursePart<\/a>"],[0,7,"<a href=\"CoursePartDocument.php.html#10\">App\\Entity\\CoursePartDocument<\/a>"],[0,3,"<a href=\"CoursePartQuiz.php.html#11\">App\\Entity\\CoursePartQuiz<\/a>"],[0,14,"<a href=\"CourseSection.php.html#13\">App\\Entity\\CourseSection<\/a>"],[0,7,"<a href=\"FavoriteCourse.php.html#11\">App\\Entity\\FavoriteCourse<\/a>"],[0,15,"<a href=\"Group.php.html#14\">App\\Entity\\Group<\/a>"],[0,14,"<a href=\"Notification.php.html#13\">App\\Entity\\Notification<\/a>"],[72.72727272727273,22,"<a href=\"Quiz.php.html#13\">App\\Entity\\Quiz<\/a>"],[62.857142857142854,24,"<a href=\"QuizPart.php.html#15\">App\\Entity\\QuizPart<\/a>"],[0,11,"<a href=\"QuizPartPerform.php.html#11\">App\\Entity\\QuizPartPerform<\/a>"],[0,9,"<a href=\"ReadLater.php.html#11\">App\\Entity\\ReadLater<\/a>"],[0,7,"<a href=\"ReceivedNotification.php.html#11\">App\\Entity\\ReceivedNotification<\/a>"],[0,20,"<a href=\"Skill.php.html#13\">App\\Entity\\Skill<\/a>"],[0,7,"<a href=\"SkillUserXP.php.html#11\">App\\Entity\\SkillUserXP<\/a>"],[0,16,"<a href=\"Speaker.php.html#14\">App\\Entity\\Speaker<\/a>"],[0,7,"<a href=\"Speciality.php.html#11\">App\\Entity\\Speciality<\/a>"],[0,6,"<a href=\"Student.php.html#12\">App\\Entity\\Student<\/a>"],[0,10,"<a href=\"TypeContact.php.html#13\">App\\Entity\\TypeContact<\/a>"],[36.53846153846153,71,"<a href=\"User.php.html#15\">App\\Entity\\User<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[0,1,"<a href=\"Badge.php.html#42\">App\\Entity\\Badge::__construct<\/a>"],[0,1,"<a href=\"Badge.php.html#47\">App\\Entity\\Badge::getId<\/a>"],[0,1,"<a href=\"Badge.php.html#52\">App\\Entity\\Badge::getNom<\/a>"],[0,1,"<a href=\"Badge.php.html#57\">App\\Entity\\Badge::setNom<\/a>"],[0,1,"<a href=\"Badge.php.html#64\">App\\Entity\\Badge::getImage<\/a>"],[0,1,"<a href=\"Badge.php.html#69\">App\\Entity\\Badge::setImage<\/a>"],[0,1,"<a href=\"Badge.php.html#76\">App\\Entity\\Badge::getDescription<\/a>"],[0,1,"<a href=\"Badge.php.html#81\">App\\Entity\\Badge::setDescription<\/a>"],[0,1,"<a href=\"Badge.php.html#91\">App\\Entity\\Badge::getUser<\/a>"],[0,2,"<a href=\"Badge.php.html#96\">App\\Entity\\Badge::addUser<\/a>"],[0,1,"<a href=\"Badge.php.html#105\">App\\Entity\\Badge::removeUser<\/a>"],[0,1,"<a href=\"Contact.php.html#40\">App\\Entity\\Contact::getId<\/a>"],[0,1,"<a href=\"Contact.php.html#45\">App\\Entity\\Contact::getPhone<\/a>"],[0,1,"<a href=\"Contact.php.html#50\">App\\Entity\\Contact::setPhone<\/a>"],[0,1,"<a href=\"Contact.php.html#57\">App\\Entity\\Contact::getDescription<\/a>"],[0,1,"<a href=\"Contact.php.html#62\">App\\Entity\\Contact::setDescription<\/a>"],[0,1,"<a href=\"Contact.php.html#69\">App\\Entity\\Contact::getTypeContact<\/a>"],[0,1,"<a href=\"Contact.php.html#74\">App\\Entity\\Contact::setTypeContact<\/a>"],[0,1,"<a href=\"Contact.php.html#81\">App\\Entity\\Contact::getUser<\/a>"],[0,1,"<a href=\"Contact.php.html#86\">App\\Entity\\Contact::setUser<\/a>"],[0,1,"<a href=\"Course.php.html#82\">App\\Entity\\Course::__construct<\/a>"],[0,1,"<a href=\"Course.php.html#91\">App\\Entity\\Course::getId<\/a>"],[0,1,"<a href=\"Course.php.html#96\">App\\Entity\\Course::getTitle<\/a>"],[0,1,"<a href=\"Course.php.html#101\">App\\Entity\\Course::setTitle<\/a>"],[0,1,"<a href=\"Course.php.html#108\">App\\Entity\\Course::getDescription<\/a>"],[0,1,"<a href=\"Course.php.html#113\">App\\Entity\\Course::setDescription<\/a>"],[0,1,"<a href=\"Course.php.html#120\">App\\Entity\\Course::getPublishDate<\/a>"],[0,1,"<a href=\"Course.php.html#125\">App\\Entity\\Course::setPublishDate<\/a>"],[0,1,"<a href=\"Course.php.html#132\">App\\Entity\\Course::getLastEditDate<\/a>"],[0,1,"<a href=\"Course.php.html#137\">App\\Entity\\Course::setLastEditDate<\/a>"],[0,1,"<a href=\"Course.php.html#144\">App\\Entity\\Course::getImage<\/a>"],[0,1,"<a href=\"Course.php.html#149\">App\\Entity\\Course::setImage<\/a>"],[0,1,"<a href=\"Course.php.html#156\">App\\Entity\\Course::isIsPublic<\/a>"],[0,1,"<a href=\"Course.php.html#161\">App\\Entity\\Course::setIsPublic<\/a>"],[0,1,"<a href=\"Course.php.html#171\">App\\Entity\\Course::getFavoriteCourses<\/a>"],[0,2,"<a href=\"Course.php.html#176\">App\\Entity\\Course::addFavoriteCourse<\/a>"],[0,3,"<a href=\"Course.php.html#186\">App\\Entity\\Course::removeFavoriteCourse<\/a>"],[0,1,"<a href=\"Course.php.html#201\">App\\Entity\\Course::getReadLaters<\/a>"],[0,2,"<a href=\"Course.php.html#206\">App\\Entity\\Course::addReadLater<\/a>"],[0,3,"<a href=\"Course.php.html#216\">App\\Entity\\Course::removeReadLater<\/a>"],[0,1,"<a href=\"Course.php.html#228\">App\\Entity\\Course::getSpeaker<\/a>"],[0,1,"<a href=\"Course.php.html#233\">App\\Entity\\Course::setSpeaker<\/a>"],[0,1,"<a href=\"Course.php.html#243\">App\\Entity\\Course::getGroupFilter<\/a>"],[0,2,"<a href=\"Course.php.html#248\">App\\Entity\\Course::addGroupFilter<\/a>"],[0,1,"<a href=\"Course.php.html#257\">App\\Entity\\Course::removeGroupFilter<\/a>"],[0,1,"<a href=\"Course.php.html#267\">App\\Entity\\Course::getCourseSections<\/a>"],[0,2,"<a href=\"Course.php.html#272\">App\\Entity\\Course::addCourseSection<\/a>"],[0,3,"<a href=\"Course.php.html#282\">App\\Entity\\Course::removeCourseSection<\/a>"],[0,1,"<a href=\"Course.php.html#297\">App\\Entity\\Course::getCategory<\/a>"],[0,2,"<a href=\"Course.php.html#302\">App\\Entity\\Course::addCategory<\/a>"],[0,1,"<a href=\"Course.php.html#311\">App\\Entity\\Course::removeCategory<\/a>"],[0,1,"<a href=\"CourseCategory.php.html#37\">App\\Entity\\CourseCategory::__construct<\/a>"],[0,1,"<a href=\"CourseCategory.php.html#42\">App\\Entity\\CourseCategory::getId<\/a>"],[0,1,"<a href=\"CourseCategory.php.html#47\">App\\Entity\\CourseCategory::getName<\/a>"],[0,1,"<a href=\"CourseCategory.php.html#52\">App\\Entity\\CourseCategory::setName<\/a>"],[0,1,"<a href=\"CourseCategory.php.html#59\">App\\Entity\\CourseCategory::getColor<\/a>"],[0,1,"<a href=\"CourseCategory.php.html#64\">App\\Entity\\CourseCategory::setColor<\/a>"],[0,1,"<a href=\"CourseCategory.php.html#74\">App\\Entity\\CourseCategory::getCourses<\/a>"],[0,2,"<a href=\"CourseCategory.php.html#79\">App\\Entity\\CourseCategory::addCourse<\/a>"],[0,2,"<a href=\"CourseCategory.php.html#89\">App\\Entity\\CourseCategory::removeCourse<\/a>"],[0,1,"<a href=\"CoursePart.php.html#40\">App\\Entity\\CoursePart::getId<\/a>"],[0,1,"<a href=\"CoursePart.php.html#45\">App\\Entity\\CoursePart::getTitle<\/a>"],[0,1,"<a href=\"CoursePart.php.html#50\">App\\Entity\\CoursePart::setTitle<\/a>"],[0,1,"<a href=\"CoursePart.php.html#57\">App\\Entity\\CoursePart::getOrderPart<\/a>"],[0,1,"<a href=\"CoursePart.php.html#62\">App\\Entity\\CoursePart::setOrderPart<\/a>"],[0,1,"<a href=\"CoursePart.php.html#69\">App\\Entity\\CoursePart::getEstimatedTime<\/a>"],[0,1,"<a href=\"CoursePart.php.html#74\">App\\Entity\\CoursePart::setEstimatedTime<\/a>"],[0,1,"<a href=\"CoursePart.php.html#81\">App\\Entity\\CoursePart::getCourseSection<\/a>"],[0,1,"<a href=\"CoursePart.php.html#86\">App\\Entity\\CoursePart::setCourseSection<\/a>"],[0,1,"<a href=\"CoursePartDocument.php.html#34\">App\\Entity\\CoursePartDocument::getId<\/a>"],[0,1,"<a href=\"CoursePartDocument.php.html#39\">App\\Entity\\CoursePartDocument::getLinkVideo<\/a>"],[0,1,"<a href=\"CoursePartDocument.php.html#44\">App\\Entity\\CoursePartDocument::setLinkVideo<\/a>"],[0,1,"<a href=\"CoursePartDocument.php.html#51\">App\\Entity\\CoursePartDocument::getContent<\/a>"],[0,1,"<a href=\"CoursePartDocument.php.html#56\">App\\Entity\\CoursePartDocument::setContent<\/a>"],[0,1,"<a href=\"CoursePartDocument.php.html#63\">App\\Entity\\CoursePartDocument::getFiles<\/a>"],[0,1,"<a href=\"CoursePartDocument.php.html#68\">App\\Entity\\CoursePartDocument::setFiles<\/a>"],[0,1,"<a href=\"CoursePartQuiz.php.html#25\">App\\Entity\\CoursePartQuiz::getId<\/a>"],[0,1,"<a href=\"CoursePartQuiz.php.html#30\">App\\Entity\\CoursePartQuiz::getQuiz<\/a>"],[0,1,"<a href=\"CoursePartQuiz.php.html#35\">App\\Entity\\CoursePartQuiz::setQuiz<\/a>"],[0,1,"<a href=\"CourseSection.php.html#42\">App\\Entity\\CourseSection::__construct<\/a>"],[0,1,"<a href=\"CourseSection.php.html#47\">App\\Entity\\CourseSection::getId<\/a>"],[0,1,"<a href=\"CourseSection.php.html#52\">App\\Entity\\CourseSection::getNom<\/a>"],[0,1,"<a href=\"CourseSection.php.html#57\">App\\Entity\\CourseSection::setNom<\/a>"],[0,1,"<a href=\"CourseSection.php.html#64\">App\\Entity\\CourseSection::getCourseOrder<\/a>"],[0,1,"<a href=\"CourseSection.php.html#69\">App\\Entity\\CourseSection::setCourseOrder<\/a>"],[0,1,"<a href=\"CourseSection.php.html#76\">App\\Entity\\CourseSection::getCourse<\/a>"],[0,1,"<a href=\"CourseSection.php.html#81\">App\\Entity\\CourseSection::setCourse<\/a>"],[0,1,"<a href=\"CourseSection.php.html#91\">App\\Entity\\CourseSection::getCourseParts<\/a>"],[0,2,"<a href=\"CourseSection.php.html#96\">App\\Entity\\CourseSection::addCoursePart<\/a>"],[0,3,"<a href=\"CourseSection.php.html#106\">App\\Entity\\CourseSection::removeCoursePart<\/a>"],[0,1,"<a href=\"FavoriteCourse.php.html#35\">App\\Entity\\FavoriteCourse::getId<\/a>"],[0,1,"<a href=\"FavoriteCourse.php.html#40\">App\\Entity\\FavoriteCourse::getAddDate<\/a>"],[0,1,"<a href=\"FavoriteCourse.php.html#45\">App\\Entity\\FavoriteCourse::setAddDate<\/a>"],[0,1,"<a href=\"FavoriteCourse.php.html#52\">App\\Entity\\FavoriteCourse::getUser<\/a>"],[0,1,"<a href=\"FavoriteCourse.php.html#57\">App\\Entity\\FavoriteCourse::setUser<\/a>"],[0,1,"<a href=\"FavoriteCourse.php.html#64\">App\\Entity\\FavoriteCourse::getCourse<\/a>"],[0,1,"<a href=\"FavoriteCourse.php.html#69\">App\\Entity\\FavoriteCourse::setCourse<\/a>"],[0,1,"<a href=\"Group.php.html#38\">App\\Entity\\Group::__construct<\/a>"],[0,1,"<a href=\"Group.php.html#44\">App\\Entity\\Group::getId<\/a>"],[0,1,"<a href=\"Group.php.html#49\">App\\Entity\\Group::getNom<\/a>"],[0,1,"<a href=\"Group.php.html#54\">App\\Entity\\Group::setNom<\/a>"],[0,1,"<a href=\"Group.php.html#64\">App\\Entity\\Group::getStudent<\/a>"],[0,2,"<a href=\"Group.php.html#69\">App\\Entity\\Group::addStudent<\/a>"],[0,3,"<a href=\"Group.php.html#79\">App\\Entity\\Group::removeStudent<\/a>"],[0,1,"<a href=\"Group.php.html#94\">App\\Entity\\Group::getCourses<\/a>"],[0,2,"<a href=\"Group.php.html#99\">App\\Entity\\Group::addCourse<\/a>"],[0,2,"<a href=\"Group.php.html#109\">App\\Entity\\Group::removeCourse<\/a>"],[0,1,"<a href=\"Notification.php.html#42\">App\\Entity\\Notification::__construct<\/a>"],[0,1,"<a href=\"Notification.php.html#47\">App\\Entity\\Notification::getId<\/a>"],[0,1,"<a href=\"Notification.php.html#52\">App\\Entity\\Notification::getTitle<\/a>"],[0,1,"<a href=\"Notification.php.html#57\">App\\Entity\\Notification::setTitle<\/a>"],[0,1,"<a href=\"Notification.php.html#64\">App\\Entity\\Notification::getDescription<\/a>"],[0,1,"<a href=\"Notification.php.html#69\">App\\Entity\\Notification::setDescription<\/a>"],[0,1,"<a href=\"Notification.php.html#76\">App\\Entity\\Notification::getInteraction<\/a>"],[0,1,"<a href=\"Notification.php.html#81\">App\\Entity\\Notification::setInteraction<\/a>"],[0,1,"<a href=\"Notification.php.html#91\">App\\Entity\\Notification::getReceivedNotifications<\/a>"],[0,2,"<a href=\"Notification.php.html#96\">App\\Entity\\Notification::addReceivedNotification<\/a>"],[0,3,"<a href=\"Notification.php.html#106\">App\\Entity\\Notification::removeReceivedNotification<\/a>"],[100,1,"<a href=\"Quiz.php.html#52\">App\\Entity\\Quiz::__construct<\/a>"],[100,1,"<a href=\"Quiz.php.html#58\">App\\Entity\\Quiz::getId<\/a>"],[100,1,"<a href=\"Quiz.php.html#63\">App\\Entity\\Quiz::getDescription<\/a>"],[100,1,"<a href=\"Quiz.php.html#68\">App\\Entity\\Quiz::setDescription<\/a>"],[100,1,"<a href=\"Quiz.php.html#75\">App\\Entity\\Quiz::isPublic<\/a>"],[100,1,"<a href=\"Quiz.php.html#80\">App\\Entity\\Quiz::setPublic<\/a>"],[100,1,"<a href=\"Quiz.php.html#87\">App\\Entity\\Quiz::getCreatedAt<\/a>"],[100,1,"<a href=\"Quiz.php.html#92\">App\\Entity\\Quiz::setCreatedAt<\/a>"],[100,1,"<a href=\"Quiz.php.html#99\">App\\Entity\\Quiz::getTimeToPerformAll<\/a>"],[100,1,"<a href=\"Quiz.php.html#104\">App\\Entity\\Quiz::setTimeToPerformAll<\/a>"],[100,1,"<a href=\"Quiz.php.html#114\">App\\Entity\\Quiz::getQuizParts<\/a>"],[100,2,"<a href=\"Quiz.php.html#119\">App\\Entity\\Quiz::addQuizPart<\/a>"],[100,3,"<a href=\"Quiz.php.html#129\">App\\Entity\\Quiz::removeQuizPart<\/a>"],[0,1,"<a href=\"Quiz.php.html#144\">App\\Entity\\Quiz::getCoursePartQuizzes<\/a>"],[0,2,"<a href=\"Quiz.php.html#149\">App\\Entity\\Quiz::addCoursePartQuiz<\/a>"],[0,3,"<a href=\"Quiz.php.html#159\">App\\Entity\\Quiz::removeCoursePartQuiz<\/a>"],[100,1,"<a href=\"QuizPart.php.html#66\">App\\Entity\\QuizPart::__construct<\/a>"],[66.66666666666666,2,"<a href=\"QuizPart.php.html#71\">App\\Entity\\QuizPart::getQuizId<\/a>"],[100,1,"<a href=\"QuizPart.php.html#78\">App\\Entity\\QuizPart::getId<\/a>"],[100,1,"<a href=\"QuizPart.php.html#83\">App\\Entity\\QuizPart::getQuestion<\/a>"],[100,1,"<a href=\"QuizPart.php.html#88\">App\\Entity\\QuizPart::setQuestion<\/a>"],[100,1,"<a href=\"QuizPart.php.html#95\">App\\Entity\\QuizPart::getChoice<\/a>"],[100,1,"<a href=\"QuizPart.php.html#100\">App\\Entity\\QuizPart::setChoice<\/a>"],[100,1,"<a href=\"QuizPart.php.html#107\">App\\Entity\\QuizPart::getTimeMaxToResponse<\/a>"],[100,1,"<a href=\"QuizPart.php.html#112\">App\\Entity\\QuizPart::setTimeMaxToResponse<\/a>"],[100,1,"<a href=\"QuizPart.php.html#119\">App\\Entity\\QuizPart::getQuizOrder<\/a>"],[100,1,"<a href=\"QuizPart.php.html#124\">App\\Entity\\QuizPart::setQuizOrder<\/a>"],[0,1,"<a href=\"QuizPart.php.html#134\">App\\Entity\\QuizPart::getQuizPartPerforms<\/a>"],[0,2,"<a href=\"QuizPart.php.html#139\">App\\Entity\\QuizPart::addQuizPartPerform<\/a>"],[0,3,"<a href=\"QuizPart.php.html#149\">App\\Entity\\QuizPart::removeQuizPartPerform<\/a>"],[100,1,"<a href=\"QuizPart.php.html#161\">App\\Entity\\QuizPart::getQuiz<\/a>"],[100,1,"<a href=\"QuizPart.php.html#166\">App\\Entity\\QuizPart::setQuiz<\/a>"],[100,1,"<a href=\"QuizPart.php.html#176\">App\\Entity\\QuizPart::getAnswer<\/a>"],[100,1,"<a href=\"QuizPart.php.html#186\">App\\Entity\\QuizPart::setAnswer<\/a>"],[0,1,"<a href=\"QuizPart.php.html#193\">App\\Entity\\QuizPart::getSkill<\/a>"],[0,1,"<a href=\"QuizPart.php.html#198\">App\\Entity\\QuizPart::setSkill<\/a>"],[0,1,"<a href=\"QuizPartPerform.php.html#45\">App\\Entity\\QuizPartPerform::getId<\/a>"],[0,1,"<a href=\"QuizPartPerform.php.html#50\">App\\Entity\\QuizPartPerform::getTimeToResponse<\/a>"],[0,1,"<a href=\"QuizPartPerform.php.html#55\">App\\Entity\\QuizPartPerform::setTimeToResponse<\/a>"],[0,1,"<a href=\"QuizPartPerform.php.html#62\">App\\Entity\\QuizPartPerform::getDate<\/a>"],[0,1,"<a href=\"QuizPartPerform.php.html#67\">App\\Entity\\QuizPartPerform::setDate<\/a>"],[0,1,"<a href=\"QuizPartPerform.php.html#74\">App\\Entity\\QuizPartPerform::getScore<\/a>"],[0,1,"<a href=\"QuizPartPerform.php.html#79\">App\\Entity\\QuizPartPerform::setScore<\/a>"],[0,1,"<a href=\"QuizPartPerform.php.html#86\">App\\Entity\\QuizPartPerform::getUser<\/a>"],[0,1,"<a href=\"QuizPartPerform.php.html#91\">App\\Entity\\QuizPartPerform::setUser<\/a>"],[0,1,"<a href=\"QuizPartPerform.php.html#98\">App\\Entity\\QuizPartPerform::getQuizPart<\/a>"],[0,1,"<a href=\"QuizPartPerform.php.html#103\">App\\Entity\\QuizPartPerform::setQuizPart<\/a>"],[0,1,"<a href=\"ReadLater.php.html#40\">App\\Entity\\ReadLater::getId<\/a>"],[0,1,"<a href=\"ReadLater.php.html#45\">App\\Entity\\ReadLater::getAddDate<\/a>"],[0,1,"<a href=\"ReadLater.php.html#50\">App\\Entity\\ReadLater::setAddDate<\/a>"],[0,1,"<a href=\"ReadLater.php.html#57\">App\\Entity\\ReadLater::getPositionOrder<\/a>"],[0,1,"<a href=\"ReadLater.php.html#62\">App\\Entity\\ReadLater::setPositionOrder<\/a>"],[0,1,"<a href=\"ReadLater.php.html#69\">App\\Entity\\ReadLater::getUser<\/a>"],[0,1,"<a href=\"ReadLater.php.html#74\">App\\Entity\\ReadLater::setUser<\/a>"],[0,1,"<a href=\"ReadLater.php.html#81\">App\\Entity\\ReadLater::getCourse<\/a>"],[0,1,"<a href=\"ReadLater.php.html#86\">App\\Entity\\ReadLater::setCourse<\/a>"],[0,1,"<a href=\"ReceivedNotification.php.html#35\">App\\Entity\\ReceivedNotification::getId<\/a>"],[0,1,"<a href=\"ReceivedNotification.php.html#40\">App\\Entity\\ReceivedNotification::isViewed<\/a>"],[0,1,"<a href=\"ReceivedNotification.php.html#45\">App\\Entity\\ReceivedNotification::setViewed<\/a>"],[0,1,"<a href=\"ReceivedNotification.php.html#52\">App\\Entity\\ReceivedNotification::getNotification<\/a>"],[0,1,"<a href=\"ReceivedNotification.php.html#57\">App\\Entity\\ReceivedNotification::setNotification<\/a>"],[0,1,"<a href=\"ReceivedNotification.php.html#64\">App\\Entity\\ReceivedNotification::getUser<\/a>"],[0,1,"<a href=\"ReceivedNotification.php.html#69\">App\\Entity\\ReceivedNotification::setUser<\/a>"],[0,1,"<a href=\"Skill.php.html#48\">App\\Entity\\Skill::__construct<\/a>"],[0,1,"<a href=\"Skill.php.html#55\">App\\Entity\\Skill::getId<\/a>"],[0,1,"<a href=\"Skill.php.html#60\">App\\Entity\\Skill::getName<\/a>"],[0,1,"<a href=\"Skill.php.html#65\">App\\Entity\\Skill::setName<\/a>"],[0,1,"<a href=\"Skill.php.html#72\">App\\Entity\\Skill::getXpRequiredForLevels<\/a>"],[0,1,"<a href=\"Skill.php.html#77\">App\\Entity\\Skill::setXpRequiredForLevels<\/a>"],[0,1,"<a href=\"Skill.php.html#84\">App\\Entity\\Skill::getDescription<\/a>"],[0,1,"<a href=\"Skill.php.html#89\">App\\Entity\\Skill::setDescription<\/a>"],[0,1,"<a href=\"Skill.php.html#99\">App\\Entity\\Skill::getSkillUserXPs<\/a>"],[0,2,"<a href=\"Skill.php.html#104\">App\\Entity\\Skill::addSkillUserXP<\/a>"],[0,3,"<a href=\"Skill.php.html#114\">App\\Entity\\Skill::removeSkillUserXP<\/a>"],[0,1,"<a href=\"Skill.php.html#129\">App\\Entity\\Skill::getCompetence<\/a>"],[0,2,"<a href=\"Skill.php.html#134\">App\\Entity\\Skill::addCompetence<\/a>"],[0,3,"<a href=\"Skill.php.html#144\">App\\Entity\\Skill::removeCompetence<\/a>"],[0,1,"<a href=\"SkillUserXP.php.html#35\">App\\Entity\\SkillUserXP::getId<\/a>"],[0,1,"<a href=\"SkillUserXP.php.html#40\">App\\Entity\\SkillUserXP::getXp<\/a>"],[0,1,"<a href=\"SkillUserXP.php.html#45\">App\\Entity\\SkillUserXP::setXp<\/a>"],[0,1,"<a href=\"SkillUserXP.php.html#52\">App\\Entity\\SkillUserXP::getSkill<\/a>"],[0,1,"<a href=\"SkillUserXP.php.html#57\">App\\Entity\\SkillUserXP::setSkill<\/a>"],[0,1,"<a href=\"SkillUserXP.php.html#64\">App\\Entity\\SkillUserXP::getUser<\/a>"],[0,1,"<a href=\"SkillUserXP.php.html#69\">App\\Entity\\SkillUserXP::setUser<\/a>"],[0,1,"<a href=\"Speaker.php.html#39\">App\\Entity\\Speaker::__construct<\/a>"],[0,1,"<a href=\"Speaker.php.html#46\">App\\Entity\\Speaker::getId<\/a>"],[0,1,"<a href=\"Speaker.php.html#51\">App\\Entity\\Speaker::getUser<\/a>"],[0,1,"<a href=\"Speaker.php.html#56\">App\\Entity\\Speaker::setUser<\/a>"],[0,1,"<a href=\"Speaker.php.html#66\">App\\Entity\\Speaker::getSpecialities<\/a>"],[0,2,"<a href=\"Speaker.php.html#71\">App\\Entity\\Speaker::addSpeciality<\/a>"],[0,3,"<a href=\"Speaker.php.html#81\">App\\Entity\\Speaker::removeSpeciality<\/a>"],[0,1,"<a href=\"Speaker.php.html#96\">App\\Entity\\Speaker::getCourses<\/a>"],[0,2,"<a href=\"Speaker.php.html#101\">App\\Entity\\Speaker::addCourse<\/a>"],[0,3,"<a href=\"Speaker.php.html#111\">App\\Entity\\Speaker::removeCourse<\/a>"],[0,1,"<a href=\"Speciality.php.html#35\">App\\Entity\\Speciality::getId<\/a>"],[0,1,"<a href=\"Speciality.php.html#40\">App\\Entity\\Speciality::getName<\/a>"],[0,1,"<a href=\"Speciality.php.html#45\">App\\Entity\\Speciality::setName<\/a>"],[0,1,"<a href=\"Speciality.php.html#52\">App\\Entity\\Speciality::getBeginAt<\/a>"],[0,1,"<a href=\"Speciality.php.html#57\">App\\Entity\\Speciality::setBeginAt<\/a>"],[0,1,"<a href=\"Speciality.php.html#64\">App\\Entity\\Speciality::getSpeaker<\/a>"],[0,1,"<a href=\"Speciality.php.html#69\">App\\Entity\\Speciality::setSpeaker<\/a>"],[0,1,"<a href=\"Student.php.html#33\">App\\Entity\\Student::getId<\/a>"],[0,1,"<a href=\"Student.php.html#38\">App\\Entity\\Student::getUser<\/a>"],[0,1,"<a href=\"Student.php.html#43\">App\\Entity\\Student::setUser<\/a>"],[0,1,"<a href=\"Student.php.html#50\">App\\Entity\\Student::getGroupReference<\/a>"],[0,1,"<a href=\"Student.php.html#55\">App\\Entity\\Student::setGroupReference<\/a>"],[0,1,"<a href=\"Student.php.html#65\">App\\Entity\\Student::getUserId<\/a>"],[0,1,"<a href=\"TypeContact.php.html#32\">App\\Entity\\TypeContact::__construct<\/a>"],[0,1,"<a href=\"TypeContact.php.html#37\">App\\Entity\\TypeContact::getId<\/a>"],[0,1,"<a href=\"TypeContact.php.html#42\">App\\Entity\\TypeContact::getName<\/a>"],[0,1,"<a href=\"TypeContact.php.html#47\">App\\Entity\\TypeContact::setName<\/a>"],[0,1,"<a href=\"TypeContact.php.html#57\">App\\Entity\\TypeContact::getContacts<\/a>"],[0,2,"<a href=\"TypeContact.php.html#62\">App\\Entity\\TypeContact::addContact<\/a>"],[0,3,"<a href=\"TypeContact.php.html#72\">App\\Entity\\TypeContact::removeContact<\/a>"],[100,1,"<a href=\"User.php.html#101\">App\\Entity\\User::__construct<\/a>"],[100,1,"<a href=\"User.php.html#111\">App\\Entity\\User::getId<\/a>"],[100,1,"<a href=\"User.php.html#116\">App\\Entity\\User::getEmail<\/a>"],[100,1,"<a href=\"User.php.html#121\">App\\Entity\\User::setEmail<\/a>"],[0,1,"<a href=\"User.php.html#133\">App\\Entity\\User::getUserIdentifier<\/a>"],[100,1,"<a href=\"User.php.html#141\">App\\Entity\\User::getUsername<\/a>"],[100,1,"<a href=\"User.php.html#149\">App\\Entity\\User::getRoles<\/a>"],[100,1,"<a href=\"User.php.html#158\">App\\Entity\\User::setRoles<\/a>"],[100,1,"<a href=\"User.php.html#168\">App\\Entity\\User::getPassword<\/a>"],[100,1,"<a href=\"User.php.html#173\">App\\Entity\\User::setPassword<\/a>"],[100,1,"<a href=\"User.php.html#186\">App\\Entity\\User::getSalt<\/a>"],[100,1,"<a href=\"User.php.html#194\">App\\Entity\\User::eraseCredentials<\/a>"],[100,1,"<a href=\"User.php.html#200\">App\\Entity\\User::getContact<\/a>"],[0,5,"<a href=\"User.php.html#205\">App\\Entity\\User::setContact<\/a>"],[100,1,"<a href=\"User.php.html#225\">App\\Entity\\User::getReceivedNotifications<\/a>"],[0,2,"<a href=\"User.php.html#230\">App\\Entity\\User::addReceivedNotification<\/a>"],[0,3,"<a href=\"User.php.html#240\">App\\Entity\\User::removeReceivedNotification<\/a>"],[100,1,"<a href=\"User.php.html#252\">App\\Entity\\User::getStudent<\/a>"],[0,5,"<a href=\"User.php.html#257\">App\\Entity\\User::setStudent<\/a>"],[100,1,"<a href=\"User.php.html#274\">App\\Entity\\User::getName<\/a>"],[100,1,"<a href=\"User.php.html#279\">App\\Entity\\User::setName<\/a>"],[100,1,"<a href=\"User.php.html#286\">App\\Entity\\User::getFirstname<\/a>"],[100,1,"<a href=\"User.php.html#291\">App\\Entity\\User::setFirstname<\/a>"],[100,1,"<a href=\"User.php.html#298\">App\\Entity\\User::getImage<\/a>"],[100,1,"<a href=\"User.php.html#303\">App\\Entity\\User::setImage<\/a>"],[100,1,"<a href=\"User.php.html#313\">App\\Entity\\User::getBadges<\/a>"],[0,2,"<a href=\"User.php.html#318\">App\\Entity\\User::addBadge<\/a>"],[0,2,"<a href=\"User.php.html#328\">App\\Entity\\User::removeBadge<\/a>"],[100,1,"<a href=\"User.php.html#340\">App\\Entity\\User::getSkillUserXPs<\/a>"],[0,2,"<a href=\"User.php.html#345\">App\\Entity\\User::addSkillUserXP<\/a>"],[0,3,"<a href=\"User.php.html#355\">App\\Entity\\User::removeSkillUserXP<\/a>"],[100,1,"<a href=\"User.php.html#370\">App\\Entity\\User::getQuizPartPerforms<\/a>"],[0,2,"<a href=\"User.php.html#375\">App\\Entity\\User::addQuizPartPerform<\/a>"],[0,3,"<a href=\"User.php.html#385\">App\\Entity\\User::removeQuizPartPerform<\/a>"],[100,1,"<a href=\"User.php.html#400\">App\\Entity\\User::getReadLaters<\/a>"],[0,2,"<a href=\"User.php.html#405\">App\\Entity\\User::addReadLater<\/a>"],[0,3,"<a href=\"User.php.html#415\">App\\Entity\\User::removeReadLater<\/a>"],[100,1,"<a href=\"User.php.html#430\">App\\Entity\\User::getFavoriteCourses<\/a>"],[0,2,"<a href=\"User.php.html#435\">App\\Entity\\User::addFavoriteCourse<\/a>"],[0,3,"<a href=\"User.php.html#445\">App\\Entity\\User::removeFavoriteCourse<\/a>"],[100,1,"<a href=\"User.php.html#457\">App\\Entity\\User::getSpeaker<\/a>"],[0,5,"<a href=\"User.php.html#462\">App\\Entity\\User::setSpeaker<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>

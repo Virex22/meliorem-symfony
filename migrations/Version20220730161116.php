@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220727114702 extends AbstractMigration
+final class Version20220730161116 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -35,12 +35,11 @@ final class Version20220727114702 extends AbstractMigration
         $this->addSql('CREATE TABLE `group` (id INT AUTO_INCREMENT NOT NULL, nom VARCHAR(100) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE notification (id INT AUTO_INCREMENT NOT NULL, title LONGTEXT NOT NULL, description LONGTEXT NOT NULL, interaction LONGTEXT DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE quiz (id INT AUTO_INCREMENT NOT NULL, description LONGTEXT NOT NULL, public TINYINT(1) NOT NULL, created_at DATETIME NOT NULL, time_to_perform_all INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE quiz_part (id INT AUTO_INCREMENT NOT NULL, quiz_id INT DEFAULT NULL, question LONGTEXT NOT NULL, choice LONGTEXT NOT NULL, answer LONGTEXT NOT NULL, time_max_to_response INT DEFAULT NULL, quiz_order INT NOT NULL, INDEX IDX_83FE8C9D853CD175 (quiz_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE quiz_part_skill (quiz_part_id INT NOT NULL, skill_id INT NOT NULL, INDEX IDX_842194A85EB9E64C (quiz_part_id), INDEX IDX_842194A85585C142 (skill_id), PRIMARY KEY(quiz_part_id, skill_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE quiz_part (id INT AUTO_INCREMENT NOT NULL, quiz_id INT DEFAULT NULL, skill_id INT DEFAULT NULL, question LONGTEXT NOT NULL, choice LONGTEXT NOT NULL, answer LONGTEXT NOT NULL, time_max_to_response INT DEFAULT NULL, quiz_order INT NOT NULL, INDEX IDX_83FE8C9D853CD175 (quiz_id), INDEX IDX_83FE8C9D5585C142 (skill_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE quiz_part_perform (id INT AUTO_INCREMENT NOT NULL, user_id INT DEFAULT NULL, quiz_part_id INT DEFAULT NULL, time_to_response TIME NOT NULL, date DATE NOT NULL, score INT NOT NULL, INDEX IDX_8F4672B0A76ED395 (user_id), INDEX IDX_8F4672B05EB9E64C (quiz_part_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE read_later (id INT AUTO_INCREMENT NOT NULL, user_id INT DEFAULT NULL, course_id INT DEFAULT NULL, add_date DATETIME NOT NULL, position_order INT NOT NULL, INDEX IDX_B383CE9DA76ED395 (user_id), INDEX IDX_B383CE9D591CC992 (course_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE received_notification (id INT AUTO_INCREMENT NOT NULL, notification_id INT DEFAULT NULL, user_id INT DEFAULT NULL, viewed TINYINT(1) NOT NULL, INDEX IDX_D27F8B86EF1A9D84 (notification_id), INDEX IDX_D27F8B86A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE skill (id INT AUTO_INCREMENT NOT NULL, nom LONGTEXT DEFAULT NULL, xp_required_for_levels LONGTEXT NOT NULL, description LONGTEXT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE skill (id INT AUTO_INCREMENT NOT NULL, name LONGTEXT DEFAULT NULL, xp_required_for_levels LONGTEXT NOT NULL, description LONGTEXT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE skill_user_xp (id INT AUTO_INCREMENT NOT NULL, skill_id INT DEFAULT NULL, user_id INT DEFAULT NULL, xp INT NOT NULL, INDEX IDX_F498BAD15585C142 (skill_id), INDEX IDX_F498BAD1A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE speaker (id INT AUTO_INCREMENT NOT NULL, user_id INT DEFAULT NULL, UNIQUE INDEX UNIQ_7B85DB61A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE speciality (id INT AUTO_INCREMENT NOT NULL, speaker_id INT DEFAULT NULL, name LONGTEXT NOT NULL, begin_at DATETIME NOT NULL, INDEX IDX_F3D7A08ED04A0F27 (speaker_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -63,8 +62,7 @@ final class Version20220727114702 extends AbstractMigration
         $this->addSql('ALTER TABLE favorite_course ADD CONSTRAINT FK_2A2B0343A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE favorite_course ADD CONSTRAINT FK_2A2B0343591CC992 FOREIGN KEY (course_id) REFERENCES course (id)');
         $this->addSql('ALTER TABLE quiz_part ADD CONSTRAINT FK_83FE8C9D853CD175 FOREIGN KEY (quiz_id) REFERENCES quiz (id)');
-        $this->addSql('ALTER TABLE quiz_part_skill ADD CONSTRAINT FK_842194A85EB9E64C FOREIGN KEY (quiz_part_id) REFERENCES quiz_part (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE quiz_part_skill ADD CONSTRAINT FK_842194A85585C142 FOREIGN KEY (skill_id) REFERENCES skill (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE quiz_part ADD CONSTRAINT FK_83FE8C9D5585C142 FOREIGN KEY (skill_id) REFERENCES skill (id)');
         $this->addSql('ALTER TABLE quiz_part_perform ADD CONSTRAINT FK_8F4672B0A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE quiz_part_perform ADD CONSTRAINT FK_8F4672B05EB9E64C FOREIGN KEY (quiz_part_id) REFERENCES quiz_part (id)');
         $this->addSql('ALTER TABLE read_later ADD CONSTRAINT FK_B383CE9DA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
@@ -95,9 +93,8 @@ final class Version20220727114702 extends AbstractMigration
         $this->addSql('ALTER TABLE received_notification DROP FOREIGN KEY FK_D27F8B86EF1A9D84');
         $this->addSql('ALTER TABLE course_part_quiz DROP FOREIGN KEY FK_5C1BC4B3853CD175');
         $this->addSql('ALTER TABLE quiz_part DROP FOREIGN KEY FK_83FE8C9D853CD175');
-        $this->addSql('ALTER TABLE quiz_part_skill DROP FOREIGN KEY FK_842194A85EB9E64C');
         $this->addSql('ALTER TABLE quiz_part_perform DROP FOREIGN KEY FK_8F4672B05EB9E64C');
-        $this->addSql('ALTER TABLE quiz_part_skill DROP FOREIGN KEY FK_842194A85585C142');
+        $this->addSql('ALTER TABLE quiz_part DROP FOREIGN KEY FK_83FE8C9D5585C142');
         $this->addSql('ALTER TABLE skill_user_xp DROP FOREIGN KEY FK_F498BAD15585C142');
         $this->addSql('ALTER TABLE course DROP FOREIGN KEY FK_169E6FB9D04A0F27');
         $this->addSql('ALTER TABLE speciality DROP FOREIGN KEY FK_F3D7A08ED04A0F27');
@@ -127,7 +124,6 @@ final class Version20220727114702 extends AbstractMigration
         $this->addSql('DROP TABLE notification');
         $this->addSql('DROP TABLE quiz');
         $this->addSql('DROP TABLE quiz_part');
-        $this->addSql('DROP TABLE quiz_part_skill');
         $this->addSql('DROP TABLE quiz_part_perform');
         $this->addSql('DROP TABLE read_later');
         $this->addSql('DROP TABLE received_notification');
