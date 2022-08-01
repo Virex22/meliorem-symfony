@@ -38,6 +38,21 @@ class QuizController extends AbstractController
     }
 
     /**
+     * @Route("/{id}", name="delete_quiz", methods={"DELETE"})
+     */
+    public function delete(?Quiz $quiz, Security $security,EntityManager $entityManager): JsonResponse
+    {
+        if (!$security->isGranted('ROLE_SUPERADMIN'))
+            return new JsonResponse(['error' => 'You are not authorized to delete a user'], Response::HTTP_UNAUTHORIZED);
+        if ($quiz === null)
+            return new JsonResponse(['error' => 'Quiz not found'], Response::HTTP_NOT_FOUND);
+        
+        $entityManager->remove($quiz);
+        $entityManager->flush();
+        return new JsonResponse(['success' => 'Quiz deleted'], Response::HTTP_OK);
+    }
+
+    /**
      * @Route("/", name="create_quiz", methods={"POST"})
      */
     public function create(Security $security, Request $request, QuizService $quizService ): JsonResponse
@@ -53,21 +68,6 @@ class QuizController extends AbstractController
         
         // return data with code created
         return $this->json($quiz, Response::HTTP_CREATED);
-    }
-
-    /**
-     * @Route("/{id}", name="delete_quiz", methods={"DELETE"})
-     */
-    public function delete(?Quiz $quiz, Security $security,EntityManager $entityManager): JsonResponse
-    {
-        if (!$security->isGranted('ROLE_SUPERADMIN'))
-            return new JsonResponse(['error' => 'You are not authorized to delete a user'], Response::HTTP_UNAUTHORIZED);
-        if ($quiz === null)
-            return new JsonResponse(['error' => 'Quiz not found'], Response::HTTP_NOT_FOUND);
-        
-        $entityManager->remove($quiz);
-        $entityManager->flush();
-        return new JsonResponse(['success' => 'Quiz deleted'], Response::HTTP_OK);
     }
 
     /**

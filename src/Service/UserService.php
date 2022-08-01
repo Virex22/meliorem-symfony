@@ -46,10 +46,12 @@ class UserService
      * 
      * delete a User entity
      */
-    public function deleteStudent(User $user)
+    public function deleteUser(User $user)
     {
         if($user->getStudent() !== null)
             $this->em->remove($user->getStudent());
+        if($user->getSpeaker() !== null)
+            $this->em->remove($user->getSpeaker());
             
         $this->em->remove($user);
         $this->em->flush();

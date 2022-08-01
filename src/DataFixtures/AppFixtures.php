@@ -2,8 +2,10 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Notification;
 use App\Entity\Quiz;
 use App\Entity\QuizPart;
+use App\Entity\ReceivedNotification;
 use App\Entity\User;
 use App\Service\UserService;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -56,15 +58,47 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $this->manager = $manager;
+        $users = [];
 
-        $this->createStudent(5);
-        $this->createSpeaker(5);
-        $this->createUser(["ROLE_ADMINISTRATION"],5,"administration");
-        $this->createUser(["ROLE_SUPERADMIN"],5,"superadmin");
+        $users[] = $this->createStudent(5);
+        $users[] = $this->createSpeaker(5);
+        $users[] = $this->createUser(["ROLE_ADMINISTRATION"],5,"administration");
+        $users[] = $this->createUser(["ROLE_SUPERADMIN"],5,"superadmin");
         $this->createQuiz(5);
+        $notification = $this->createNotification(5);
+        foreach ($notification as $notif) 
+            $this->createReceivedNotification($this->faker->range(1,5) ,$notif,$this->faker->randomElement($users));
 
 
         $manager->flush();
+    }
+
+    public function createNotification(int $count): Array
+    {
+        $notifications = [];
+        for ($i = 0; $i < $count; $i++) {
+            $notification = new Notification();
+            $notification->setTitle($this->faker->sentence(3))
+                ->setDescription($this->faker->text(200))
+                ->setInteraction($this->faker->paragraph());
+            $this->manager->persist($notification);
+            $notifications[] = $notification;
+        }
+        return $notifications;
+    }
+
+    public function createReceivedNotification(int $count, Notification $notification, User $user): Array
+    {
+        $receivedNotifications = [];
+        for ($i = 0; $i < $count; $i++) {
+            $receivedNotification = new ReceivedNotification();
+            $receivedNotification->setViewed(false)
+                ->setNotification($notification)
+                ->setUser($user);
+            $this->manager->persist($receivedNotification);
+            $receivedNotifications[] = $receivedNotification;
+        }
+        return $receivedNotifications;
     }
 
     public function createQuiz(int $count){

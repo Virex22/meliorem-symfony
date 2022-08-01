@@ -33,6 +33,17 @@ class SkillController extends AbstractController
             return new JsonResponse(['error' => 'Skill not found'], Response::HTTP_NOT_FOUND);
         return $this->json($skill, Response::HTTP_OK);
     }
+    
+    /**
+     * @Route("/api/skill/{id}", name="delete_skill", methods={"DELETE"})
+     */
+    public function delete(?Skill $skill, EntityManager $entityManager): JsonResponse
+    {
+        if (!$this->isGranted('ROLE_SUPERADMIN'))
+            return new JsonResponse(['error' => 'You are not authorized to delete a user'], Response::HTTP_UNAUTHORIZED);
+        $entityManager->remove($skill);
+        return $this->json(['success' => 'Skill deleted'], Response::HTTP_OK);
+    }
 
     /**
      * @Route("/api/skill", name="create_skill", methods={"POST"})
@@ -51,17 +62,6 @@ class SkillController extends AbstractController
 
         // return data with code created
         return $this->json($skill, Response::HTTP_CREATED);
-    }
-
-    /**
-     * @Route("/api/skill/{id}", name="delete_skill", methods={"DELETE"})
-     */
-    public function delete(?Skill $skill, EntityManager $entityManager): JsonResponse
-    {
-        if (!$this->isGranted('ROLE_SUPERADMIN'))
-            return new JsonResponse(['error' => 'You are not authorized to delete a user'], Response::HTTP_UNAUTHORIZED);
-        $entityManager->remove($skill);
-        return $this->json($skill, Response::HTTP_OK);
     }
 
     /**

@@ -11,12 +11,14 @@ use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+/**
+ * @Route("/api/quiz-part")
+ */
 class QuizPartController extends AbstractController
 {
     
     /**
-     * @Route("/api/quiz_part", name="get_quiz_part", methods={"GET"})
+     * @Route("", name="get_quiz_part", methods={"GET"})
      */
     public function getAll(QuizPartRepository $quizPartRepository): JsonResponse
     {
@@ -24,7 +26,7 @@ class QuizPartController extends AbstractController
         return $this->json($quizParts,Response::HTTP_OK);
     }
     /**
-     * @Route("/api/quiz_part/{id}", name="get_quiz_part_by_id", methods={"GET"})
+     * @Route("/{id}", name="get_quiz_part_by_id", methods={"GET"})
      */
     public function getByID(?QuizPart $quizPart): JsonResponse
     {
@@ -33,7 +35,20 @@ class QuizPartController extends AbstractController
         return $this->json($quizPart,Response::HTTP_OK);
     }
     /**
-     * @Route("/api/quiz_part", name="create_quiz_part", methods={"POST"})
+     * @Route("/{id}", name="delete_quiz_part", methods={"DELETE"})
+     */
+    public function delete(?QuizPart $quizPart, EntityManager $entityManager): JsonResponse
+    {
+        if (!$this->isGranted('ROLE_SPEAKER'))
+            return new JsonResponse(['error' => 'You are not authorized to delete a user'], Response::HTTP_UNAUTHORIZED);
+        if ($quizPart === null)
+            return new JsonResponse(['error' => 'QuizPart not found'], Response::HTTP_NOT_FOUND);
+        $entityManager->remove($quizPart);
+        $entityManager->flush();
+        return new JsonResponse(['success' => 'QuizPart deleted'], Response::HTTP_OK);
+    }
+    /**
+     * @Route("/", name="create_quiz_part", methods={"POST"})
      */
     public function create(Request $request, QuizPartService $quizPartService ): JsonResponse
     {
@@ -50,20 +65,9 @@ class QuizPartController extends AbstractController
         // return data with code created
         return $this->json($quizPart, Response::HTTP_CREATED);
     }
-    /**
-     * @Route("/api/quiz_part/{id}", name="delete_quiz_part", methods={"DELETE"})
-     */
-    public function delete(QuizPart $quizPart, EntityManager $entityManager): JsonResponse
-    {
-        if (!$this->isGranted('ROLE_SPEAKER'))
-            return new JsonResponse(['error' => 'You are not authorized to delete a user'], Response::HTTP_UNAUTHORIZED);
-        $entityManager->remove($quizPart);
-        $entityManager->flush();
-        return new JsonResponse(['success' => 'QuizPart deleted'], Response::HTTP_OK);
-    }
 
     /**
-     * @Route("/api/quiz_part/{id}", name="update_quiz_part", methods={"PATCH"})
+     * @Route("/{id}", name="update_quiz_part", methods={"PATCH"})
      */
     public function update(?QuizPart $quizPart, Request $request, QuizPartService $quizPartService): JsonResponse
     {   

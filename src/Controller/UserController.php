@@ -36,7 +36,7 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="get_user", methods={"GET"})
      */
-    public function getByID(User $user): JsonResponse
+    public function getByID(?User $user): JsonResponse
     {
         if ($user === null)
             return new JsonResponse(['error' => 'User not found'], Response::HTTP_NOT_FOUND);
@@ -47,12 +47,14 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="delete_user", methods={"DELETE"})
      */
-    public function delete(User $user,UserService $userService): JsonResponse
+    public function delete(?User $user,UserService $userService): JsonResponse
     {
+        if (!$this->isGranted('ROLE_SUPERADMIN'))
+            return new JsonResponse(['error' => 'You are not authorized to delete a user'], Response::HTTP_UNAUTHORIZED);
         if ($user === null)
             return new JsonResponse(['error' => 'User not found'], Response::HTTP_NOT_FOUND);
 
-        $userService->deleteStudent($user);
+        $userService->deleteUser($user);
 
         return new JsonResponse(['success' => 'User deleted'], Response::HTTP_OK);
     }
@@ -79,7 +81,7 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="edit_user", methods={"PATCH"})
      */
-    public function edit(User $user, Request $request, Security $security, UserService $userService): JsonResponse
+    public function edit(?User $user, Request $request, Security $security, UserService $userService): JsonResponse
     {
         if (!$security->isGranted('ROLE_SUPERADMIN'))
             return new JsonResponse(['error' => 'You are not authorized to edit a user'], Response::HTTP_UNAUTHORIZED);
