@@ -126,12 +126,12 @@ class Skill
     /**
      * @return Collection<int, QuizPart>
      */
-    public function getCompetence(): Collection
+    public function getQuizParts(): Collection
     {
         return $this->quizParts;
     }
 
-    public function addCompetence(QuizPart $quizParts): self
+    public function addQuizPart(QuizPart $quizParts): self
     {
         if (!$this->quizParts->contains($quizParts)) {
             $this->quizParts[] = $quizParts;
@@ -141,7 +141,7 @@ class Skill
         return $this;
     }
 
-    public function removeCompetence(QuizPart $quizParts): self
+    public function removeQuizPart(QuizPart $quizParts): self
     {
         if ($this->quizParts->removeElement($quizParts)) {
             // set the owning side to null (unless already changed)

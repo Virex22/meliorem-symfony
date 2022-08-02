@@ -25,14 +25,14 @@ class UserService
     {
         if(in_array('ROLE_STUDENT', $user->getRoles()) && !$user->getStudent()) {
           $student = new Student();
-          $student->setUser($user);
+          $user->setStudent($student);
           $this->em->persist($student);
         } 
         elseif ($user->getStudent())
             $this->em->remove($user->getStudent());
         if(in_array('ROLE_SPEAKER', $user->getRoles()) && !$user->getSpeaker()) {
           $speaker = new Speaker();
-          $speaker->setUser($user);
+          $user->setSpeaker($speaker);
           $this->em->persist($speaker);
         }
         elseif ($user->getSpeaker())

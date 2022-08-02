@@ -1,4 +1,4 @@
-name: Testing Symfony with MySQL
+name: Symfony CI/CD
 on: [push, pull_request]
 jobs:
   symfony:

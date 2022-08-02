@@ -2,6 +2,8 @@
 namespace App\Service;
 
 use App\Entity\Contact;
+use App\Entity\TypeContact;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ContactService

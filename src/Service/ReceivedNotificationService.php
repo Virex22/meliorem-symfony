@@ -1,7 +1,9 @@
 <?php
 namespace App\Service;
 
+use App\Entity\Notification;
 use App\Entity\ReceivedNotification;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ReceivedNotificationService

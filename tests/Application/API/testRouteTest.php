@@ -30,7 +30,6 @@ class testRouteTest extends WebTestCase
         array(),
         array('CONTENT_TYPE' => 'application/json'),
         '{"username":"superadmin0@meliorem.fr","password":"azerty"}');
-        echo json_encode($client->getResponse()->getContent());
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());// recois 500 au lieu de 200
         $data = json_decode($client->getResponse()->getContent(), true);

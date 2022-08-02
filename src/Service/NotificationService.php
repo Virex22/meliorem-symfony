@@ -16,12 +16,12 @@ class NotificationService
     public function create(Array $notification){
         if (!isset($notification['title']))
             throw new \Exception('Title is required');
-        if (!isset($notification['message']))
-            throw new \Exception('Message is required');
+        if (!isset($notification['description']))
+            throw new \Exception('Description is required');
         
         $notification = new Notification();
         $notification->setTitle($notification['title'])
-            ->setDescription($notification['message']);
+            ->setDescription($notification['description']);
 
         if (isset($notification['interaction']))
             $notification->setInteraction($notification['interaction']);
@@ -33,8 +33,8 @@ class NotificationService
     public function update(Notification $notification, Array $data){
         if (isset($data['title']))
             $notification->setTitle($data['title']);
-        if (isset($data['message']))
-            $notification->setDescription($data['message']);
+        if (isset($data['description']))
+            $notification->setDescription($data['description']);
         if (isset($data['interaction']))
             $notification->setInteraction($data['interaction']);
         $this->em->persist($notification);

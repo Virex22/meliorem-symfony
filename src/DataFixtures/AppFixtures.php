@@ -2,10 +2,15 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Contact;
 use App\Entity\Notification;
 use App\Entity\Quiz;
 use App\Entity\QuizPart;
 use App\Entity\ReceivedNotification;
+use App\Entity\Skill;
+use App\Entity\Speaker;
+use App\Entity\Speciality;
+use App\Entity\TypeContact;
 use App\Entity\User;
 use App\Service\UserService;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -20,7 +25,6 @@ class AppFixtures extends Fixture
     /**
      * TODO :
      * Badge
-     * Contact
      * Course
      * CourseCategory
      * CoursePart
@@ -29,19 +33,12 @@ class AppFixtures extends Fixture
      * CourseSection
      * FavoriteCourse
      * Group
-     * Notification
-     * Quiz
-     * QuizPart
      * QuizPartPerformed
      * ReadLater
      * ReceivedNotification
      * Skill
      * SkillUser XP
-     * Speaker
      * Speciality
-     * Student
-     * TypeContact
-     * User 
      */
     private ObjectManager $manager;
     private Generator $faker;
@@ -60,23 +57,94 @@ class AppFixtures extends Fixture
         $this->manager = $manager;
         $users = [];
 
-        $users[] = $this->createStudent(5);
-        $users[] = $this->createSpeaker(5);
-        $users[] = $this->createUser(["ROLE_ADMINISTRATION"],5,"administration");
-        $users[] = $this->createUser(["ROLE_SUPERADMIN"],5,"superadmin");
-        $this->createQuiz(5);
+        $users[]= $this->createStudent(5);
+        $users[]= $speakers = $this->createSpeaker(5);
+        $users[]= $this->createUser(["ROLE_ADMINISTRATION"],5,"administration");
+        $users[]= $this->createUser(["ROLE_SUPERADMIN"],5,"superadmin");
+        $buff = $users;
+        $users = [];
+            foreach ($buff as $user)
+            foreach ($user as $u) 
+                $users[]= $u;
+        $quizs = $this->createQuiz(5);
         $notification = $this->createNotification(5);
-        foreach ($notification as $notif) 
-            $this->createReceivedNotification($this->faker->range(1,5) ,$notif,$this->faker->randomElement($users));
-
+        foreach ($notification as $notif)
+            $this->createReceivedNotification($this->faker->numberBetween(1,5) ,$notif,$this->faker->randomElement($users));
+        $contactTypes = $this->createContactType(5);
+        $contacts = [];
+        foreach ($users as $user)
+            if ($this->faker->boolean(40))
+                $contacts[] = $this->createContact($this->faker->randomElement($contactTypes) ,$user);
+        foreach ($speakers as $speaker)
+            $this->createSpeciality($this->faker->numberBetween(1,5),$speaker->getSpeaker());
+        
+        $skills = $this->createSkill(5);
+            
 
         $manager->flush();
+    }
+
+    public function createSkill(int $count): array
+    {
+        $skills = [];
+        for ($i = 0; $i < $count; $i++) {
+            echo "Creating skill ".$i."\n";
+            $skill = new Skill();
+            $skill->setName($this->faker->unique()->word)
+                ->setDescription($this->faker->text(100))
+                ->setXpRequiredForLevels($this->faker->paragraph());
+            $this->manager->persist($skill);
+            $skills[] = $skill;
+        }
+        return $skills;
+    }
+
+    public function createSpeciality(int $count,Speaker $speaker): array
+    {
+        static $nbSpeakers = 0;
+        $nbSpeakers++;
+        $specialities = [];
+        for ($i = 0; $i < $count; $i++) {
+            echo "Creating speciality $i for speaker $nbSpeakers \n";
+            $speciality = new Speciality();
+            $speciality->setName($this->faker->unique()->word)
+                ->setBeginAt($this->faker->dateTimeBetween('-1 years', 'now'))
+                ->setSpeaker($speaker);
+            $this->manager->persist($speciality);
+            $specialities[] = $speciality;
+        }
+        return $specialities;
+    }
+
+    public function createContact(TypeContact $contactType,User $user): Contact
+    {
+        echo "Creating contact for user ".$user->getFirstname()." ". $user->getName() . "\n";
+        $contact = new Contact();
+        $contact->setTypeContact($contactType)
+            ->setUser($user)
+            ->setDescription($this->faker->text(100))
+            ->setPhone($this->faker->phoneNumber);
+        $this->manager->persist($contact);
+        return $contact;
+    }
+
+    public function createContactType(int $count): array
+    {
+        $contactTypes = [];
+        for ($i = 0; $i < $count; $i++) {
+            echo "Creating contact type $i\n";
+            $contactTypes[] = new TypeContact();
+            $contactTypes[$i]->setName($this->faker->unique()->word);
+            $this->manager->persist($contactTypes[$i]);
+        }
+        return $contactTypes;
     }
 
     public function createNotification(int $count): Array
     {
         $notifications = [];
         for ($i = 0; $i < $count; $i++) {
+            echo "Creating notification $i\n";
             $notification = new Notification();
             $notification->setTitle($this->faker->sentence(3))
                 ->setDescription($this->faker->text(200))
@@ -89,8 +157,11 @@ class AppFixtures extends Fixture
 
     public function createReceivedNotification(int $count, Notification $notification, User $user): Array
     {
+        static $passage = 0;
+        $passage++;
         $receivedNotifications = [];
         for ($i = 0; $i < $count; $i++) {
+            echo "Creating received notification $i for user $passage\n";
             $receivedNotification = new ReceivedNotification();
             $receivedNotification->setViewed(false)
                 ->setNotification($notification)

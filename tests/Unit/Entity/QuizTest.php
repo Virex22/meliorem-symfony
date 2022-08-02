@@ -2,6 +2,7 @@
 
 namespace App\Tests\Unit\Entity;
 
+use App\Entity\CoursePartQuiz;
 use App\Entity\Quiz;
 use App\Entity\QuizPart;
 use PHPUnit\Framework\TestCase;
@@ -12,12 +13,18 @@ class QuizTest extends TestCase
     
     public function testQuizConstructorGetterAndSetter(){
         $date = new \DateTime();
+        $course = new CoursePartQuiz();
         $quiz = new Quiz();
         $quiz->setDescription("description");
         $quiz->setPublic(true);
         $quiz->setCreatedAt($date);
         $quiz->setTimeToPerformAll(10);
-        // not saved in bdd yet -> id is null
+        $quiz->addCoursePartQuiz($course);
+        $this->assertContains($course, $quiz->getCoursePartQuizzes());
+        $quiz->removeCoursePartQuiz($course);
+        $this->assertNotContains($course, $quiz->getCoursePartQuizzes());
+
+        $this->assertEquals("description", $quiz->getDescription());
         $this->assertNull($quiz->getId());
         $this->assertEquals("description", $quiz->getDescription());
         $this->assertEquals(true, $quiz->isPublic());
