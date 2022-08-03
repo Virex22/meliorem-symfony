@@ -28,7 +28,7 @@ class CoursePartDocument
     private $content;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $files;
 

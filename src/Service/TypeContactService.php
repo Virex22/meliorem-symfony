@@ -13,13 +13,13 @@ class TypeContactService
         $this->em = $em;
     }
 
-    public function create(Array $typeContact) : TypeContact
+    public function create(Array $data) : TypeContact
     {
-        if (!isset($typeContact['name']))
+        if (!isset($data['name']))
             throw new \Exception('Name is required');
 
         $typeContact = new TypeContact();
-        $typeContact->setName($typeContact['name']);
+        $typeContact->setName($data['name']);
 
         $this->em->persist($typeContact);
         $this->em->flush();

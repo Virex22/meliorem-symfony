@@ -12,7 +12,17 @@ class CoursePartRepositoryTest extends KernelTestCase {
         $kernel = self::bootKernel();
         $em = $kernel->getContainer()->get('doctrine')->getManager();
         $coursePartRepository = $em->getRepository(CoursePart::class);
-        $this->assertNotSame("TODO","implement more than constructor");
+        
+        $coursePart = new CoursePart();
+        $coursePart->setTitle('CoursePart 1')
+            ->setEstimatedTime(new \DateTime('01-01-2020'))
+            ->setOrderPart(1);
+
+        $coursePartRepository->add($coursePart,true);
+        $newCoursePart = $coursePartRepository->findBy(['title' => 'CoursePart 1'])[0];
+        $coursePartRepository->remove($coursePart,true);
+        $newCoursePart = $coursePartRepository->findBy(['title' => 'CoursePart 1']);
+        $this->assertEmpty($newCoursePart);
 
     }
 

@@ -28,7 +28,8 @@ class UserRepositoryTest extends KernelTestCase {
         $newUser = $userRepository->findBy(['email' => "test@meliorem.fr"])[0];
         $this->assertEquals($newUser->getEmail(), "test@meliorem.fr");
         $userRepository->remove($user,true);
-
+        $newUser = $userRepository->findBy(['email' => "test@meliorem.fr"]);
+        $this->assertEmpty($newUser);
         
 
     }

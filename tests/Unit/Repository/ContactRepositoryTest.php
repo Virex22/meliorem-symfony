@@ -14,7 +14,14 @@ class ContactRepositoryTest extends KernelTestCase {
         $contactRepository = $em->getRepository(Contact::class);
 
         $contact =new Contact();
-        $this->assertNotSame("TODO","implement more than constructor");
+        $contact->setPhone("phonetest")
+        ->setDescription("descriptiontest");
+
+        $contactRepository->add($contact,true);
+        $newContact = $contactRepository->findBy(['phone' => "phonetest"])[0];
+        $contactRepository->remove($contact,true);
+        $newContact = $contactRepository->findBy(['phone' => "phonetest"]);
+        $this->assertEmpty($newContact);
 
     }
 

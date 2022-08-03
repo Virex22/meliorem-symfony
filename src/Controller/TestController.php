@@ -30,7 +30,6 @@ class TestController extends AbstractController
      */
     public function loginPing(Security $security): JsonResponse
     {
-        echo "request login ping ok"; // test ok 
         return $this->json([
             "message" => "success with login"
         ]);

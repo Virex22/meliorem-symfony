@@ -48,14 +48,14 @@ class SkillController extends AbstractController
     /**
      * @Route("/api/skill", name="create_skill", methods={"POST"})
      */
-    public function create(Request $request, SkillRepository $skillRepository): JsonResponse
+    public function create(Request $request, SkillService $skillService): JsonResponse
     {
         if (!$this->isGranted('ROLE_SUPERADMIN'))
             return new JsonResponse(['error' => 'You are not authorized to create a user'], Response::HTTP_UNAUTHORIZED);
 
         $data = json_decode($request->getContent(), true);
         try {
-            $skill = $skillRepository->createSkill($data);
+            $skill = $skillService->createSkill($data);
         } catch (\Throwable $th) {
             return new JsonResponse(['error' => $th->getMessage()], Response::HTTP_BAD_REQUEST);
         }

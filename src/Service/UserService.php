@@ -87,10 +87,8 @@ class UserService
             $this->createPair($user);
         else if(in_array('ROLE_SPEAKER', $parameters['roles']))
             $this->createPair($user);
-        else {
-            $this->em->persist($user);
-            $this->em->flush();
-        }
+        $this->em->persist($user);
+        $this->em->flush();
         return $user;
     }
 
@@ -104,8 +102,6 @@ class UserService
     public function editUser(User $user, array $parameters){
         if (isset($parameters['email']))
             $user->setEmail($parameters['email']);
-        if (isset($parameters['password']))
-            $user->setPassword($parameters['password']);
         if (isset($parameters['firstname']))
             $user->setFirstName($parameters['firstname']);
         if (isset($parameters['image']))

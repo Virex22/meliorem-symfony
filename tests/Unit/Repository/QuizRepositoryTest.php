@@ -49,6 +49,7 @@ class QuizRepositoryTest extends KernelTestCase {
         $quizPartRepository->remove($quizPart,true);
         $newQuizPart = $quizPartRepository->findBy(['question' => $randomQuestion]);
         $this->assertEmpty($newQuizPart);
+
     }
 
 

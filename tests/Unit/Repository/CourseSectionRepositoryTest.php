@@ -12,7 +12,17 @@ class CourseSectionRepositoryTest extends KernelTestCase {
         $kernel = self::bootKernel();
         $em = $kernel->getContainer()->get('doctrine')->getManager();
         $courseSectionRepository = $em->getRepository(CourseSection::class);
-        $this->assertNotSame("TODO","implement more than constructor");
+        
+
+        $courseSection = new CourseSection();
+        $courseSection->setCourseOrder(1)
+        ->setName('CourseSection 1');
+
+        $courseSectionRepository->add($courseSection,true);
+        $newCourseSection = $courseSectionRepository->findBy(['name' => 'CourseSection 1'])[0];
+        $courseSectionRepository->remove($courseSection,true);
+        $newCourseSection = $courseSectionRepository->findBy(['name' => 'CourseSection 1']);
+        $this->assertEmpty($newCourseSection);
 
     }
 

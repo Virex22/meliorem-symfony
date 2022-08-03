@@ -12,7 +12,17 @@ class GroupRepositoryTest extends KernelTestCase {
         $kernel = self::bootKernel();
         $em = $kernel->getContainer()->get('doctrine')->getManager();
         $groupRepository = $em->getRepository(Group::class);
-        $this->assertNotSame("TODO","implement more than constructor");
+        
+        $group = new Group();
+        $group->setName('Group 1 de test');
+
+        $groupRepository->add($group,true);
+        $newGroup = $groupRepository->findBy(['name' => 'Group 1 de test'])[0];
+        $groupRepository->remove($group,true);
+        $newGroup = $groupRepository->findBy(['name' => 'Group 1 de test']);
+        $this->assertEmpty($newGroup);
+        
+
 
     }
 

@@ -12,7 +12,18 @@ class CoursePartDocumentRepositoryTest extends KernelTestCase {
         $kernel = self::bootKernel();
         $em = $kernel->getContainer()->get('doctrine')->getManager();
         $coursePartDocumentRepository = $em->getRepository(CoursePartDocument::class);
-        $this->assertNotSame("TODO","implement more than constructor");
+        
+        $coursePartDocument = new CoursePartDocument();
+        $coursePartDocument->setContent('CoursePartDocument 1');
+
+        $coursePartDocumentRepository->add($coursePartDocument,true);
+        $newCoursePartDocument = $coursePartDocumentRepository->findBy(['content' => 'CoursePartDocument 1'])[0];
+        $coursePartDocumentRepository->remove($coursePartDocument,true);
+        $newCoursePartDocument = $coursePartDocumentRepository->findBy(['content' => 'CoursePartDocument 1']);
+        $this->assertEmpty($newCoursePartDocument);
+
+
+
 
     }
 

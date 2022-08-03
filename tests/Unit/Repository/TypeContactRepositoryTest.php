@@ -12,7 +12,17 @@ class TypeContactRepositoryTest extends KernelTestCase {
         $kernel = self::bootKernel();
         $em = $kernel->getContainer()->get('doctrine')->getManager();
         $typeContactRepository = $em->getRepository(TypeContact::class);
-        $this->assertNotSame("TODO","implement more than constructor");
+        
+        $typeContact = new TypeContact();
+        $typeContact->setName('TypeContact 1');
+
+        $typeContactRepository->add($typeContact,true);
+        $newTypeContact = $typeContactRepository->findBy(['name' => 'TypeContact 1'])[0];
+        $this->assertEquals('TypeContact 1', $newTypeContact->getName());
+        $typeContactRepository->remove($typeContact,true);
+        $newTypeContact = $typeContactRepository->findBy(['name' => 'TypeContact 1']);
+        $this->assertEmpty($newTypeContact);
+
 
     }
 

@@ -12,7 +12,17 @@ class QuizPartPerformRepositoryTest extends KernelTestCase {
         $kernel = self::bootKernel();
         $em = $kernel->getContainer()->get('doctrine')->getManager();
         $quizPartPerformRepository = $em->getRepository(QuizPartPerform::class);
-        $this->assertNotSame("TODO","implement more than constructor");
+        
+        $quizPartPerform = new QuizPartPerform();
+        $quizPartPerform->setDate(new \DateTime())
+        ->setScore(13453543)
+        ->setTimeToResponse(10);
+
+        $quizPartPerformRepository->add($quizPartPerform,true);
+        $newQuizPartPerform = $quizPartPerformRepository->findBy(['score' => 13453543])[0];
+        $quizPartPerformRepository->remove($quizPartPerform,true);
+        $newQuizPartPerform = $quizPartPerformRepository->findBy(['score' => 13453543]);
+        $this->assertEmpty($newQuizPartPerform);
 
     }
 

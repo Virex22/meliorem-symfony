@@ -18,7 +18,8 @@ class QuizPartPerform
     private $id;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="integer")
+     * in seconds
      */
     private $timeToResponse;
 
@@ -47,12 +48,12 @@ class QuizPartPerform
         return $this->id;
     }
 
-    public function getTimeToResponse(): ?\DateTimeInterface
+    public function getTimeToResponse(): ?int
     {
         return $this->timeToResponse;
     }
 
-    public function setTimeToResponse(\DateTimeInterface $timeToResponse): self
+    public function setTimeToResponse(int $timeToResponse): self
     {
         $this->timeToResponse = $timeToResponse;
 

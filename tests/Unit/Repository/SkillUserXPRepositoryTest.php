@@ -12,7 +12,16 @@ class SkillUserXPRepositoryTest extends KernelTestCase {
         $kernel = self::bootKernel();
         $em = $kernel->getContainer()->get('doctrine')->getManager();
         $skillUserXPRepository = $em->getRepository(SkillUserXP::class);
-        $this->assertNotSame("TODO","implement more than constructor");
+        
+        $skillUserXP = new SkillUserXP();
+        $skillUserXP->setXp(500);
+        
+        $skillUserXPRepository->add($skillUserXP,true);
+        $newSkillUserXP = $skillUserXPRepository->findBy(['xp' => 500])[0];
+        $this->assertEquals(500,$newSkillUserXP->getXp());
+        $skillUserXPRepository->remove($skillUserXP,true);
+        $newSkillUserXP = $skillUserXPRepository->findBy(['xp' => 500]);
+        $this->assertEmpty($newSkillUserXP);
 
     }
 

@@ -12,7 +12,16 @@ class ReadLaterRepositoryTest extends KernelTestCase {
         $kernel = self::bootKernel();
         $em = $kernel->getContainer()->get('doctrine')->getManager();
         $readLaterRepository = $em->getRepository(ReadLater::class);
-        $this->assertNotSame("TODO","implement more than constructor");
+        
+        $readLater = new ReadLater();
+        $readLater->setAddDate(new \DateTime())
+        ->setPositionOrder(1234);
+
+        $readLaterRepository->add($readLater,true);
+        $newReadLater = $readLaterRepository->findBy(['positionOrder' => 1234])[0];
+        $readLaterRepository->remove($readLater,true);
+        $newReadLater = $readLaterRepository->findBy(['positionOrder' => 1234]);
+        $this->assertEmpty($newReadLater);
 
     }
 
