@@ -6,6 +6,7 @@ use App\Entity\Notification;
 use App\Repository\NotificationRepository;
 use App\Service\NotificationService;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,7 +39,7 @@ class NotificationController extends AbstractController
     /**
      * @Route("/{id}", name="notification_delete", methods={"DELETE"})
      */
-    public function delete(?Notification $notification, EntityManager $entityManager): JsonResponse
+    public function delete(?Notification $notification, EntityManagerInterface $entityManager): JsonResponse
     {
         if ($notification === null)
             return new JsonResponse(['error' => 'Notification not found'], Response::HTTP_NOT_FOUND);

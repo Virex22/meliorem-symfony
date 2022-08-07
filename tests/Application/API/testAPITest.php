@@ -7,12 +7,6 @@ use Symfony\Component\HttpClient\HttpClient;
 
 class testRouteTest extends WebTestCase
 {
-    private $client;
-
-    public function setUp() : void
-    {
-        $this->client = HttpClient::create();
-    }
     
 
     public function testPing()

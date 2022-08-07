@@ -6,6 +6,8 @@ use App\Repository\TypeContactRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Generator;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @ORM\Entity(repositoryClass=TypeContactRepository::class)
@@ -26,6 +28,7 @@ class TypeContact
 
     /**
      * @ORM\OneToMany(targetEntity=Contact::class, mappedBy="typeContact")
+     * @Ignore
      */
     private $contacts;
 
@@ -79,5 +82,10 @@ class TypeContact
         }
 
         return $this;
+    }
+    public function getContactsId() : Generator
+    {
+        foreach ($this->contacts as $contact)
+            yield $contact->getId();
     }
 }

@@ -40,7 +40,7 @@ class StudentController extends AbstractController
     public function edit(Request $request, ?Student $student, StudentService $studentService): JsonResponse
     { 
         if (!$this->isGranted('ROLE_SUPERADMIN'))
-            return new JsonResponse(['error' => 'You are not authorized to edit a user'], Response::HTTP_UNAUTHORIZED);
+            return new JsonResponse(['error' => 'You are not authorized to edit a student'], Response::HTTP_UNAUTHORIZED);
         if ($student === null)
             return new JsonResponse(['error' => 'Student not found'], Response::HTTP_NOT_FOUND);
         $data = json_decode($request->getContent(), true);

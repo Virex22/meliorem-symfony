@@ -4,49 +4,28 @@ namespace App\Service;
 use App\Entity\Skill;
 use Doctrine\ORM\EntityManagerInterface;
 
-class SkillService
+class SkillService extends AbstractEntityService
 {
-    private $em;
-
-    public function __construct(EntityManagerInterface $em)
+    protected function getEntityClass() : string
     {
-        $this->em = $em;
+        return Skill::class;
     }
 
-    public function createSkill(Array $skill) : Skill
+    public function create(array $data) : Skill
     {
-        if (!isset($skill['name']))
-            throw new \Exception('"name" is required');
-        if (!isset($skill['xpRequiredForLevels']))
-            throw new \Exception('"xpRequiredForLevels" is required');
-        if (!isset($skill['description']))
-            throw new \Exception('"description" is required');
-
-        $skill = new Skill();
-        $skill->setName($skill['name'])
-        ->setXpRequiredForLevels($skill['xpRequiredForLevels'])
-        ->setDescription($skill['description']);
-
-        $this->em->persist($skill);
-        $this->em->flush();
-
+        
+        $this->validateRequiredData($data, 'name', 'description', 'xpRequiredForLevels');
+        $skill = $this->createEntity($data, 'name', 'description', 'xpRequiredForLevels');
+       
+        return $skill;
+    }
+    public function edit($skill ,array $data) : Skill
+    {
+        $this->editEntity($skill, $data, 'name', 'description', 'xpRequiredForLevels');
+        
         return $skill;
     }
 
-
-    public function updateSkill(Skill $skill, Array $skillData) : Skill
-    {
-        if (isset($skillData['name']))
-            $skill->setName($skillData['name']);
-        if (isset($skillData['xpRequiredForLevels']))
-            $skill->setXpRequiredForLevels($skillData['xpRequiredForLevels']);
-        if (isset($skillData['description']))
-            $skill->setDescription($skillData['description']);
-
-        $this->em->persist($skill);
-        $this->em->flush();
-
-        return $skill;
-    }
+    
 }
 ?>

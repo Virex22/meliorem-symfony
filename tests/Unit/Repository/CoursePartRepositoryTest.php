@@ -15,7 +15,7 @@ class CoursePartRepositoryTest extends KernelTestCase {
         
         $coursePart = new CoursePart();
         $coursePart->setTitle('CoursePart 1')
-            ->setEstimatedTime(new \DateTime('01-01-2020'))
+            ->setEstimatedTime(500)
             ->setOrderPart(1);
 
         $coursePartRepository->add($coursePart,true);

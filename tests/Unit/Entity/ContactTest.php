@@ -25,6 +25,8 @@ class ContactTest extends TestCase
         $this->assertEquals("phone", $quiz->getPhone());
         $this->assertEquals($typeContact, $quiz->getTypeContact());
         $this->assertEquals($user, $quiz->getUser());
+        $this->assertEquals($quiz->getTypeContact()->getName(), $quiz->getTypeContactName());
+        $this->assertEquals($quiz->getUser()->getId(), $quiz->getUserId());
     }
 
 }

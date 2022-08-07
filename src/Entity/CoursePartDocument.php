@@ -32,6 +32,12 @@ class CoursePartDocument
      */
     private $files;
 
+    /**
+     * @ORM\OneToOne(targetEntity=CoursePart::class, inversedBy="coursePartDocument", cascade={"persist", "remove"})
+     */
+    private $coursePart;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +75,18 @@ class CoursePartDocument
     public function setFiles(?string $files): self
     {
         $this->files = $files;
+
+        return $this;
+    }
+
+    public function getCoursePart(): ?CoursePart
+    {
+        return $this->coursePart;
+    }
+
+    public function setCoursePart(?CoursePart $coursePart): self
+    {
+        $this->coursePart = $coursePart;
 
         return $this;
     }

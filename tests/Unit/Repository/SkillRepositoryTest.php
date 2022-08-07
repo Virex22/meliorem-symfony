@@ -20,6 +20,7 @@ class SkillRepositoryTest extends KernelTestCase {
 
         $skillRepository->add($skill,true);
         $newSkill = $skillRepository->findBy(['name' => 'Skill 1 test for test'])[0];
+        $this->assertNotNull($newSkill);
         $skillRepository->remove($newSkill,true);
         $newSkill = $skillRepository->findBy(['name' => 'Skill 1 test for test']);
         $this->assertEmpty($newSkill);

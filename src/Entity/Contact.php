@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\ContactRepository;
+use App\DTO\UserDTO;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @ORM\Entity(repositoryClass=ContactRepository::class)
@@ -28,14 +30,17 @@ class Contact
     private $description;
 
     /**
+     * @ORM\OneToOne(targetEntity=User::class, inversedBy="contact", cascade={"persist", "remove"}) 
+     * @Ignore
+     */
+    private $user;
+
+    /**
      * @ORM\ManyToOne(targetEntity=TypeContact::class, inversedBy="contacts")
+     * @Ignore
      */
     private $typeContact;
 
-    /**
-     * @ORM\OneToOne(targetEntity=User::class, inversedBy="contact", cascade={"persist", "remove"})
-     */
-    private $user;
 
     public function getId(): ?int
     {
@@ -88,5 +93,15 @@ class Contact
         $this->user = $user;
 
         return $this;
+    }
+    public function getTypeContactName(): ?string
+    {
+        if (!$this->typeContact) return null;
+        return $this->typeContact->getName();
+    }
+    public function getUserId(): ?int
+    {
+        if (!$this->user) return null;
+        return $this->user->getId();
     }
 }

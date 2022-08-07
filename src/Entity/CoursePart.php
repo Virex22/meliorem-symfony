@@ -28,7 +28,7 @@ class CoursePart
     private $orderPart;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="integer")
      */
     private $estimatedTime;
 
@@ -36,6 +36,19 @@ class CoursePart
      * @ORM\ManyToOne(targetEntity=CourseSection::class, inversedBy="courseParts")
      */
     private $courseSection;
+
+    /**
+     * @ORM\OneToOne(targetEntity=CoursePartDocument::class, mappedBy="coursePart", cascade={"persist", "remove"})
+     */
+    private $coursePartDocument;
+
+    /**
+     * @ORM\OneToOne(targetEntity=CoursePartQuiz::class, mappedBy="coursePart", cascade={"persist", "remove"})
+     */
+    private $coursePartQuiz;
+
+
+
 
     public function getId(): ?int
     {
@@ -66,12 +79,12 @@ class CoursePart
         return $this;
     }
 
-    public function getEstimatedTime(): ?\DateTimeInterface
+    public function getEstimatedTime(): ?int
     {
         return $this->estimatedTime;
     }
 
-    public function setEstimatedTime(\DateTimeInterface $estimatedTime): self
+    public function setEstimatedTime(int $estimatedTime): self
     {
         $this->estimatedTime = $estimatedTime;
 
@@ -86,6 +99,50 @@ class CoursePart
     public function setCourseSection(?CourseSection $courseSection): self
     {
         $this->courseSection = $courseSection;
+
+        return $this;
+    }
+
+    public function getCoursePartDocument(): ?CoursePartDocument
+    {
+        return $this->coursePartDocument;
+    }
+
+    public function setCoursePartDocument(?CoursePartDocument $coursePartDocument): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($coursePartDocument === null && $this->coursePartDocument !== null) {
+            $this->coursePartDocument->setCoursePart(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($coursePartDocument !== null && $coursePartDocument->getCoursePart() !== $this) {
+            $coursePartDocument->setCoursePart($this);
+        }
+
+        $this->coursePartDocument = $coursePartDocument;
+
+        return $this;
+    }
+
+    public function getCoursePartQuiz(): ?CoursePartQuiz
+    {
+        return $this->coursePartQuiz;
+    }
+
+    public function setCoursePartQuiz(?CoursePartQuiz $coursePartQuiz): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($coursePartQuiz === null && $this->coursePartQuiz !== null) {
+            $this->coursePartQuiz->setCoursePart(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($coursePartQuiz !== null && $coursePartQuiz->getCoursePart() !== $this) {
+            $coursePartQuiz->setCoursePart($this);
+        }
+
+        $this->coursePartQuiz = $coursePartQuiz;
 
         return $this;
     }

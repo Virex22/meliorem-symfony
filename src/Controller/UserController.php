@@ -34,6 +34,16 @@ class UserController extends AbstractController
         return $this->json($usersDTO,200);
     }
     /**
+     * @Route("/me", name="get_my_user", methods={"GET"})
+     */
+    public function getMyUser(Security $security): JsonResponse
+    {
+        $user = $security->getUser();
+        $userDTO = new UserDTO();
+        $userDTO->hydrate($user);
+        return $this->json($userDTO->getData());
+    }
+    /**
      * @Route("/{id}", name="get_user", methods={"GET"})
      */
     public function getByID(?User $user): JsonResponse

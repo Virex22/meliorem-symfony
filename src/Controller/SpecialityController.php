@@ -11,6 +11,7 @@ use App\Entity\Speciality;
 use App\Repository\SpecialityRepository;
 use App\Service\SpecialityService;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @Route("/api/speciality")
@@ -38,7 +39,7 @@ class SpecialityController extends AbstractController
     /**
      * @Route("/{id}", name="speciality_delete", methods={"DELETE"})
      */
-    public function delete(?Speciality $speciality, EntityManager $entityManager): JsonResponse
+    public function delete(?Speciality $speciality, EntityManagerInterface $entityManager): JsonResponse
     {
         if ($speciality === null)
             return new JsonResponse(['error' => 'Speciality not found'], Response::HTTP_NOT_FOUND);

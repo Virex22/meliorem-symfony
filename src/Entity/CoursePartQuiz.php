@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CoursePartQuizRepository;
+use App\Entity\CoursePart;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,6 +23,12 @@ class CoursePartQuiz
      */
     private $quiz;
 
+    /**
+     * @ORM\OneToOne(targetEntity=CoursePart::class, inversedBy="coursePartQuiz", cascade={"persist", "remove"})
+     */
+    private $coursePart;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -38,4 +45,18 @@ class CoursePartQuiz
 
         return $this;
     }
+
+    public function getCoursePart(): ?CoursePart
+    {
+        return $this->coursePart;
+    }
+
+    public function setCoursePart(?CoursePart $coursePart): self
+    {
+        $this->coursePart = $coursePart;
+
+        return $this;
+    }
+
+
 }

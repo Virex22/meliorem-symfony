@@ -6,6 +6,7 @@ use App\Entity\QuizPart;
 use App\Repository\QuizPartRepository;
 use App\Service\QuizPartService;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -37,10 +38,10 @@ class QuizPartController extends AbstractController
     /**
      * @Route("/{id}", name="delete_quiz_part", methods={"DELETE"})
      */
-    public function delete(?QuizPart $quizPart, EntityManager $entityManager): JsonResponse
+    public function delete(?QuizPart $quizPart, EntityManagerInterface $entityManager): JsonResponse
     {
         if (!$this->isGranted('ROLE_SPEAKER'))
-            return new JsonResponse(['error' => 'You are not authorized to delete a user'], Response::HTTP_UNAUTHORIZED);
+            return new JsonResponse(['error' => 'You are not authorized to delete a quizpart'], Response::HTTP_UNAUTHORIZED);
         if ($quizPart === null)
             return new JsonResponse(['error' => 'QuizPart not found'], Response::HTTP_NOT_FOUND);
         $entityManager->remove($quizPart);
@@ -53,7 +54,7 @@ class QuizPartController extends AbstractController
     public function create(Request $request, QuizPartService $quizPartService ): JsonResponse
     {
         if (!$this->isGranted('ROLE_SPEAKER'))
-            return new JsonResponse(['error' => 'You are not authorized to create a user'], Response::HTTP_UNAUTHORIZED);
+            return new JsonResponse(['error' => 'You are not authorized to create a quizpart'], Response::HTTP_UNAUTHORIZED);
 
         $data = json_decode($request->getContent(), true);
         try {
@@ -72,7 +73,7 @@ class QuizPartController extends AbstractController
     public function update(?QuizPart $quizPart, Request $request, QuizPartService $quizPartService): JsonResponse
     {   
         if (!$this->isGranted('ROLE_SPEAKER'))
-            return new JsonResponse(['error' => 'You are not authorized to update a user'], Response::HTTP_UNAUTHORIZED);
+            return new JsonResponse(['error' => 'You are not authorized to update a quizpart'], Response::HTTP_UNAUTHORIZED);
         if ($quizPart === null)
             return new JsonResponse(['error' => 'QuizPart not found'], Response::HTTP_NOT_FOUND);
         $data = json_decode($request->getContent(), true);

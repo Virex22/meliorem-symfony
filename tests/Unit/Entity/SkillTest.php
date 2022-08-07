@@ -20,6 +20,7 @@ class SkillTest extends TestCase
         ->setDescription('description')
         ->addSkillUserXP($skillUserXp)
         ->addQuizPart($quizPart);
+        
         $this->assertContains($skillUserXp, $skill->getSkillUserXPs());
         $this->assertContains($quizPart, $skill->getQuizParts());
         $skill->removeSkillUserXP($skillUserXp);

@@ -11,6 +11,7 @@ use App\Entity\ReceivedNotification;
 use App\Repository\ReceivedNotificationRepository;
 use App\Service\ReceivedNotificationService;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @Route("/api/received-notification")
@@ -38,7 +39,7 @@ class ReceivedNotificationController extends AbstractController
     /*
     * @Route("/{id}", name="received_notification_delete", methods={"DELETE"})
     */
-    public function delete(?ReceivedNotification $receivedNotification, EntityManager $entityManager): JsonResponse
+    public function delete(?ReceivedNotification $receivedNotification, EntityManagerInterface $entityManager): JsonResponse
     {
         if ($receivedNotification === null)
             return new JsonResponse(['error' => 'ReceivedNotification not found'], Response::HTTP_NOT_FOUND);
