@@ -3,86 +3,52 @@
 namespace App\Controller;
 
 use App\Entity\Course;
-use App\Repository\CourseRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 /**
- * @Route("/course")
- */
-class CourseController extends AbstractController
+ * @Route("/api/course")
+ * */
+class CourseController extends AbstractCRUDController
 {
-   
-    /**
-     * @Route("/", name="course_list" , methods={"GET"})
-     */
-    public function index(CourseRepository $courseRepository): JsonResponse
+    protected function getEntityClass(): string
     {
-        return $this->json($courseRepository->findAll(), Response::HTTP_OK);
+        return Course::class;
     }
-
     /**
-     * @Route("/{id}", name="course_show", methods={"GET"})
+     * @Route("/", name="course index", methods={"GET"})
      */
-    public function show(?Course $course): JsonResponse
+    public function index(): JsonResponse
     {
-        if ($course === null)
-            return new JsonResponse(['error' => 'Course not found'], Response::HTTP_NOT_FOUND);
-        return $this->json($course, Response::HTTP_OK);
+        return $this->getAll();
     }
-
     /**
-     * @Route("/{id}", name="course_delete", methods={"DELETE"})
+     * @Route("/{id}", name="$kebabCaseName show", methods={"GET"})
      */
-    public function delete(?Course $course, EntityManagerInterface $entityManager): JsonResponse
+    public function show(int $id): JsonResponse
     {
-        if (!$this->isGranted('ROLE_SUPERADMIN'))
-            return new JsonResponse(['error' => 'You are not authorized to delete a course'], Response::HTTP_UNAUTHORIZED);
-        if ($course === null)
-            return new JsonResponse(['error' => 'Course not found'], Response::HTTP_NOT_FOUND);
-            
-        $entityManager->remove($course);
-        $entityManager->flush();
-
-        return $this->json(['success' => 'Course deleted'], Response::HTTP_OK);
+        return $this->getById($id);
     }
-
     /**
-     * @Route("/", name="course_create", methods={"POST"})
+     * @Route("/{id}", name="course remove", methods={"DELETE"})
      */
-    public function create(Request $request, EntityManagerInterface $entityManager, CourseService $courseService): JsonResponse
+    public function remove(int $id): JsonResponse
     {
-        if (!$this->isGranted('ROLE_SUPERADMIN'))
-            return new JsonResponse(['error' => 'You are not authorized to create a course'], Response::HTTP_UNAUTHORIZED);
-        $data = json_decode($request->getContent(), true);
-        try {
-            $course = $courseService->create($data);
-        } catch (\Exception $e) {
-            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
-        }
-        return $this->json($course, Response::HTTP_CREATED);
+        return $this->delete($id);
     }
-
     /**
-     * @Route("/{id}", name="course_update", methods={"PATCH"})
+     * @Route("/", name="course new", methods={"POST"})
      */
-    public function update(?Course $course, Request $request, CourseService $courseService): JsonResponse
+    public function new(Request $request): JsonResponse
     {
-        if (!$this->isGranted('ROLE_SUPERADMIN'))
-            return new JsonResponse(['error' => 'You are not authorized to update a course'], Response::HTTP_UNAUTHORIZED);
-        $data = json_decode($request->getContent(), true);
-        try {
-            $course = $courseService->update($course, $data);
-        } catch (\Exception $e) {
-            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
-        }
-        return $this->json($course, Response::HTTP_OK);
+        return $this->create($request);
     }
-
-
-
-
+    /**
+     * @Route("/{id}", name="course edit", methods={"PATCH"})
+     */
+    public function edit(int $id, Request $request): JsonResponse
+    {
+        return $this->update($id, $request);
+    }
 }

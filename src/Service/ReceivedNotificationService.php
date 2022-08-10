@@ -1,48 +1,30 @@
 <?php
 namespace App\Service;
 
-use App\Entity\Notification;
 use App\Entity\ReceivedNotification;
-use App\Entity\User;
-use Doctrine\ORM\EntityManagerInterface;
 
-class ReceivedNotificationService
+class ReceivedNotificationService extends AbstractEntityService
 {
-    private $em;
-
-    public function __construct(EntityManagerInterface $em)
+    protected function getEntityClass() : string
     {
-        $this->em = $em;
+        return ReceivedNotification::class;
     }
 
-    public function create(Array $data){
-        if (!isset($data['notificationId']))
-            throw new \Exception('NotificationId is required');
-        if (!isset($data['userId']))
-            throw new \Exception('userId is required');
-        $notification = $this->em->getRepository(Notification::class)->find($data['notificationId']);
-        if (!$notification)
-            throw new \Exception('NotificationId is invalid');
-        $user = $this->em->getRepository(User::class)->find($data['userId']);
-        if (!$user)
-            throw new \Exception('userId is invalid');
-        
-        $receivedNotification = new ReceivedNotification();
-        $receivedNotification->setNotification($notification)
-            ->setUser($user)
-            ->setViewed($data['viewed'] ?? false);
-
-        $this->em->persist($receivedNotification);
-        $this->em->flush();
+    public function create(Array $data) : ReceivedNotification
+    {
+        $this->validateRequiredData($data, 'notificationId', 'userId');
+        if (!isset($data['viewed']))
+            $data['viewed'] = false;
+        $receivedNotification = $this->createEntity($data, 'notificationId', 'userId','viewed');
         
         return $receivedNotification;
     }
 
-    public function edit(ReceivedNotification $receivedNotification, Array $data){
-        if (isset($data['viewed']))
-            $receivedNotification->setViewed($data['viewed']);
-        $this->em->persist($receivedNotification);
-        $this->em->flush();
+
+    public function edit(object $receivedNotification ,Array $data) : ReceivedNotification
+    {
+        $this->editEntity($receivedNotification, $data, 'notificationId', 'userId','viewed');
+        
+        return $receivedNotification;
     }
 }
-?>

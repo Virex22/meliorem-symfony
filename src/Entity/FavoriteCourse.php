@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\FavoriteCourseRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @ORM\Entity(repositoryClass=FavoriteCourseRepository::class)
@@ -24,10 +25,12 @@ class FavoriteCourse
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="favoriteCourses")
+     * @Ignore
      */
     private $user;
 
     /**
+     * @Ignore
      * @ORM\ManyToOne(targetEntity=Course::class, inversedBy="favoriteCourses")
      */
     private $course;
@@ -71,5 +74,28 @@ class FavoriteCourse
         $this->course = $course;
 
         return $this;
+    }
+    public function getUserInfo(): ?array
+    {
+        if (!$this->user)
+            return null;
+        return [
+            'id' => $this->user->getId(),
+            'name' => $this->user->getName(),
+            'firstName' => $this->user->getFirstName(),
+            'email' => $this->user->getEmail(),
+            'roles' => $this->user->getRoles(),
+        ];
+    }
+    public function getCourseInfo(): ?array
+    {
+        if (!$this->course)
+            return null;
+        return [
+            'id' => $this->course->getId(),
+            'title' => $this->course->getTitle(),
+            'description' => $this->course->getDescription(),
+            'image' => $this->course->getImage(),
+        ];
     }
 }

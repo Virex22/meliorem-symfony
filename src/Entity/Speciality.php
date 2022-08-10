@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\SpecialityRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @ORM\Entity(repositoryClass=SpecialityRepository::class)
@@ -29,6 +30,7 @@ class Speciality
 
     /**
      * @ORM\ManyToOne(targetEntity=Speaker::class, inversedBy="specialities")
+     * @Ignore
      */
     private $speaker;
 
@@ -71,5 +73,14 @@ class Speciality
         $this->speaker = $speaker;
 
         return $this;
+    }
+    public function getSpeakerIdAndName(): ?array
+    {
+        if ($this->speaker)
+            return [
+                'id' => $this->speaker->getId(),
+                'name' => $this->speaker->getUser()->getFirstname() . ' ' . $this->speaker->getUser()->getName()
+            ];
+        return null;
     }
 }

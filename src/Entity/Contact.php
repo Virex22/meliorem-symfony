@@ -30,7 +30,7 @@ class Contact
     private $description;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class, inversedBy="contact", cascade={"persist", "remove"}) 
+     * @ORM\OneToOne(targetEntity=User::class, inversedBy="contact") 
      * @Ignore
      */
     private $user;

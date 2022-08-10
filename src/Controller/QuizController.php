@@ -3,99 +3,52 @@
 namespace App\Controller;
 
 use App\Entity\Quiz;
-use App\Repository\QuizRepository;
-use App\Service\QuizService;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
 
 /**
  * @Route("/api/quiz")
- */
-class QuizController extends AbstractController
+ * */
+class QuizController extends AbstractCRUDController
 {
-    /**
-     * @Route("/", name="all_quiz", methods={"GET"})
-     */
-    public function getAll(QuizRepository $quizRepository): JsonResponse
+    protected function getEntityClass(): string
     {
-        $quizzes = $quizRepository->findAll();
-        return $this->json($quizzes,Response::HTTP_OK);
-    }
-
-    /**
-     * @Route("/{id}", name="get_quiz", methods={"GET"})
-     */
-    public function getByID(?Quiz $quiz): JsonResponse
-    {
-        if ($quiz === null)
-            return new JsonResponse(['error' => 'Quiz not found'], Response::HTTP_NOT_FOUND);
-        return $this->json($quiz,Response::HTTP_OK);
-    }
-
-    /**
-     * @Route("/{id}", name="delete_quiz", methods={"DELETE"})
-     */
-    public function delete(?Quiz $quiz, Security $security,EntityManagerInterface $entityManager): JsonResponse
-    {
-        if (!$security->isGranted('ROLE_SUPERADMIN'))
-            return new JsonResponse(['error' => 'You are not authorized to delete a quiz'], Response::HTTP_UNAUTHORIZED);
-        if ($quiz === null)
-            return new JsonResponse(['error' => 'Quiz not found'], Response::HTTP_NOT_FOUND);
-        
-        $entityManager->remove($quiz);
-        $entityManager->flush();
-        return new JsonResponse(['success' => 'Quiz deleted'], Response::HTTP_OK);
-    }
-
-    /**
-     * @Route("/", name="create_quiz", methods={"POST"})
-     */
-    public function create(Security $security, Request $request, QuizService $quizService ): JsonResponse
-    {
-        if (!$security->isGranted('ROLE_SPEAKER'))
-            return new JsonResponse(['error' => 'You are not authorized to create a quiz'], Response::HTTP_UNAUTHORIZED);
-        $data = json_decode($request->getContent(), true);
-        try {
-            $quiz = $quizService->createQuiz($data);
-        } catch (\Throwable $th) {
-            return new JsonResponse(['error' => $th->getMessage()], Response::HTTP_BAD_REQUEST);
-        }
-        
-        // return data with code created
-        return $this->json($quiz, Response::HTTP_CREATED);
-    }
-
-    /**
-     * @Route("/{id}", name="update_quiz", methods={"PATCH"})
-     */
-    public function update(?Quiz $quiz, Request $request, Security $security, QuizService $quizService): JsonResponse
-    {
-        if (!$security->isGranted('ROLE_SUPERADMIN'))
-            return new JsonResponse(['error' => 'You are not authorized to update a quiz'], Response::HTTP_UNAUTHORIZED);
-        if ($quiz === null)
-            return new JsonResponse(['error' => 'Quiz not found'], Response::HTTP_NOT_FOUND);
-        $data = json_decode($request->getContent(), true);
-        try {
-            $quiz = $quizService->editQuiz($quiz, $data);
-        } catch (\Throwable $th) {
-            return new JsonResponse(['error' => $th->getMessage()], Response::HTTP_BAD_REQUEST);
-        }
-        return $this->json($quiz, Response::HTTP_OK);
+        return Quiz::class;
     }
     /**
-     * @Route("/api/quiz/{id}/quiz-part", name="quiz_part", methods={"GET"})
+     * @Route("/", name="quiz index", methods={"GET"})
      */
-    public function getAllQuizParts(Quiz $quiz): JsonResponse
+    public function index(): JsonResponse
     {
-        $quizParts = $quiz->getQuizParts();
-        return $this->json($quizParts,Response::HTTP_OK);
+        return $this->getAll();
     }
-
-
+    /**
+     * @Route("/{id}", name="quiz show", methods={"GET"})
+     */
+    public function show(int $id): JsonResponse
+    {
+        return $this->getById($id);
+    }
+    /**
+     * @Route("/{id}", name="quiz remove", methods={"DELETE"})
+     */
+    public function remove(int $id): JsonResponse
+    {
+        return $this->delete($id);
+    }
+    /**
+     * @Route("/", name="quiz new", methods={"POST"})
+     */
+    public function new(Request $request): JsonResponse
+    {
+        return $this->create($request);
+    }
+    /**
+     * @Route("/{id}", name="quiz edit", methods={"PATCH"})
+     */
+    public function edit(int $id, Request $request): JsonResponse
+    {
+        return $this->update($id, $request);
+    }
 }

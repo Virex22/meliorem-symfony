@@ -3,86 +3,52 @@
 namespace App\Controller;
 
 use App\Entity\QuizPart;
-use App\Repository\QuizPartRepository;
-use App\Service\QuizPartService;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+
 /**
  * @Route("/api/quiz-part")
- */
-class QuizPartController extends AbstractController
+ * */
+class QuizPartController extends AbstractCRUDController
 {
-    
-    /**
-     * @Route("", name="get_quiz_part", methods={"GET"})
-     */
-    public function getAll(QuizPartRepository $quizPartRepository): JsonResponse
+    protected function getEntityClass(): string
     {
-        $quizParts = $quizPartRepository->findAll();
-        return $this->json($quizParts,Response::HTTP_OK);
+        return QuizPart::class;
     }
     /**
-     * @Route("/{id}", name="get_quiz_part_by_id", methods={"GET"})
+     * @Route("/", name="quizPart index", methods={"GET"})
      */
-    public function getByID(?QuizPart $quizPart): JsonResponse
+    public function index(): JsonResponse
     {
-        if ($quizPart === null)
-            return new JsonResponse(['error' => 'QuizPart not found'], Response::HTTP_NOT_FOUND);
-        return $this->json($quizPart,Response::HTTP_OK);
+        return $this->getAll();
     }
     /**
-     * @Route("/{id}", name="delete_quiz_part", methods={"DELETE"})
+     * @Route("/{id}", name="quizPart show", methods={"GET"})
      */
-    public function delete(?QuizPart $quizPart, EntityManagerInterface $entityManager): JsonResponse
+    public function show(int $id): JsonResponse
     {
-        if (!$this->isGranted('ROLE_SPEAKER'))
-            return new JsonResponse(['error' => 'You are not authorized to delete a quizpart'], Response::HTTP_UNAUTHORIZED);
-        if ($quizPart === null)
-            return new JsonResponse(['error' => 'QuizPart not found'], Response::HTTP_NOT_FOUND);
-        $entityManager->remove($quizPart);
-        $entityManager->flush();
-        return new JsonResponse(['success' => 'QuizPart deleted'], Response::HTTP_OK);
+        return $this->getById($id);
     }
     /**
-     * @Route("/", name="create_quiz_part", methods={"POST"})
+     * @Route("/{id}", name="quizPart remove", methods={"DELETE"})
      */
-    public function create(Request $request, QuizPartService $quizPartService ): JsonResponse
+    public function remove(int $id): JsonResponse
     {
-        if (!$this->isGranted('ROLE_SPEAKER'))
-            return new JsonResponse(['error' => 'You are not authorized to create a quizpart'], Response::HTTP_UNAUTHORIZED);
-
-        $data = json_decode($request->getContent(), true);
-        try {
-            $quizPart = $quizPartService->createQuizPart($data);
-        } catch (\Throwable $th) {
-            return new JsonResponse(['error' => $th->getMessage()], Response::HTTP_BAD_REQUEST);
-        }
-        
-        // return data with code created
-        return $this->json($quizPart, Response::HTTP_CREATED);
+        return $this->delete($id);
     }
-
     /**
-     * @Route("/{id}", name="update_quiz_part", methods={"PATCH"})
+     * @Route("/", name="quizPart new", methods={"POST"})
      */
-    public function update(?QuizPart $quizPart, Request $request, QuizPartService $quizPartService): JsonResponse
-    {   
-        if (!$this->isGranted('ROLE_SPEAKER'))
-            return new JsonResponse(['error' => 'You are not authorized to update a quizpart'], Response::HTTP_UNAUTHORIZED);
-        if ($quizPart === null)
-            return new JsonResponse(['error' => 'QuizPart not found'], Response::HTTP_NOT_FOUND);
-        $data = json_decode($request->getContent(), true);
-        try {
-            $quizPart = $quizPartService->updateQuizPart($quizPart, $data);
-        } catch (\Throwable $th) {
-            return new JsonResponse(['error' => $th->getMessage()], Response::HTTP_BAD_REQUEST);
-        }
-        return $this->json($quizPart, Response::HTTP_OK);
+    public function new(Request $request): JsonResponse
+    {
+        return $this->create($request);
     }
-
+    /**
+     * @Route("/{id}", name="quizPart edit", methods={"PATCH"})
+     */
+    public function edit(int $id, Request $request): JsonResponse
+    {
+        return $this->update($id, $request);
+    }
 }

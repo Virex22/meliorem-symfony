@@ -2,45 +2,28 @@
 namespace App\Service;
 
 use App\Entity\Notification;
-use Doctrine\ORM\EntityManagerInterface;
 
-class NotificationService
+class NotificationService extends AbstractEntityService
 {
-    private $em;
-
-    public function __construct(EntityManagerInterface $em)
+    protected function getEntityClass() : string
     {
-        $this->em = $em;
+        return Notification::class;
     }
 
-    public function create(Array $notification){
-        if (!isset($notification['title']))
-            throw new \Exception('Title is required');
-        if (!isset($notification['description']))
-            throw new \Exception('Description is required');
+    public function create(Array $data) : Notification
+    {
+        $this->validateRequiredData($data, 'title', 'description','interaction');
+        $notification = $this->createEntity($data, 'title', 'description','interaction');
+    
+        return $notification;
+    }
+
+
+    public function edit(object $notification ,Array $data) : Notification
+    {
+        $this->editEntity($notification, $data, 'title', 'description','interaction');
         
-        $notification = new Notification();
-        $notification->setTitle($notification['title'])
-            ->setDescription($notification['description']);
-
-        if (isset($notification['interaction']))
-            $notification->setInteraction($notification['interaction']);
-
-        $this->em->persist($notification);
-        $this->em->flush();
+        
+        return $notification;
     }
-
-    public function update(Notification $notification, Array $data){
-        if (isset($data['title']))
-            $notification->setTitle($data['title']);
-        if (isset($data['description']))
-            $notification->setDescription($data['description']);
-        if (isset($data['interaction']))
-            $notification->setInteraction($data['interaction']);
-        $this->em->persist($notification);
-        $this->em->flush();
-    }
-
-
 }
-?>

@@ -3,89 +3,52 @@
 namespace App\Controller;
 
 use App\Entity\Contact;
-use App\Repository\ContactRepository;
-use App\Service\ContactService;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/api/contact")
- */
-class ContactController extends AbstractController
+ * */
+class ContactController extends AbstractCRUDController
 {
-    /**
-     * @Route("/", name="contact_index", methods={"GET"})
-     */
-    public function index(ContactRepository $contactRepository): JsonResponse
+    protected function getEntityClass(): string
     {
-        return $this->json($contactRepository->findAll(), Response::HTTP_OK);
+        return Contact::class;
     }
     /**
-     * @Route("/{id}", name="contact_show", methods={"GET"})
+     * @Route("/", name="contact index", methods={"GET"})
      */
-    public function show(?Contact $contact): JsonResponse
+    public function index(): JsonResponse
     {
-        if ($contact === null)
-            return new JsonResponse(['error' => 'Contact not found'], Response::HTTP_NOT_FOUND);
-        return $this->json($contact, Response::HTTP_OK);
-    }
-
-    /**
-     * @Route("/{id}", name="contact_delete", methods={"DELETE"})
-     */
-    public function delete(?Contact $contact, EntityManagerInterface $entityManager): JsonResponse
-    {
-        if (!$this->isGranted('ROLE_SUPERADMIN'))
-            return new JsonResponse(['error' => 'You are not authorized to delete a contact'], Response::HTTP_UNAUTHORIZED);
-        if ($contact === null)
-            return new JsonResponse(['error' => 'Contact not found'], Response::HTTP_NOT_FOUND);
-            
-        $entityManager->remove($contact);
-        $entityManager->flush();
-
-        return $this->json(['success' => 'Contact deleted'], Response::HTTP_OK);
+        return $this->getAll();
     }
     /**
-     * @Route("/", name="contact_create", methods={"POST"})
+     * @Route("/{id}", name="contact show", methods={"GET"})
      */
-    public function create(Request $request, ContactService $contactService): JsonResponse
+    public function show(int $id): JsonResponse
     {
-        if (!$this->isGranted('ROLE_SUPERADMIN'))
-            return new JsonResponse(['error' => 'You are not authorized to create a contact'], Response::HTTP_UNAUTHORIZED);
-
-        $data = json_decode($request->getContent(), true);
-        try {
-            $contact = $contactService->createContact($data);
-        } catch (\Throwable $th) {
-            return new JsonResponse(['error' => $th->getMessage()], Response::HTTP_BAD_REQUEST);
-        }
-
-        // return data with code created
-        return $this->json($contact, Response::HTTP_CREATED);
+        return $this->getById($id);
     }
     /**
-     * @Route("/{id}", name="contact_update", methods={"PATCH"})
+     * @Route("/{id}", name="contact remove", methods={"DELETE"})
      */
-    public function update(?Contact $contact, Request $request, ContactService $contactService): JsonResponse
+    public function remove(int $id): JsonResponse
     {
-        if (!$this->isGranted('ROLE_SUPERADMIN'))
-            return new JsonResponse(['error' => 'You are not authorized to update a contact'], Response::HTTP_UNAUTHORIZED);
-        if ($contact === null)
-            return new JsonResponse(['error' => 'Contact not found'], Response::HTTP_NOT_FOUND);
-
-        $data = json_decode($request->getContent(), true);
-        try {
-            $contact = $contactService->editContact($contact, $data);
-        } catch (\Throwable $th) {
-            return new JsonResponse(['error' => $th->getMessage()], Response::HTTP_BAD_REQUEST);
-        }
-        return $this->json($contact, Response::HTTP_OK);
+        return $this->delete($id);
     }
-
-
+    /**
+     * @Route("/", name="contact new", methods={"POST"})
+     */
+    public function new(Request $request): JsonResponse
+    {
+        return $this->create($request);
+    }
+    /**
+     * @Route("/{id}", name="contact edit", methods={"PATCH"})
+     */
+    public function edit(int $id, Request $request): JsonResponse
+    {
+        return $this->update($id, $request);
+    }
 }

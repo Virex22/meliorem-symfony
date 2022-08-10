@@ -2,7 +2,6 @@
 namespace App\Service;
 
 use App\Entity\Skill;
-use Doctrine\ORM\EntityManagerInterface;
 
 class SkillService extends AbstractEntityService
 {
@@ -11,21 +10,19 @@ class SkillService extends AbstractEntityService
         return Skill::class;
     }
 
-    public function create(array $data) : Skill
+    public function create(Array $data) : Skill
     {
-        
-        $this->validateRequiredData($data, 'name', 'description', 'xpRequiredForLevels');
-        $skill = $this->createEntity($data, 'name', 'description', 'xpRequiredForLevels');
-       
-        return $skill;
-    }
-    public function edit($skill ,array $data) : Skill
-    {
-        $this->editEntity($skill, $data, 'name', 'description', 'xpRequiredForLevels');
+        $this->validateRequiredData($data, 'name', 'xpRequiredForLevels','description');
+        $skill = $this->createEntity($data, 'name', 'xpRequiredForLevels','description');
         
         return $skill;
     }
 
-    
+
+    public function edit(object $skill ,Array $data) : Skill
+    {
+        $this->editEntity($skill, $data, 'name', 'xpRequiredForLevels','description');
+        
+        return $skill;
+    }
 }
-?>

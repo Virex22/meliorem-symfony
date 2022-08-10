@@ -2,54 +2,30 @@
 namespace App\Service;
 
 use App\Entity\Quiz;
-use Doctrine\ORM\EntityManagerInterface;
+use DateTime;
 
-class QuizService
+class QuizService extends AbstractEntityService
 {
-    private $em;
-
-    public function __construct(EntityManagerInterface $em)
+    protected function getEntityClass() : string
     {
-        $this->em = $em;
+        return Quiz::class;
     }
 
-    function createQuiz(Array $quiz) : Quiz
+    public function create(Array $data) : Quiz
     {
-
-        if (!isset($quiz['description']))
-            throw new \Exception('"description" is required');
-        if (!isset($quiz['public']))
-            throw new \Exception('"public" is required');
-        if (!isset($quiz['timeToPerformAll']))
-            throw new \Exception('"timeToPerformAll" is required');
-
-        $quiz = new Quiz();
-        $quiz->setDescription($quiz['description'])
-        ->setPublic($quiz['public'])
-        ->setTimeToPerformAll($quiz['timeToPerformAll'])
-        ->setCreatedAt(new \DateTime());
-
-        $this->em->persist($quiz);
-        $this->em->flush();
-
+        $this->validateRequiredData($data, 'description', 'public','timeToPerformAll','title');
+        if (!isset($data['createdAt']))
+            $data['createdAt'] = new DateTime();
+        $quiz = $this->createEntity($data, 'createdAt', 'description', 'public','timeToPerformAll','title');
+    
         return $quiz;
     }
 
-    function editQuiz(Quiz $quiz, Array $quizData) : Quiz
+
+    public function edit(object $quiz ,Array $data) : Quiz
     {
-        if (isset($quizData['description']))
-            $quiz->setDescription($quizData['description']);
-        if (isset($quizData['public']))
-            $quiz->setPublic($quizData['public']);
-        if (isset($quizData['timeToPerformAll']))
-            $quiz->setTimeToPerformAll($quizData['timeToPerformAll']);
-
-        $this->em->persist($quiz);
-        $this->em->flush();
-
+        $this->editEntity($quiz, $data, 'createdAt', 'description', 'public','timeToPerformAll','title');
+        
         return $quiz;
     }
-    
-    
 }
-?>

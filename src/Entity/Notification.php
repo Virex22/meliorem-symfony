@@ -6,6 +6,7 @@ use App\Repository\NotificationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @ORM\Entity(repositoryClass=NotificationRepository::class)
@@ -36,6 +37,7 @@ class Notification
 
     /**
      * @ORM\OneToMany(targetEntity=ReceivedNotification::class, mappedBy="notification")
+     * @Ignore
      */
     private $receivedNotifications;
 

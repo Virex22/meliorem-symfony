@@ -6,6 +6,7 @@ use App\Repository\CourseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @ORM\Entity(repositoryClass=CourseRepository::class)
@@ -56,18 +57,20 @@ class Course
 
     /**
      * @ORM\OneToMany(targetEntity=ReadLater::class, mappedBy="course")
+     * @Ignore
      */
     private $readLaters;
 
     /**
      * @ORM\ManyToOne(targetEntity=Speaker::class, inversedBy="courses")
+     * @Ignore
      */
     private $speaker;
 
     /**
      * @ORM\ManyToMany(targetEntity=Group::class, inversedBy="courses")
      */
-    private $groupFilter;
+    private $group;
 
     /**
      * @ORM\OneToMany(targetEntity=CourseSection::class, mappedBy="course")
@@ -77,15 +80,15 @@ class Course
     /**
      * @ORM\ManyToMany(targetEntity=CourseCategory::class, inversedBy="courses")
      */
-    private $category;
+    private $courseCategory;
 
     public function __construct()
     {
         $this->favoriteCourses = new ArrayCollection();
         $this->readLaters = new ArrayCollection();
-        $this->groupFilter = new ArrayCollection();
+        $this->group = new ArrayCollection();
         $this->courseSections = new ArrayCollection();
-        $this->category = new ArrayCollection();
+        $this->courseCategory = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -240,23 +243,23 @@ class Course
     /**
      * @return Collection<int, Group>
      */
-    public function getGroupFilter(): Collection
+    public function getGroup(): Collection
     {
-        return $this->groupFilter;
+        return $this->group;
     }
 
-    public function addGroupFilter(Group $groupFilter): self
+    public function addGroup(Group $group): self
     {
-        if (!$this->groupFilter->contains($groupFilter)) {
-            $this->groupFilter[] = $groupFilter;
+        if (!$this->group->contains($group)) {
+            $this->group[] = $group;
         }
 
         return $this;
     }
 
-    public function removeGroupFilter(Group $groupFilter): self
+    public function removeGroup(Group $group): self
     {
-        $this->groupFilter->removeElement($groupFilter);
+        $this->group->removeElement($group);
 
         return $this;
     }
@@ -292,26 +295,35 @@ class Course
     }
 
     /**
-     * @return Collection<int, CourseCategory>
+     * @return Collection<int, CourseCourseCategory>
      */
-    public function getCategory(): Collection
+    public function getCourseCategory(): Collection
     {
-        return $this->category;
+        return $this->courseCategory;
     }
 
-    public function addCategory(CourseCategory $category): self
+    public function addCourseCategory(CourseCategory $courseCategory): self
     {
-        if (!$this->category->contains($category)) {
-            $this->category[] = $category;
+        if (!$this->courseCategory->contains($courseCategory)) {
+            $this->courseCategory[] = $courseCategory;
         }
 
         return $this;
     }
 
-    public function removeCategory(CourseCategory $category): self
+    public function removeCourseCategory(CourseCategory $courseCategory): self
     {
-        $this->category->removeElement($category);
+        $this->courseCategory->removeElement($courseCategory);
 
         return $this;
+    }
+
+    public function getSpeakerName(): ?string
+    {
+        return $this->speaker->getUser()->getFirstname() . " " . $this->speaker->getUser()->getName();
+    }
+    public function getSpeakerId(): ?string
+    {
+        return $this->speaker->getId();
     }
 }

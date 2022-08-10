@@ -30,7 +30,7 @@ class CourseCategory
     private $color;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Course::class, mappedBy="category")
+     * @ORM\ManyToMany(targetEntity=Course::class, mappedBy="courseCategory")
      */
     private $courses;
 
@@ -80,7 +80,7 @@ class CourseCategory
     {
         if (!$this->courses->contains($course)) {
             $this->courses[] = $course;
-            $course->addCategory($this);
+            $course->addCourseCategory($this);
         }
 
         return $this;
@@ -89,7 +89,7 @@ class CourseCategory
     public function removeCourse(Course $course): self
     {
         if ($this->courses->removeElement($course)) {
-            $course->removeCategory($this);
+            $course->removeCourseCategory($this);
         }
 
         return $this;

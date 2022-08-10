@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CoursePartRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @ORM\Entity(repositoryClass=CoursePartRepository::class)
@@ -34,6 +35,7 @@ class CoursePart
 
     /**
      * @ORM\ManyToOne(targetEntity=CourseSection::class, inversedBy="courseParts")
+     * @Ignore
      */
     private $courseSection;
 
@@ -145,5 +147,15 @@ class CoursePart
         $this->coursePartQuiz = $coursePartQuiz;
 
         return $this;
+    }
+
+    public function getCourseSectionInfo () : ?array {
+        if ($this->courseSection) 
+            return [
+                'id' => $this->courseSection->getId(),
+                'name' => $this->courseSection->getName(),
+                'courseOrder' => $this->courseSection->getCourseOrder(),
+            ];
+        return null;
     }
 }

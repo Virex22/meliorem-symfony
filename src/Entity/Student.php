@@ -20,15 +20,16 @@ class Student
 
     
     /**
-     * @ORM\OneToOne(targetEntity=User::class, inversedBy="Student", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=User::class, inversedBy="student", cascade={"persist", "remove"})
      * @Ignore
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Group::class, inversedBy="Student")
+     * @ORM\ManyToOne(targetEntity=Group::class, inversedBy="student")
+     * @Ignore
      */
-    private $groupReference;
+    private $group;
 
     public function getId(): ?int
     {
@@ -47,14 +48,14 @@ class Student
         return $this;
     }
 
-    public function getGroupReference(): ?Group
+    public function getGroup(): ?Group
     {
-        return $this->groupReference;
+        return $this->group;
     }
 
-    public function setGroupReference(?Group $groupReference): self
+    public function setGroup(?Group $group): self
     {
-        $this->groupReference = $groupReference;
+        $this->group = $group;
 
         return $this;
     }
@@ -65,5 +66,14 @@ class Student
     public function getUserId()
     {
         return $this->user->getId();
+    }
+    public function getGroupInfo() : ?array
+    {
+        if (!$this->group)
+            return null;
+        return [
+            'id' => $this->group->getId(),
+            'name' => $this->group->getName()
+        ];
     }
 }

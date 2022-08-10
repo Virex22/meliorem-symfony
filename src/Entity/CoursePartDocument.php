@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CoursePartDocumentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @ORM\Entity(repositoryClass=CoursePartDocumentRepository::class)
@@ -34,6 +35,7 @@ class CoursePartDocument
 
     /**
      * @ORM\OneToOne(targetEntity=CoursePart::class, inversedBy="coursePartDocument", cascade={"persist", "remove"})
+     * @Ignore
      */
     private $coursePart;
 
@@ -89,5 +91,19 @@ class CoursePartDocument
         $this->coursePart = $coursePart;
 
         return $this;
+    }
+
+    public function getCoursePartInfo(): ?array
+    {
+        if ($this->coursePart) {
+            return [
+                'id' => $this->coursePart->getId(),
+                'title' => $this->coursePart->getTitle(),
+                'orderPart' => $this->coursePart->getOrderPart(),
+                'estimatedTime' => $this->coursePart->getEstimatedTime(),
+                'courseSectionInfo' => $this->coursePart->getCourseSectionInfo(),
+            ];
+        }
+        return null;
     }
 }

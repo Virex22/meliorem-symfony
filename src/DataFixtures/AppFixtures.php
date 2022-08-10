@@ -3,6 +3,8 @@
 namespace App\DataFixtures;
 
 use App\Entity\Contact;
+use App\Entity\Course;
+use App\Entity\CourseSection;
 use App\Entity\Notification;
 use App\Entity\Quiz;
 use App\Entity\QuizPart;
@@ -25,24 +27,6 @@ use Symfony\Component\Validator\Constraints\Time;
  */
 class AppFixtures extends Fixture
 {
-    /**
-     * TODO :
-     * Badge
-     * Course
-     * CourseCategory
-     * CoursePart
-     * CoursePartDocument
-     * CoursePartQuiz
-     * CourseSection
-     * FavoriteCourse
-     * Group
-     * QuizPartPerformed
-     * ReadLater
-     * ReceivedNotification
-     * Skill
-     * SkillUser XP
-     * Speciality
-     */
     private ObjectManager $manager;
     private Generator $faker;
     private UserPasswordHasherInterface $hasher;
@@ -59,6 +43,7 @@ class AppFixtures extends Fixture
     {
         $this->manager = $manager;
         $users = [];
+        $skills = $this->createSkill(5);
 
         $users[]= $this->createStudent(5);
         $users[]= $speakers = $this->createSpeaker(5);
@@ -69,7 +54,7 @@ class AppFixtures extends Fixture
             foreach ($buff as $user)
             foreach ($user as $u) 
                 $users[]= $u;
-        $quizs = $this->createQuiz(5);
+        $quizs = $this->createQuiz(5,$skills);
         $notification = $this->createNotification(5);
         foreach ($notification as $notif)
             $this->createReceivedNotification($this->faker->numberBetween(1,5) ,$notif,$this->faker->randomElement($users));
@@ -80,11 +65,43 @@ class AppFixtures extends Fixture
                 $contacts[] = $this->createContact($this->faker->randomElement($contactTypes) ,$user);
         foreach ($speakers as $speaker)
             $this->createSpeciality($this->faker->numberBetween(1,5),$speaker->getSpeaker());
+        $courses = $this->createCourse(5,$speakers);
+        $courseSection = $this->createCourseSection(10,$courses);
         
-        $skills = $this->createSkill(5);
             
 
         $manager->flush();
+    }
+    public function createCourseSection(int $count,array $course): array{
+        $courseSections = [];
+        for ($i=0; $i < $count; $i++) { 
+            $courseSection = new CourseSection();
+            $courseSection->setName($this->faker->sentence(3));
+            $courseSection->setCourseOrder($this->faker->numberBetween(1,10));
+            $courseSection->setCourse($this->faker->randomElement($course));
+            $this->manager->persist($courseSection);
+            $courseSections[] = $courseSection;
+        }
+        return $courseSections;
+    }
+
+    public function createCourse(int $count,array $speakers)
+    {
+        $courses = [];
+        for ($i = 0; $i < $count; $i++) {
+            echo "Creating course : ".$i."\n";
+            $course = new Course();
+            $course->setTitle($this->faker->sentence(3));
+            $course->setDescription($this->faker->text(200));
+            $course->setPublishDate($this->faker->dateTimeBetween('-1 years', 'now'));
+            $course->setLastEditDate($this->faker->dateTimeBetween('-1 years', 'now'));
+            $course->setImage($this->faker->imageUrl());
+            $course->setIsPublic($this->faker->boolean(50));
+            $course->setSpeaker($speakers[$i]->getSpeaker());
+            $this->manager->persist($course);
+            $courses[] = $course;
+        }
+        return $courses;
     }
 
     public function createSkill(int $count): array
@@ -175,23 +192,24 @@ class AppFixtures extends Fixture
         return $receivedNotifications;
     }
 
-    public function createQuiz(int $count){
+    public function createQuiz(int $count, array $skills){
         for ($i=0; $i < $count; $i++) { 
             $quizPartCount = $this->faker->numberBetween(1,10);
             echo "Creating quiz $i with $quizPartCount quiz part \n";
             $quiz = new Quiz();
             $quiz->setDescription($this->faker->paragraph)
             ->setPublic(true)
+            ->setTitle($this->faker->sentence(3))
             ->setCreatedAt($this->faker->dateTime)
             ->setTimeToPerformAll($this->faker->numberBetween(100,1000));
             
-            $this->createQuizPart($quiz,$quizPartCount);
+            $this->createQuizPart($quiz,$quizPartCount,$skills);
 
             $this->manager->persist($quiz);
         }
     }
 
-    public function createQuizPart(Quiz $quiz, int $count){
+    public function createQuizPart(Quiz $quiz, int $count,array $skills){
         for ($i=0; $i < $count; $i++) { 
             $quizPart = new QuizPart();
             $quizPart->setQuestion($this->faker->paragraph)
@@ -210,6 +228,7 @@ class AppFixtures extends Fixture
             ))
             ->setTimeMaxToResponse($this->faker->numberBetween(10,100))
             ->setQuizOrder($i)
+            ->setSkill($this->faker->randomElement($skills))
             ->setQuiz($quiz);
 
             $this->manager->persist($quizPart);

@@ -28,6 +28,7 @@ class Speaker
 
     /**
      * @ORM\OneToMany(targetEntity=Speciality::class, mappedBy="speaker")
+     * @Ignore
      */
     private $specialities;
 
@@ -118,5 +119,12 @@ class Speaker
         }
 
         return $this;
+    }
+    public function getSpecialitiesId(): array
+    {
+        $specialitiesId = [];
+        foreach ($this->specialities as $speciality)
+            $specialitiesId[] = $speciality->getId();
+        return $specialitiesId;
     }
 }

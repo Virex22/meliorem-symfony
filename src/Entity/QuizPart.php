@@ -48,6 +48,7 @@ class QuizPart
 
     /**
      * @ORM\OneToMany(targetEntity=QuizPartPerform::class, mappedBy="quizPart")
+     * @Ignore
      */
     private $quizPartPerforms;
 

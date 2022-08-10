@@ -2,80 +2,53 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\ReceivedNotification;
-use App\Repository\ReceivedNotificationRepository;
-use App\Service\ReceivedNotificationService;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/api/received-notification")
- */
-class ReceivedNotificationController extends AbstractController
+ * */
+class ReceivedNotificationController extends AbstractCRUDController
 {
-    /*
-    * @Route("/", name="received_notification_index", methods={"GET"})
-    */
-    public function index(ReceivedNotificationRepository $receivedNotificationRepository): JsonResponse
+    protected function getEntityClass(): string
     {
-        return $this->json($receivedNotificationRepository->findAll(), Response::HTTP_OK);
+        return ReceivedNotification::class;
     }
-
-    /*
-    * @Route("/{id}", name="received_notification_show", methods={"GET"})
-    */
-    public function show(?ReceivedNotification $receivedNotification): JsonResponse
+    /**
+     * @Route("/", name="receivedNotification index", methods={"GET"})
+     */
+    public function index(): JsonResponse
     {
-        if ($receivedNotification === null)
-            return new JsonResponse(['error' => 'ReceivedNotification not found'], Response::HTTP_NOT_FOUND);
-        return $this->json($receivedNotification, Response::HTTP_OK);
+        return $this->getAll();
     }
-
-    /*
-    * @Route("/{id}", name="received_notification_delete", methods={"DELETE"})
-    */
-    public function delete(?ReceivedNotification $receivedNotification, EntityManagerInterface $entityManager): JsonResponse
+    /**
+     * @Route("/{id}", name="receivedNotification show", methods={"GET"})
+     */
+    public function show(int $id): JsonResponse
     {
-        if ($receivedNotification === null)
-            return new JsonResponse(['error' => 'ReceivedNotification not found'], Response::HTTP_NOT_FOUND);
-
-        $entityManager->remove($receivedNotification);
-        $entityManager->flush();
-
-        return $this->json(['success' => 'ReceivedNotification deleted'], Response::HTTP_OK);
+        return $this->getById($id);
     }
-
-    /*
-    * @Route("/", name="received_notification_create", methods={"POST"})
-    */
-    public function create(Request $request, ReceivedNotificationService $receivedNotificationService): JsonResponse
+    /**
+     * @Route("/{id}", name="receivedNotification remove", methods={"DELETE"})
+     */
+    public function remove(int $id): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
-        
-        try {
-            $receivedNotification =  $receivedNotificationService->create($data);
-        } catch (\Exception $e) {
-            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
-        }
-        return $this->json($receivedNotification, Response::HTTP_OK);
+        return $this->delete($id);
     }
-    /*
-    * @Route("/{id}", name="received_notification_update", methods={"PATCH"})
-    */
-    public function update(Request $request,?ReceivedNotification $receivedNotification , ReceivedNotificationService $receivedNotificationService): JsonResponse
+    /**
+     * @Route("/", name="receivedNotification new", methods={"POST"})
+     */
+    public function new(Request $request): JsonResponse
     {
-        if ($receivedNotification === null)
-            return new JsonResponse(['error' => 'ReceivedNotification not found'], Response::HTTP_NOT_FOUND);
-        $data = json_decode($request->getContent(), true);
-
-        $receivedNotification = $receivedNotificationService->edit($receivedNotification, $data);
-        return $this->json($receivedNotification, Response::HTTP_OK);
+        return $this->create($request);
     }
-
-
+    /**
+     * @Route("/{id}", name="receivedNotification edit", methods={"PATCH"})
+     */
+    public function edit(int $id, Request $request): JsonResponse
+    {
+        return $this->update($id, $request);
+    }
 }

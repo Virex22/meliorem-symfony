@@ -3,91 +3,52 @@
 namespace App\Controller;
 
 use App\Entity\Group;
-use App\Repository\GroupRepository;
-use App\Service\GroupService;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/api/group")
- */
-class GroupController extends AbstractController
+ * */
+class GroupController extends AbstractCRUDController
 {
-    /**
-     * @Route("/", name="group_index", methods={"GET"})
-     */
-    public function index(GroupRepository $groupRepository): JsonResponse
+    protected function getEntityClass(): string
     {
-        return $this->json($groupRepository->findAll(), Response::HTTP_OK);
-    }
-
-    /**
-     * @Route("/{id}", name="group_show", methods={"GET"})
-     */
-    public function show(?Group $group): JsonResponse
-    {
-        if ($group === null)
-            return new JsonResponse(['error' => 'Group not found'], Response::HTTP_NOT_FOUND);
-        return $this->json($group, Response::HTTP_OK);
-    }
-
-    /**
-     * @Route("/{id}", name="group_delete", methods={"DELETE"})
-     */
-    public function delete(?Group $group, EntityManagerInterface $entityManager): JsonResponse
-    {
-        if (!$this->isGranted('ROLE_SUPERADMIN'))
-            return new JsonResponse(['error' => 'You are not authorized to delete a group'], Response::HTTP_UNAUTHORIZED);
-        if ($group === null)
-            return new JsonResponse(['error' => 'Group not found'], Response::HTTP_NOT_FOUND);
-            
-        $entityManager->remove($group);
-        $entityManager->flush();
-
-        return $this->json(['success' => 'Group deleted'], Response::HTTP_OK);
+        return Group::class;
     }
     /**
-     * @Route("/", name="group_create", methods={"POST"})
+     * @Route("/", name="group index", methods={"GET"})
      */
-    public function create(Request $request, GroupService $groupService): JsonResponse
+    public function index(): JsonResponse
     {
-        if (!$this->isGranted('ROLE_SUPERADMIN'))
-            return new JsonResponse(['error' => 'You are not authorized to create a group'], Response::HTTP_UNAUTHORIZED);
-        $data = json_decode($request->getContent(), true);
-        try {
-            $group = $groupService->create($data);
-        } catch (\Exception $e) {
-            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
-        }
-        if ($group === null)
-            return new JsonResponse(['error' => 'Group not created'], Response::HTTP_BAD_REQUEST);
-        return $this->json($group, Response::HTTP_CREATED);
+        return $this->getAll();
     }
-
     /**
-     * @Route("/{id}", name="group_update", methods={"PATCH"})
+     * @Route("/{id}", name="group show", methods={"GET"})
      */
-    public function update(?Group $group, Request $request, GroupService $groupService): JsonResponse
+    public function show(int $id): JsonResponse
     {
-        if (!$this->isGranted('ROLE_SUPERADMIN'))
-            return new JsonResponse(['error' => 'You are not authorized to update a group'], Response::HTTP_UNAUTHORIZED);
-        if ($group === null)
-            return new JsonResponse(['error' => 'Group not found'], Response::HTTP_NOT_FOUND);
-        $data = json_decode($request->getContent(), true);
-        try {
-            $group = $groupService->update($group, $data);
-        } catch (\Exception $e) {
-            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
-        }
-        if ($group === null)
-            return new JsonResponse(['error' => 'Group not updated'], Response::HTTP_BAD_REQUEST);
-        return $this->json($group, Response::HTTP_OK);
+        return $this->getById($id);
     }
-
-
+    /**
+     * @Route("/{id}", name="group remove", methods={"DELETE"})
+     */
+    public function remove(int $id): JsonResponse
+    {
+        return $this->delete($id);
+    }
+    /**
+     * @Route("/", name="group new", methods={"POST"})
+     */
+    public function new(Request $request): JsonResponse
+    {
+        return $this->create($request);
+    }
+    /**
+     * @Route("/{id}", name="group edit", methods={"PATCH"})
+     */
+    public function edit(int $id, Request $request): JsonResponse
+    {
+        return $this->update($id, $request);
+    }
 }

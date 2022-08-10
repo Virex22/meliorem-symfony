@@ -2,42 +2,27 @@
 namespace App\Service;
 
 use App\Entity\TypeContact;
-use Doctrine\ORM\EntityManagerInterface;
 
-class TypeContactService
+class TypeContactService extends AbstractEntityService
 {
-    private $em;
-
-    public function __construct(EntityManagerInterface $em)
+    protected function getEntityClass() : string
     {
-        $this->em = $em;
+        return TypeContact::class;
     }
 
     public function create(Array $data) : TypeContact
     {
-        if (!isset($data['name']))
-            throw new \Exception('Name is required');
-
-        $typeContact = new TypeContact();
-        $typeContact->setName($data['name']);
-
-        $this->em->persist($typeContact);
-        $this->em->flush();
-
+        $this->validateRequiredData($data,'name');
+        $typeContact = $this->createEntity($data, 'name');
+    
         return $typeContact;
     }
 
-    public function update(TypeContact $typeContact, Array $typeContactData) : TypeContact
+
+    public function edit(object $typeContact ,Array $data) : TypeContact
     {
-        if (isset($typeContactData['name']))
-            $typeContact->setName($typeContactData['name']);
-
-        $this->em->persist($typeContact);
-        $this->em->flush();
-
+        $this->editEntity($typeContact, $data, 'name');
+        
         return $typeContact;
     }
-
-
 }
-?>

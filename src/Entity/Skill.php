@@ -6,6 +6,7 @@ use App\Repository\SkillRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @ORM\Entity(repositoryClass=SkillRepository::class)
@@ -36,11 +37,13 @@ class Skill
 
     /**
      * @ORM\OneToMany(targetEntity=SkillUserXP::class, mappedBy="skill")
+     * @Ignore
      */
     private $skillUserXPs;
 
     /**
      * @ORM\OneToMany(targetEntity=QuizPart::class, mappedBy="skill")
+     * @Ignore
      */
     private $quizParts;
     

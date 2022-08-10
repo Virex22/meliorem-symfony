@@ -3,54 +3,31 @@
 namespace App\Controller;
 
 use App\Entity\Student;
-use App\Repository\StudentRepository;
-use App\Service\StudentService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/api/student")
- */
-class StudentController extends AbstractController
+ * */
+class StudentController extends AbstractCRUDController
 {
-    /**
-     * @Route("/", name="student_index", methods={"GET"})
-     */
-    public function index(StudentRepository $studentRepository): JsonResponse
+    protected function getEntityClass(): string
     {
-        return $this->json($studentRepository->findAll(), Response::HTTP_OK);
+        return Student::class;
     }
-
     /**
-     * @Route("/{id}", name="student_show", methods={"GET"})
+     * @Route("/", name="student index", methods={"GET"})
      */
-    public function show(?Student $student): JsonResponse
+    public function index(): JsonResponse
     {
-        if ($student === null)
-            return new JsonResponse(['error' => 'Student not found'], Response::HTTP_NOT_FOUND);
-        return $this->json($student, Response::HTTP_OK);
+        return $this->getAll();
     }
-
     /**
-     * @Route("/{id}", name="student_edit", methods={"PATCH"})
+     * @Route("/{id}", name="student show", methods={"GET"})
      */
-    public function edit(Request $request, ?Student $student, StudentService $studentService): JsonResponse
-    { 
-        if (!$this->isGranted('ROLE_SUPERADMIN'))
-            return new JsonResponse(['error' => 'You are not authorized to edit a student'], Response::HTTP_UNAUTHORIZED);
-        if ($student === null)
-            return new JsonResponse(['error' => 'Student not found'], Response::HTTP_NOT_FOUND);
-        $data = json_decode($request->getContent(), true);
-        try {
-            $student = $studentService->edit($student, $data);
-        }
-        catch (\Exception $e) {
-            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
-        }
-
-        return $this->json($student, Response::HTTP_OK);
+    public function show(int $id): JsonResponse
+    {
+        return $this->getById($id);
     }
 }

@@ -45,6 +45,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=ReceivedNotification::class, mappedBy="user")
+     * @Ignore
      */
     private $receivedNotifications;
 
@@ -75,11 +76,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=SkillUserXP::class, mappedBy="user")
+     * @Ignore
      */
     private $skillUserXPs;
 
     /**
      * @ORM\OneToMany(targetEntity=QuizPartPerform::class, mappedBy="user")
+     * @Ignore
      */
     private $quizPartPerforms;
 

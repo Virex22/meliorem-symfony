@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CoursePartQuizRepository;
 use App\Entity\CoursePart;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @ORM\Entity(repositoryClass=CoursePartQuizRepository::class)
@@ -20,11 +21,13 @@ class CoursePartQuiz
 
     /**
      * @ORM\ManyToOne(targetEntity=Quiz::class, inversedBy="coursePartQuizzes")
+     * @Ignore
      */
     private $quiz;
 
     /**
      * @ORM\OneToOne(targetEntity=CoursePart::class, inversedBy="coursePartQuiz", cascade={"persist", "remove"})
+     * @Ignore
      */
     private $coursePart;
 
@@ -56,6 +59,32 @@ class CoursePartQuiz
         $this->coursePart = $coursePart;
 
         return $this;
+    }
+
+    public function getQuizInfo(): ?array
+    {
+        if (!$this->quiz)
+            return null;
+        return [
+            'id' => $this->quiz->getId(),
+            'title' => $this->quiz->getTitle(),
+            'description' => $this->quiz->getDescription(),
+            'public' => $this->quiz->isPublic(),
+            'createdAt' => $this->quiz->getCreatedAt(),
+            'timeToPerformAll' => $this->quiz->getTimeToPerformAll()
+        ];
+    }
+
+    public function getCoursePartInfo (): ?array
+    {
+        if (!$this->coursePart)
+            return null;
+        return [
+            'id' => $this->coursePart->getId(),
+            'title' => $this->coursePart->getTitle(),
+            'orderPart' => $this->coursePart->getOrderPart(),
+            'estimatedTime' => $this->coursePart->getEstimatedTime(),
+        ];
     }
 
 

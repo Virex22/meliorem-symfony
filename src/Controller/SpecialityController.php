@@ -2,88 +2,53 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Speciality;
-use App\Repository\SpecialityRepository;
-use App\Service\SpecialityService;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/api/speciality")
- */
-class SpecialityController extends AbstractController
+ * */
+class SpecialityController extends AbstractCRUDController
 {
-    /**
-     * @Route("/", name="speciality_index", methods={"GET"})
-     */
-    public function index(SpecialityRepository $specialityRepository): JsonResponse
+    protected function getEntityClass(): string
     {
-        return $this->json($specialityRepository->findAll(), Response::HTTP_OK);
+        return Speciality::class;
     }
-
     /**
-     * @Route("/{id}", name="speciality_show", methods={"GET"})
+     * @Route("/", name="speciality index", methods={"GET"})
      */
-    public function show(?Speciality $speciality): JsonResponse
+    public function index(): JsonResponse
     {
-        if ($speciality === null)
-            return new JsonResponse(['error' => 'Speciality not found'], Response::HTTP_NOT_FOUND);
-        return $this->json($speciality, Response::HTTP_OK);
+        return $this->getAll();
     }
-
     /**
-     * @Route("/{id}", name="speciality_delete", methods={"DELETE"})
+     * @Route("/{id}", name="speciality show", methods={"GET"})
      */
-    public function delete(?Speciality $speciality, EntityManagerInterface $entityManager): JsonResponse
+    public function show(int $id): JsonResponse
     {
-        if ($speciality === null)
-            return new JsonResponse(['error' => 'Speciality not found'], Response::HTTP_NOT_FOUND);
-
-        $entityManager->remove($speciality);
-        $entityManager->flush();
-
-        return $this->json(['success' => 'Speciality deleted'], Response::HTTP_OK);
+        return $this->getById($id);
     }
-
     /**
-     * @Route("/", name="speciality_create", methods={"POST"})
+     * @Route("/{id}", name="speciality remove", methods={"DELETE"})
      */
-    public function create(Request $request, SpecialityService $specialityService): JsonResponse
+    public function remove(int $id): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
-        
-        try {
-            $speciality =  $specialityService->create($data);
-        } catch (\Exception $e) {
-            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
-        }
-
-        return $this->json($speciality, Response::HTTP_CREATED);
+        return $this->delete($id);
     }
-
     /**
-     * @Route("/{id}", name="speciality_edit", methods={"PATCH"})
+     * @Route("/", name="speciality new", methods={"POST"})
      */
-    public function edit(Request $request, ?Speciality $speciality, SpecialityService $specialityService): JsonResponse
+    public function new(Request $request): JsonResponse
     {
-        if ($speciality === null)
-            return new JsonResponse(['error' => 'Speciality not found'], Response::HTTP_NOT_FOUND);
-        $data = json_decode($request->getContent(), true);
-        try {
-            $speciality = $specialityService->edit($speciality, $data);
-        }
-        catch (\Exception $e) {
-            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
-        }
-
-        return $this->json($speciality, Response::HTTP_OK);
+        return $this->create($request);
     }
-
-    
-    
+    /**
+     * @Route("/{id}", name="speciality edit", methods={"PATCH"})
+     */
+    public function edit(int $id, Request $request): JsonResponse
+    {
+        return $this->update($id, $request);
+    }
 }

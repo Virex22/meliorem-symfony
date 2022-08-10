@@ -14,25 +14,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
 /**
-* @Route("/api/user")
-*/
+ * @Route("/api/user")
+ * */
 class UserController extends AbstractController
 {
     
-    /**
-     * @Route("/", name="all_user", methods={"GET"})
-     */
-    public function getAll(UserRepository $userRepository): JsonResponse
-    {
-        $users = $userRepository->findAll();
-        $usersDTO = [];
-        foreach ($users as $user) {
-            $userDTO = new UserDTO();
-            $userDTO->hydrate($user);
-            $usersDTO[] = $userDTO->getData();
-        }
-        return $this->json($usersDTO,200);
-    }
     /**
      * @Route("/me", name="get_my_user", methods={"GET"})
      */
@@ -43,21 +29,37 @@ class UserController extends AbstractController
         $userDTO->hydrate($user);
         return $this->json($userDTO->getData());
     }
+
     /**
-     * @Route("/{id}", name="get_user", methods={"GET"})
+     * @Route("/", name="user index", methods={"GET"})
      */
-    public function getByID(?User $user): JsonResponse
+    public function index(UserRepository $userRepository): JsonResponse
     {
-        if ($user === null)
-            return new JsonResponse(['error' => 'User not found'], Response::HTTP_NOT_FOUND);
-        $userDTO = new UserDTO();
-        $userDTO->hydrate($user);
-        return $this->json($userDTO->getData());
+        $users = $userRepository->findAll();
+        $usersDTO = [];
+        foreach ($users as $user)
+        {
+            $userDTO = new UserDTO();
+            $userDTO->hydrate($user);
+            $usersDTO[] = $userDTO->getData();
+        }
+        return $this->json($usersDTO, Response::HTTP_OK);
     }
     /**
-     * @Route("/{id}", name="delete_user", methods={"DELETE"})
+     * @Route("/{id}", name="user show", methods={"GET"})
      */
-    public function delete(?User $user,UserService $userService): JsonResponse
+    public function show(?User $user): JsonResponse
+    {
+        if (!$user)
+            return $this->json(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
+        $userDTO = new UserDTO();
+        $userDTO->hydrate($user);
+        return $this->json($userDTO->getData(), Response::HTTP_OK);
+    }
+     /**
+     * @Route("/{id}", name="delete user", methods={"DELETE"})
+     */
+    public function remove(?User $user,UserService $userService): JsonResponse
     {
         if (!$this->isGranted('ROLE_SUPERADMIN'))
             return new JsonResponse(['error' => 'You are not authorized to delete a user'], Response::HTTP_UNAUTHORIZED);
@@ -69,7 +71,7 @@ class UserController extends AbstractController
         return new JsonResponse(['success' => 'User deleted'], Response::HTTP_OK);
     }
     /**
-     * @Route("/", name="create_user", methods={"POST"})
+     * @Route("/", name="create user", methods={"POST"})
      */
     public function create(Request $request,Security $security, UserService $userService): JsonResponse
     {
@@ -110,5 +112,4 @@ class UserController extends AbstractController
         $userDTO->hydrate($user);
         return $this->json($userDTO->getData(), Response::HTTP_OK);
     }
-
 }

@@ -6,6 +6,7 @@ use App\Repository\CourseSectionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @ORM\Entity(repositoryClass=CourseSectionRepository::class)
@@ -31,6 +32,7 @@ class CourseSection
 
     /**
      * @ORM\ManyToOne(targetEntity=Course::class, inversedBy="courseSections")
+     * @Ignore
      */
     private $course;
 
@@ -113,5 +115,17 @@ class CourseSection
         }
 
         return $this;
+    }
+
+    public function getCourseInfo(): ?array
+    {
+        if ($this->course)
+            return [
+                'id' => $this->course->getId(),
+                'name' => $this->course->getTitle(),
+                'description' => $this->course->getDescription(),
+                'image' => $this->course->getImage(),
+            ];
+        return null;
     }
 }

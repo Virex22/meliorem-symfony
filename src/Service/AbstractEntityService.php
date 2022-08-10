@@ -1,10 +1,10 @@
 <?php
 namespace App\Service;
 
-use App\Entity\Contact;
 use App\Service\IService;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-
+use TypeError;
 
 abstract class AbstractEntityService implements IService
 {
@@ -50,12 +50,14 @@ abstract class AbstractEntityService implements IService
             if (!isset($data[$attribute])) // for unrequired attribute
                 continue;
             if (preg_match('/Id$/', $attribute)){
-                $relationnalEntity = $this->createRelation($data[$attribute]);
-                if (is_array($data[$attribute]))
+                $relationnalEntity = $this->createRelation($data[$attribute], ucfirst(substr($attribute, 0, -2)));
+                if (is_array($relationnalEntity)){
+                    $attribute = $this->repairsTableAttribute(ucfirst(substr($attribute, 0, -2)));
                     foreach ($relationnalEntity as $value){
-                        $method = 'add' . ucfirst(substr($attribute, 0, -2));
+                        $method = 'add' . $attribute;
                         $entity->$method($value);
                     }
+                }
                 else
                 { 
                     $method = 'set' . ucfirst(substr($attribute, 0, -2));
@@ -65,9 +67,11 @@ abstract class AbstractEntityService implements IService
             else
                 {
                     $method = 'set' . ucfirst($attribute);
-                    if (!method_exists($entity, $method))
-                        $method = 'is' . ucfirst($attribute);
-                    $entity->$method($data[$attribute]);
+                    try {
+                        $entity->$method($data[$attribute]);
+                    } catch (TypeError $e) {
+                        $entity->$method(DateTime::createFromFormat('Y-m-d\TH:i:sP', $data[$attribute]));
+                    } 
                 }
                 
         }
@@ -75,18 +79,30 @@ abstract class AbstractEntityService implements IService
         $this->em->flush();
         return $entity;
     }
-    
-    final private function createRelation($id)
+    private function repairsTableAttribute(string $attribute) : string
+    {
+        if (preg_match('/ies$/', $attribute))
+            return substr($attribute, 0, -3) . 'y';
+        else if (preg_match('/s$/', $attribute))
+            return substr($attribute, 0, -1);
+        else
+            return $attribute;
+    }
+    private function createRelation($id,string $attribute)
     {
         if (!is_array($id)){
-            $entity = $this->em->getRepository($this->getEntityClass())->find($id);
+            $entity = $this->em->getRepository('App\\Entity\\' . $attribute)->find($id);
             if (!$entity)
-                throw new \Exception('Entity not found');
+                throw new \Exception("Entity ".ucfirst($attribute)." (id: $id) not found");
             return $entity;    
         }
         else {
-            foreach ($id as $value)
-                yield $this->createRelation($value); // fonction recursive pour trouver chaque entité
+            $entities = [];
+            foreach ($id as $value){
+                $attribute = $this->repairsTableAttribute($attribute);
+                $entities[] = $this->createRelation($value, $attribute);
+            }
+            return $entities;
         }
     }
 
@@ -101,33 +117,38 @@ abstract class AbstractEntityService implements IService
         {
             if (!isset($data[$attribute]))
                 continue;
-            $methodEntityName = ucfirst(substr($attribute, 0, -2));
+            $classEntityName = ucfirst(substr($attribute, 0, -2));
             if (preg_match('/Id$/', $attribute))
             {
-                $relationnalEntity = $this->createRelation($data[$attribute]);
+                $relationnalEntity = $this->createRelation($data[$attribute], $classEntityName);
                 if (is_array($data[$attribute]))
                 {
-                    $method = 'get' . $methodEntityName;
+                    $classEntityNameSingular = $this->repairsTableAttribute($classEntityName);
+                    $method = 'get' . $classEntityName;
                     $entityCurrent = $entity->$method();
                     foreach ($entityCurrent as $value){
-                        $method = 'remove' . $methodEntityName;
+                        $method = 'remove' . $classEntityNameSingular;
                         $entity->$method($value);
                     }
                     foreach ($relationnalEntity as $value){
-                        $method = 'add' . $methodEntityName;
+                        $method = 'add' . $classEntityNameSingular;
                         $entity->$method($value);
                     }
                 }
                 else
                 { 
-                    $method = 'set' . $methodEntityName;
+                    $method = 'set' . $classEntityName;
                     $entity->$method($relationnalEntity);
                 }
             }
             else
             {
                 $method = 'set' . ucfirst($attribute);
-                $entity->$method($data[$attribute]);
+                try {
+                    $entity->$method($data[$attribute]);
+                } catch (TypeError $e) {
+                    $entity->$method(DateTime::createFromFormat('Y-m-d\TH:i:sP', $data[$attribute]));
+                }
             }
         }
         $this->em->persist($entity);

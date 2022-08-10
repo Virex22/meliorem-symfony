@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ReadLaterRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @ORM\Entity(repositoryClass=ReadLaterRepository::class)
@@ -29,6 +30,7 @@ class ReadLater
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="readLaters")
+     * @Ignore
      */
     private $user;
 

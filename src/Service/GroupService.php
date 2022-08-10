@@ -2,42 +2,29 @@
 namespace App\Service;
 
 use App\Entity\Group;
-use Doctrine\ORM\EntityManagerInterface;
 
-class GroupService
+class GroupService extends AbstractEntityService
 {
-    private $em;
-
-    public function __construct(EntityManagerInterface $em)
+    use DeleteTrait;
+    
+    protected function getEntityClass() : string
     {
-        $this->em = $em;
+        return Group::class;
     }
 
     public function create(Array $data) : Group
     {
-        if (!isset($data['name']))
-            throw new \Exception('"name" is required');
-        
-
-        $group = new Group();
-        $group->setName($data['name']);
-
-        $this->em->persist($group);
-        $this->em->flush();
-       
+        $this->validateRequiredData($data, 'name');
+        $group = $this->createEntity($data, 'name', 'studentId','coursesId');
+    
         return $group;
     }
 
 
-    public function update(Group $group, Array $groupData) : Group
+    public function edit(object $group ,Array $data) : Group
     {
-        if (isset($groupData['name']))
-            $group->setName($groupData['name']);
+        $this->editEntity($group, $data, 'name', 'studentId','coursesId');
         
-        $this->em->persist($group);
-        $this->em->flush();
-
         return $group;
     }
 }
-?>

@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\GroupRepository;
+use App\Entity\Student;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @ORM\Entity(repositoryClass=GroupRepository::class)
@@ -26,12 +28,14 @@ class Group
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity=Student::class, mappedBy="groupReference")
+     * @ORM\OneToMany(targetEntity=Student::class, mappedBy="group")
+     * @Ignore
      */
     private $student;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Course::class, mappedBy="groupFilter")
+     * @ORM\ManyToMany(targetEntity=Course::class, mappedBy="group")
+     * @Ignore
      */
     private $courses;
 
@@ -70,7 +74,7 @@ class Group
     {
         if (!$this->student->contains($student)) {
             $this->student[] = $student;
-            $student->setGroupReference($this);
+            $student->setGroup($this);
         }
 
         return $this;
@@ -80,8 +84,8 @@ class Group
     {
         if ($this->student->removeElement($student)) {
             // set the owning side to null (unless already changed)
-            if ($student->getGroupReference() === $this) {
-                $student->setGroupReference(null);
+            if ($student->getGroup() === $this) {
+                $student->setGroup(null);
             }
         }
 
@@ -100,7 +104,7 @@ class Group
     {
         if (!$this->courses->contains($course)) {
             $this->courses[] = $course;
-            $course->addGroupFilter($this);
+            $course->addGroup($this);
         }
 
         return $this;
@@ -109,9 +113,31 @@ class Group
     public function removeCourse(Course $course): self
     {
         if ($this->courses->removeElement($course)) {
-            $course->removeGroupFilter($this);
+            $course->removeGroup($this);
         }
 
         return $this;
+    }
+    public function getStudentInfo() : ?array
+    {
+        $studentInfo = [];
+        foreach ($this->student as $student) {
+            $studentInfo[] = [
+                'id' => $student->getId(),
+                'name' => $student->getUser()->getName()
+            ];
+        }
+        return $studentInfo;
+    }
+    public function getCoursesInfo() : ?array
+    {
+        $coursesInfo = [];
+        foreach ($this->courses as $course) {
+            $coursesInfo[] = [
+                'id' => $course->getId(),
+                'title' => $course->getTitle()
+            ];
+        }
+        return $coursesInfo;
     }
 }
