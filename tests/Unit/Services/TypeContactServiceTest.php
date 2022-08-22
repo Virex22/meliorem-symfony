@@ -19,7 +19,7 @@ class TypeContactServiceTest extends KernelTestCase {
         ]);
         $newTypeContact = $typeContactRepository->findBy(['name' => 'TypeContactservicetest 1'])[0];
         $this->assertEquals('TypeContactservicetest 1', $newTypeContact->getName());
-        $typeContactService->update($newTypeContact, [
+        $typeContactService->edit($newTypeContact, [
             'name' => 'TypeContactservicetest 2'
         ]);
         $newTypeContact = $typeContactRepository->findBy(['name' => 'TypeContactservicetest 2'])[0];

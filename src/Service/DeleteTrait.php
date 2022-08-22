@@ -3,6 +3,12 @@ namespace App\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 
+
+/**
+ * TODO : filtrate the relation entity for dependency deleting
+ */
+
+
 trait DeleteTrait
 {
     private function findPlurialsMethodName(string $methodName,object $entity) : string

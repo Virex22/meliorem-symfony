@@ -18,10 +18,11 @@ class QuizRepositoryTest extends KernelTestCase {
         $randomDesc = uniqid("description_");
 
         $quiz = new Quiz();
-        $quiz->setDescription($randomDesc);
-        $quiz->setPublic(true);
-        $quiz->setCreatedAt($date);
-        $quiz->setTimeToPerformAll(10);
+        $quiz->setDescription($randomDesc)
+            ->setPublic(true)
+            ->setCreatedAt($date)
+            ->setTimeToPerformAll(10)
+            ->setTitle("je suis le numero 453");
 
         $quizRepository->add($quiz,true);
         $newQuiz = $quizRepository->findBy(['description' => $randomDesc])[0];

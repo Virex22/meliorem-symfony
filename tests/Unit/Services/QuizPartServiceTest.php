@@ -23,7 +23,8 @@ class QuizPartServiceTest extends KernelTestCase {
         $quiz->setDescription("descriptiontestestest");
         $quiz->setPublic(true)
         ->setCreatedAt(new DateTime())
-        ->setTimeToPerformAll(10452540);
+        ->setTimeToPerformAll(10452540)
+        ->setTitle("je suis le numero 3657452");
         $repositoryQuiz->add($quiz,true);
         $quiz = $repositoryQuiz->findBy(['description' => 'descriptiontestestest'])[0];
 
@@ -34,7 +35,7 @@ class QuizPartServiceTest extends KernelTestCase {
         $repositorySkill->add($skill,true);
         $skill = $repositorySkill->findBy(['name' => 'skilltestestseteststest'])[0];
 
-        $service->createQuizPart([
+        $service->create([
             "question"  => "question35435",
             "choice"  => "choice",
             "answer"  =>  "answer",
@@ -45,7 +46,7 @@ class QuizPartServiceTest extends KernelTestCase {
         ]);
         $quizPart = $repository->findBy(['question' => 'question35435'])[0];
         $this->assertEquals('question35435', $quizPart->getQuestion());
-        $service->updateQuizPart($quizPart, [
+        $service->edit($quizPart, [
             "question"  => "questionedited",
             "choice"  => "choice",
             "answer"  =>  "answer",
@@ -72,7 +73,7 @@ class QuizPartServiceTest extends KernelTestCase {
         $service = $kernel->getContainer()->get(QuizPartService::class);
 
         $this->expectException(\Exception::class);
-        $service->createQuizPart($array);
+        $service->create($array);
     }
 
     public function exceptionProvider() {

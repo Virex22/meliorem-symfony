@@ -13,6 +13,7 @@ class CoursePartDocumentTest extends TestCase
     public function testCoursePartDocumentConstructorGetterAndSetter(){
 
         $coursePart = new CoursePart();
+        $coursePart->setEstimatedTime(5445);
 
         $coursePartDocument = new CoursePartDocument();
 
@@ -26,6 +27,10 @@ class CoursePartDocumentTest extends TestCase
         $this->assertEquals('content', $coursePartDocument->getContent());
         $this->assertEquals('files', $coursePartDocument->getFiles());
         $this->assertEquals($coursePart, $coursePartDocument->getCoursePart());
+        $this->assertContains(5445,$coursePartDocument->getCoursePartInfo());
+
+        $coursePartDocument->setCoursePart(null);
+        $this->assertNull($coursePartDocument->getCoursePartInfo());
     }
 
 }

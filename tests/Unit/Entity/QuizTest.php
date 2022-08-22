@@ -15,11 +15,12 @@ class QuizTest extends TestCase
         $date = new \DateTime();
         $course = new CoursePartQuiz();
         $quiz = new Quiz();
-        $quiz->setDescription("description");
-        $quiz->setPublic(true);
-        $quiz->setCreatedAt($date);
-        $quiz->setTimeToPerformAll(10);
-        $quiz->addCoursePartQuiz($course);
+        $quiz->setDescription("description")
+        ->setTitle("je suis le numero 3738745")
+        ->setPublic(true)
+        ->setCreatedAt($date)
+        ->setTimeToPerformAll(10)
+        ->addCoursePartQuiz($course);
         $this->assertContains($course, $quiz->getCoursePartQuizzes());
         $quiz->removeCoursePartQuiz($course);
         $this->assertNotContains($course, $quiz->getCoursePartQuizzes());

@@ -8,7 +8,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-
+/**
+ * @codeCoverageIgnore
+ */
 class MakeCrudControllerCommand extends Command
 {
     protected static $defaultName = 'make:crudController';
@@ -83,7 +85,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/api/{$kebabCaseName}")
- * */
+ **/
 class $controllerName extends AbstractCRUDController
 {
     protected function getEntityClass(): string

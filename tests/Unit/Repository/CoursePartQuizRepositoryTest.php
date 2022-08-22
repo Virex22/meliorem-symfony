@@ -16,10 +16,11 @@ class CoursePartQuizRepositoryTest extends KernelTestCase {
         $quizRepository = $em->getRepository(Quiz::class);
 
         $quiz = new Quiz();
-        $quiz->setDescription("random quiz test");
-        $quiz->setPublic(true);
-        $quiz->setCreatedAt(new \DateTime());
-        $quiz->setTimeToPerformAll(10);
+        $quiz->setDescription("random quiz test")
+        ->setPublic(true)
+        ->setCreatedAt(new \DateTime())
+        ->setTimeToPerformAll(10)
+        ->setTitle("titletestestest");
         $quizRepository->add($quiz,true);
 
         $coursePartQuiz = new CoursePartQuiz();
@@ -30,6 +31,7 @@ class CoursePartQuizRepositoryTest extends KernelTestCase {
         $coursePartQuizRepository->remove($coursePartQuiz,true);
         $newCoursePartQuiz = $coursePartQuizRepository->findBy(['quiz' => $newQuiz]);
         $this->assertEmpty($newCoursePartQuiz);
+        $quizRepository->remove($quiz,true);
     }
 
 }

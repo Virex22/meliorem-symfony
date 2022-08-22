@@ -17,12 +17,12 @@ class StudentTest extends TestCase
         $student = new Student();
 
         $student->setUser($user)
-            ->setGroupReference($group);
+            ->setGroup($group);
 
         $this->assertNull($student->getId());
         $this->assertNull($student->getUserId());
         $this->assertSame($user, $student->getUser());
-        $this->assertSame($group, $student->getGroupReference());
+        $this->assertSame($group, $student->getGroup());
     }
 
 

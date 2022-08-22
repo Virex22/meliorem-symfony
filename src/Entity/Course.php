@@ -320,10 +320,14 @@ class Course
 
     public function getSpeakerName(): ?string
     {
-        return $this->speaker->getUser()->getFirstname() . " " . $this->speaker->getUser()->getName();
+        if ($this->speaker && $this->speaker->getUser())
+            return $this->speaker->getUser()->getFirstname() . " " . $this->speaker->getUser()->getName();
+        return null;
     }
     public function getSpeakerId(): ?string
     {
-        return $this->speaker->getId();
+        if ($this->speaker)
+            return $this->speaker->getId();
+        return null;
     }
 }

@@ -14,6 +14,7 @@ class CourseSectionTest extends TestCase
     public function testCourseSectionConstructorGetterAndSetter(){
         $coursePart = new CoursePart();
         $course = new Course();
+        $course->setDescription("uniq description for test");
         $courseSection = new CourseSection();
 
         $courseSection->setName('courseSection')
@@ -29,6 +30,11 @@ class CourseSectionTest extends TestCase
         $this->assertEquals('courseSection', $courseSection->getName());
         $this->assertEquals(1, $courseSection->getCourseOrder());
         $this->assertEquals($course, $courseSection->getCourse());
+
+        $this->assertContains('uniq description for test', $courseSection->getCourseInfo());
+
+        $courseSection->setCourse(null);
+        $this->assertNull($courseSection->getCourseInfo());
     }
 
 }

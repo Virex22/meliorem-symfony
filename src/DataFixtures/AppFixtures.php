@@ -2,9 +2,13 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Badge;
 use App\Entity\Contact;
 use App\Entity\Course;
+use App\Entity\CourseCategory;
+use App\Entity\CoursePart;
 use App\Entity\CourseSection;
+use App\Entity\Group;
 use App\Entity\Notification;
 use App\Entity\Quiz;
 use App\Entity\QuizPart;
@@ -45,15 +49,20 @@ class AppFixtures extends Fixture
         $users = [];
         $skills = $this->createSkill(5);
 
+
         $users[]= $this->createStudent(5);
         $users[]= $speakers = $this->createSpeaker(5);
         $users[]= $this->createUser(["ROLE_ADMINISTRATION"],5,"administration");
         $users[]= $this->createUser(["ROLE_SUPERADMIN"],5,"superadmin");
         $buff = $users;
-        $users = [];
+        
+        $users = []; // flat the user array
             foreach ($buff as $user)
-            foreach ($user as $u) 
-                $users[]= $u;
+                foreach ($user as $u) 
+                    $users[]= $u;
+
+        $badges = $this->createBadge(5,$users);
+        
         $quizs = $this->createQuiz(5,$skills);
         $notification = $this->createNotification(5);
         foreach ($notification as $notif)
@@ -65,13 +74,56 @@ class AppFixtures extends Fixture
                 $contacts[] = $this->createContact($this->faker->randomElement($contactTypes) ,$user);
         foreach ($speakers as $speaker)
             $this->createSpeciality($this->faker->numberBetween(1,5),$speaker->getSpeaker());
-        $courses = $this->createCourse(5,$speakers);
-        $courseSection = $this->createCourseSection(10,$courses);
+        $courses = $this->createCourse(15,$speakers);
+        $courseSections = $this->createCourseSection(5,$courses);
+        $this->createCourseCategory(5,$courses);
+        $groups = $this->createGroup(5,$users);
         
-            
-
         $manager->flush();
     }
+
+    public function createGroup(int $count): array
+    {
+        $groups = [];
+        for ($i = 0; $i < $count; $i++) {
+            $group = new Group();
+            $group->setName($this->faker->name);
+            $this->manager->persist($group);
+            $groups[] = $group;
+        }
+        return $groups;
+    }
+
+    public function createCourseCategory(int $count,array $course): array
+    {
+        $categories = [];
+        for ($i = 0; $i < $count; $i++) {
+            $category = new CourseCategory();
+            $category->setName($this->faker->word);
+            $category->setColor($this->faker->hexColor);
+            $category->addCourse($this->faker->randomElement($course));
+            $this->manager->persist($category);
+            $categories[] = $category;
+        }
+        return $categories;
+    }
+
+    public function createBadge(int $count,array $users){
+        $badges = [];
+        for ($i = 0; $i < $count; $i++) {
+            $badge = new Badge();
+            $badge->setName($this->faker->name);
+            $badge->setDescription($this->faker->text);
+            $badge->setImage($this->faker->imageUrl());
+            for ($j = 0; $j < $this->faker->numberBetween(1,5); $j++)
+                $badge->addUser($this->faker->randomElement($users));
+            $this->manager->persist($badge);
+            $badges[] = $badge;
+        }
+        return $badges;
+    }
+
+
     public function createCourseSection(int $count,array $course): array{
         $courseSections = [];
         for ($i=0; $i < $count; $i++) { 
@@ -80,9 +132,25 @@ class AppFixtures extends Fixture
             $courseSection->setCourseOrder($this->faker->numberBetween(1,10));
             $courseSection->setCourse($this->faker->randomElement($course));
             $this->manager->persist($courseSection);
+            $this->createCoursePart($this->faker->numberBetween(1,3),$courseSection);
             $courseSections[] = $courseSection;
         }
         return $courseSections;
+    }
+
+    public function createCoursePart(int $count,CourseSection $courseSection): array{
+        $courseParts = [];
+        for ($i=0; $i < $count; $i++) { 
+            echo "create course part $i\n";
+            $coursePart = new CoursePart();
+            $coursePart->setEstimatedTime($this->faker->numberBetween(1,10));
+            $coursePart->setOrderPart($this->faker->numberBetween(1,10));
+            $coursePart->setCourseSection($courseSection);
+            $coursePart->setTitle($this->faker->sentence(3));
+            $this->manager->persist($coursePart);
+            $courseParts[] = $coursePart;
+        }
+        return $courseParts;
     }
 
     public function createCourse(int $count,array $speakers)
@@ -97,7 +165,7 @@ class AppFixtures extends Fixture
             $course->setLastEditDate($this->faker->dateTimeBetween('-1 years', 'now'));
             $course->setImage($this->faker->imageUrl());
             $course->setIsPublic($this->faker->boolean(50));
-            $course->setSpeaker($speakers[$i]->getSpeaker());
+            $course->setSpeaker($this->faker->randomElement($speakers)->getSpeaker());
             $this->manager->persist($course);
             $courses[] = $course;
         }
