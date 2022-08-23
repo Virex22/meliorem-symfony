@@ -7,13 +7,19 @@ use App\Entity\Contact;
 use App\Entity\Course;
 use App\Entity\CourseCategory;
 use App\Entity\CoursePart;
+use App\Entity\CoursePartDocument;
+use App\Entity\CoursePartQuiz;
 use App\Entity\CourseSection;
+use App\Entity\FavoriteCourse;
 use App\Entity\Group;
 use App\Entity\Notification;
 use App\Entity\Quiz;
 use App\Entity\QuizPart;
+use App\Entity\QuizPartPerform;
+use App\Entity\ReadLater;
 use App\Entity\ReceivedNotification;
 use App\Entity\Skill;
+use App\Entity\SkillUserXP;
 use App\Entity\Speaker;
 use App\Entity\Speciality;
 use App\Entity\TypeContact;
@@ -63,7 +69,7 @@ class AppFixtures extends Fixture
 
         $badges = $this->createBadge(5,$users);
         
-        $quizs = $this->createQuiz(5,$skills);
+        [$quizs,$quizParts] = $this->createQuiz(15,$skills);
         $notification = $this->createNotification(5);
         foreach ($notification as $notif)
             $this->createReceivedNotification($this->faker->numberBetween(1,5) ,$notif,$this->faker->randomElement($users));
@@ -74,12 +80,77 @@ class AppFixtures extends Fixture
                 $contacts[] = $this->createContact($this->faker->randomElement($contactTypes) ,$user);
         foreach ($speakers as $speaker)
             $this->createSpeciality($this->faker->numberBetween(1,5),$speaker->getSpeaker());
-        $courses = $this->createCourse(15,$speakers);
-        $courseSections = $this->createCourseSection(5,$courses);
-        $this->createCourseCategory(5,$courses);
         $groups = $this->createGroup(5,$users);
+        $courses = $this->createCourse(5,$speakers,$groups);
+        $this->createCourseCategory(5,$courses);
+        $courseSections = $this->createCourseSection(20,$courses,$quizs);
+
+        $this->createReadLater(25,$users,$courses);
+        $this->createFavoriteCourse(25,$users,$courses);
+        $this->createSkillUserXP(25,$users,$skills);
+        $this->createQuizPartPerform(25,$users,$quizParts);
         
         $manager->flush();
+    }
+
+     public function createQuizPartPerform(int $count,array $users, array $quizParts ): array
+     {
+         $quizPartPerforms = [];
+         for ($i=0; $i < $count; $i++) { 
+            echo "create quiz part perform : $i\n";
+             $quizPartPerform = new QuizPartPerform();
+             $quizPartPerform->setQuizPart($this->faker->randomElement($quizParts));
+             $quizPartPerform->setUser($this->faker->randomElement($users));
+             $quizPartPerform->setScore($this->faker->numberBetween(0,100));
+             $quizPartPerform->setTimeToResponse($this->faker->numberBetween(0,100));
+             $quizPartPerform->setDate($this->faker->dateTimeBetween('-1 years'));
+             $this->manager->persist($quizPartPerform);
+             $quizPartPerforms[] = $quizPartPerform;
+         }
+         return $quizPartPerforms;
+     }
+
+    public function createSkillUserXP(int $count,array $users, array $skills): array
+    {
+        $skillUserXPs = [];
+        for ($i = 0; $i < $count; $i++) {
+            echo "create skill user xp : $i\n";
+            $skillUserXP = new SkillUserXP();
+            $skillUserXP->setSkill($this->faker->randomElement($skills));
+            $skillUserXP->setUser($this->faker->randomElement($users));
+            $skillUserXP->setXp($this->faker->numberBetween(0,100));
+            $this->manager->persist($skillUserXP);
+            $skillUserXPs[] = $skillUserXP;
+        }
+        return $skillUserXPs;
+    }
+
+    public function createReadLater(int $count,array $users,array $courses): array
+    {
+        $readLaters = [];
+        for ($i=0; $i < $count; $i++) { 
+            echo "create ReadLater : $i\n";
+            $readLater = new ReadLater();
+            $readLater->setUser($this->faker->randomElement($users))
+            ->setCourse($this->faker->randomElement($courses))
+            ->setAddDate($this->faker->dateTimeBetween('-1 years','now'))
+            ->setPositionOrder($this->faker->numberBetween(1,100));
+            $this->manager->persist($readLater);
+            $readLaters[] = $readLater;
+        }
+        return $readLaters;
+    }
+
+    public function createFavoriteCourse(int $count,array $users,array $courses): void
+    {
+        for ($i = 0; $i < $count; $i++) {
+            echo "create FavoriteCourse : $i\n";
+            $favoriteCourse = new FavoriteCourse();
+            $favoriteCourse->setCourse($this->faker->randomElement($courses))
+                ->setUser($this->faker->randomElement($users))
+                ->setAddDate($this->faker->dateTimeBetween('-1 years', 'now'));
+            $this->manager->persist($favoriteCourse);
+        }
     }
 
     public function createGroup(int $count): array
@@ -111,6 +182,7 @@ class AppFixtures extends Fixture
     public function createBadge(int $count,array $users){
         $badges = [];
         for ($i = 0; $i < $count; $i++) {
+            echo "create Badge : $i\n";
             $badge = new Badge();
             $badge->setName($this->faker->name);
             $badge->setDescription($this->faker->text);
@@ -124,40 +196,58 @@ class AppFixtures extends Fixture
     }
 
 
-    public function createCourseSection(int $count,array $course): array{
+    public function createCourseSection(int $count,array $course,array $quiz): array{
         $courseSections = [];
         for ($i=0; $i < $count; $i++) { 
+            echo "create CourseSection : $i\n";
             $courseSection = new CourseSection();
             $courseSection->setName($this->faker->sentence(3));
             $courseSection->setCourseOrder($this->faker->numberBetween(1,10));
             $courseSection->setCourse($this->faker->randomElement($course));
             $this->manager->persist($courseSection);
-            $this->createCoursePart($this->faker->numberBetween(1,3),$courseSection);
+            $this->createCoursePart($this->faker->numberBetween(1,3),$courseSection,$quiz);
             $courseSections[] = $courseSection;
         }
         return $courseSections;
     }
+    public function createCoursePartDocument() : CoursePartDocument{
+        $coursePartDocument = new CoursePartDocument();
+        $coursePartDocument->setContent($this->faker->text)
+        ->setFiles("/path/to/file")
+        ->setLinkVideo($this->faker->url);
+        return $coursePartDocument;
+    }
+    public function createCoursePartQuiz(array $quiz) : CoursePartQuiz{
+        $coursePartQuiz = new CoursePartQuiz();
+        $coursePartQuiz->setQuiz($this->faker->randomElement($quiz));
+        return $coursePartQuiz;
+    }
 
-    public function createCoursePart(int $count,CourseSection $courseSection): array{
+    public function createCoursePart(int $count,CourseSection $courseSection,array $quiz): array{
         $courseParts = [];
         for ($i=0; $i < $count; $i++) { 
-            echo "create course part $i\n";
+            echo "create course part : $i\n";
             $coursePart = new CoursePart();
             $coursePart->setEstimatedTime($this->faker->numberBetween(1,10));
             $coursePart->setOrderPart($this->faker->numberBetween(1,10));
             $coursePart->setCourseSection($courseSection);
             $coursePart->setTitle($this->faker->sentence(3));
+            if ($this->faker->boolean(75))
+                $coursePart->setCoursePartDocument($this->createCoursePartDocument());
+            else
+                $coursePart->setCoursePartQuiz($this->createCoursePartQuiz($quiz));
+
             $this->manager->persist($coursePart);
             $courseParts[] = $coursePart;
         }
         return $courseParts;
     }
 
-    public function createCourse(int $count,array $speakers)
+    public function createCourse(int $count,array $speakers, array $groups)
     {
         $courses = [];
         for ($i = 0; $i < $count; $i++) {
-            echo "Creating course : ".$i."\n";
+            echo "Creating course : $i\n";
             $course = new Course();
             $course->setTitle($this->faker->sentence(3));
             $course->setDescription($this->faker->text(200));
@@ -166,6 +256,8 @@ class AppFixtures extends Fixture
             $course->setImage($this->faker->imageUrl());
             $course->setIsPublic($this->faker->boolean(50));
             $course->setSpeaker($this->faker->randomElement($speakers)->getSpeaker());
+            for ($j = 0; $j < $this->faker->numberBetween(1,5); $j++)
+                $course->addGroup($this->faker->randomElement($groups));
             $this->manager->persist($course);
             $courses[] = $course;
         }
@@ -260,7 +352,9 @@ class AppFixtures extends Fixture
         return $receivedNotifications;
     }
 
-    public function createQuiz(int $count, array $skills){
+    public function createQuiz(int $count, array $skills) : array{
+        $quizzes = [];
+        $quizParts = [];
         for ($i=0; $i < $count; $i++) { 
             $quizPartCount = $this->faker->numberBetween(1,10);
             echo "Creating quiz $i with $quizPartCount quiz part \n";
@@ -271,13 +365,21 @@ class AppFixtures extends Fixture
             ->setCreatedAt($this->faker->dateTime)
             ->setTimeToPerformAll($this->faker->numberBetween(100,1000));
             
-            $this->createQuizPart($quiz,$quizPartCount,$skills);
+            $quizParts[] = $this->createQuizPart($quiz,$quizPartCount,$skills);
 
             $this->manager->persist($quiz);
+            $quizzes[] = $quiz;
         }
+        $buff = $quizParts;
+        $quizParts = [];
+        foreach ($buff as $quiz)
+                foreach ($quiz as $q) 
+                    $quizParts[]= $q;
+        return [$quizzes, $quizParts];
     }
 
-    public function createQuizPart(Quiz $quiz, int $count,array $skills){
+    public function createQuizPart(Quiz $quiz, int $count,array $skills) : array{
+        $quizParts = [];
         for ($i=0; $i < $count; $i++) { 
             $quizPart = new QuizPart();
             $quizPart->setQuestion($this->faker->paragraph)
@@ -300,8 +402,9 @@ class AppFixtures extends Fixture
             ->setQuiz($quiz);
 
             $this->manager->persist($quizPart);
+            $quizParts[] = $quizPart;
         }
-        return;
+        return $quizParts;
     }
 
     public function createUser($role,$count,$mailPrefix){
@@ -313,7 +416,7 @@ class AppFixtures extends Fixture
             ->setRoles($role)
             ->setFirstname($this->faker->firstName())
             ->setName($this->faker->name())
-            ->setImage("https://picsum.photos/1000/700")
+            ->setImage("https://picsum.photos/id/". $this->faker->numberBetween(1,1000) ."/500/500")
             ->setPassword($this->hasher->hashPassword($user, 'azerty'));
 
             $returnUsers[] = $user;
@@ -331,7 +434,7 @@ class AppFixtures extends Fixture
             ->setRoles(["ROLE_STUDENT"])
             ->setFirstname($this->faker->firstName())
             ->setName($this->faker->name())
-            ->setImage("https://picsum.photos/1000/700")
+            ->setImage("https://picsum.photos/id/". $this->faker->numberBetween(1,1000) ."/500/500")
             ->setPassword($this->hasher->hashPassword($user, 'azerty'));
 
             $this->userService->createPair($user);
@@ -350,7 +453,7 @@ class AppFixtures extends Fixture
             ->setRoles(["ROLE_SPEAKER"])
             ->setFirstname($this->faker->firstName())
             ->setName($this->faker->name())
-            ->setImage("https://picsum.photos/1000/700")
+            ->setImage("https://picsum.photos/id/". $this->faker->numberBetween(1,1000) ."/500/500")
             ->setPassword($this->hasher->hashPassword($user, 'azerty'));
 
             $this->userService->createPair($user);

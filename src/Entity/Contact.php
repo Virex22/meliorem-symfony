@@ -109,9 +109,9 @@ class Contact
         if (!$this->user) return null;
         return [
             "email" => $this->user->getEmail(),
-            "roles" => $this->user->getRoles(),
             "name" => $this->user->getName(),
-            "firstname" => $this->user->getFirstname()
+            "firstname" => $this->user->getFirstname(),
+            "image" => $this->user->getImage(),
         ];
     }
 }
