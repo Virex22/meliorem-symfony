@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\QuizPartPerformRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @ORM\Entity(repositoryClass=QuizPartPerformRepository::class)
@@ -35,6 +36,7 @@ class QuizPartPerform
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="quizPartPerforms")
+     * @Ignore
      */
     private $user;
 
@@ -106,5 +108,12 @@ class QuizPartPerform
         $this->quizPart = $quizPart;
 
         return $this;
+    }
+    public function getUserId(): ?int
+    {
+        if ($this->user) {
+            return $this->user->getId();
+        }
+        return null;
     }
 }

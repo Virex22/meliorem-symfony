@@ -35,6 +35,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Ignore
      */
     private $password;
 
@@ -88,11 +89,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=ReadLater::class, mappedBy="user")
+     * @Ignore
      */
     private $readLaters;
 
     /**
      * @ORM\OneToMany(targetEntity=FavoriteCourse::class, mappedBy="user")
+     * @Ignore
      */
     private $favoriteCourses;
 

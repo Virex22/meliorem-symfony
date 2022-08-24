@@ -63,9 +63,6 @@ class UserDTO
             'image' => $this->image,
             'badges' => $this->badges,
             'skillUserXPs' => $this->skillUserXPs,
-            'quizPartPerforms' => $this->quizPartPerforms,
-            'readLaters' => $this->readLaters,
-            'favoriteCourses' => $this->favoriteCourses,
         ];
     }
 }

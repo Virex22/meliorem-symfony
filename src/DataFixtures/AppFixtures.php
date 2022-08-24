@@ -82,7 +82,7 @@ class AppFixtures extends Fixture
             $this->createSpeciality($this->faker->numberBetween(1,5),$speaker->getSpeaker());
         $groups = $this->createGroup(5,$users);
         $courses = $this->createCourse(5,$speakers,$groups);
-        $this->createCourseCategory(5,$courses);
+        $this->createCourseCategory(15,$courses);
         $courseSections = $this->createCourseSection(20,$courses,$quizs);
 
         $this->createReadLater(25,$users,$courses);

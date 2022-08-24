@@ -52,6 +52,7 @@ class Course
 
     /**
      * @ORM\OneToMany(targetEntity=FavoriteCourse::class, mappedBy="course")
+     * @Ignore
      */
     private $favoriteCourses;
 
@@ -79,6 +80,7 @@ class Course
 
     /**
      * @ORM\ManyToMany(targetEntity=CourseCategory::class, inversedBy="courses")
+     * @Ignore
      */
     private $courseCategory;
 
@@ -329,5 +331,15 @@ class Course
         if ($this->speaker)
             return $this->speaker->getId();
         return null;
+    }
+
+    public function getCourseCategoryName(): ?array
+    {
+        if (empty($this->courseCategory))
+            return null;
+        $courseCategoryName = [];
+        foreach ($this->courseCategory as $courseCategory)
+            $courseCategoryName[] = $courseCategory->getName();
+        return $courseCategoryName;
     }
 }
