@@ -23,6 +23,14 @@ class SpecialityController extends AbstractCRUDController
     {
         return $this->getAll();
     }
+    
+    /**
+     * @Route("/{elemCount}/{pageCount}", name="speciality page", methods={"GET"})
+     */
+    public function getAllWithPage(int $elemCount,int $pageCount): JsonResponse
+    {
+        return $this->getAll($elemCount,$pageCount);
+    }
     /**
      * @Route("/{id}", name="speciality show", methods={"GET"})
      */

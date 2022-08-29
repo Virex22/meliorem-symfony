@@ -24,6 +24,13 @@ class QuizPartController extends AbstractCRUDController
         return $this->getAll();
     }
     /**
+     * @Route("/{elemCount}/{pageCount}", name="quizPart page", methods={"GET"})
+     */
+    public function getAllWithPage(int $elemCount,int $pageCount): JsonResponse
+    {
+        return $this->getAll($elemCount,$pageCount);
+    }
+    /**
      * @Route("/{id}", name="quizPart show", methods={"GET"})
      */
     public function show(int $id): JsonResponse

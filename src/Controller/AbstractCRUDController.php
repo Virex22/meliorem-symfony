@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\QuizRepository;
 use App\Service\IService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,10 +31,22 @@ abstract class AbstractCRUDController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    public function getAll() : JsonResponse
+    public function getAll(?int $elementCount = null, ?int $pageCount = null) : JsonResponse
     {
         $repository = $this->entityManager->getRepository($this->getEntityClass());
-        return $this->json($repository->findAll());
+        
+        if ($elementCount && $pageCount){
+            $totalCount = $repository->createQueryBuilder('u')
+                ->select('count(u.id)')
+                ->getQuery()
+                ->getSingleScalarResult();
+            $entities = $repository->findBy([], [], $elementCount, ($pageCount-1)*$elementCount);
+            $maxPage = ceil($totalCount / $elementCount);
+            return $this->json(["MaxPage" => $maxPage ,$entities]);
+        }
+        $entities = $repository->findAll();
+        return $this->json($entities);
+        
     }
 
     public function getById(int $id) : JsonResponse

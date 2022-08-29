@@ -142,7 +142,7 @@ class ControllerGetTest extends WebTestCase
             "data" => [
                 "name" => "test",
                 "studentId" => [$this->getEntityId(Student::class)],
-                "coursesId" => $this->getEntityId(Course::class),
+                "courseId" => $this->getEntityId(Course::class),
             ]
             ]];
         yield [[

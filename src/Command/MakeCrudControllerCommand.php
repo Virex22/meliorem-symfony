@@ -100,6 +100,13 @@ class $controllerName extends AbstractCRUDController
         return \$this->getAll();
     }
     /**
+     * @Route("/{elemCount}/{pageCount}", name="$camelCaseName page", methods={"GET"})
+     */
+    public function getAllWithPage(int \$elemCount,int \$pageCount): JsonResponse
+    {
+        return $this->getAll(\$elemCount,\$pageCount);
+    }
+    /**
      * @Route("/{id}", name="$camelCaseName show", methods={"GET"})
      */
     public function show(int \$id): JsonResponse

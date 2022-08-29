@@ -46,6 +46,38 @@ class UserController extends AbstractController
         return $this->json($usersDTO, Response::HTTP_OK);
     }
     /**
+     * @Route("/{elemCount}/{pageCount}", name="badge page", methods={"GET"})
+     */
+    public function getAllWithPage(?int $elemCount,?int $pageCount,UserRepository $userRepository): JsonResponse
+    {
+        
+        if ($elemCount && $pageCount){
+            $totalCount = $userRepository->createQueryBuilder('u')
+                ->select('count(u.id)')
+                ->getQuery()
+                ->getSingleScalarResult();
+            $usersDTO = [];
+            $users = $userRepository->findBy([], [], $elemCount, ($pageCount-1)*$elemCount);
+            $maxPage = ceil($totalCount / $elemCount);
+            foreach ($users as $user)
+            {
+                $userDTO = new UserDTO();
+                $userDTO->hydrate($user);
+                $usersDTO[] = $userDTO->getData();
+            }
+            return $this->json(["MaxPage" => $maxPage ,$usersDTO], Response::HTTP_OK);
+        }
+        $users = $userRepository->findAll();
+        $usersDTO = [];
+        foreach ($users as $user)
+        {
+            $userDTO = new UserDTO();
+            $userDTO->hydrate($user);
+            $usersDTO[] = $userDTO->getData();
+        }
+        return $this->json($usersDTO, Response::HTTP_OK);
+    }
+    /**
      * @Route("/{id}", name="user show", methods={"GET"})
      */
     public function show(?User $user): JsonResponse

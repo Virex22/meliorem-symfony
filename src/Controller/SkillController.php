@@ -32,6 +32,13 @@ class SkillController extends AbstractCRUDController
         return $this->getById($id);
     }
     /**
+     * @Route("/{elemCount}/{pageCount}", name="skill page", methods={"GET"})
+     */
+    public function getAllWithPage(int $elemCount,int $pageCount): JsonResponse
+    {
+        return $this->getAll($elemCount,$pageCount);
+    }
+    /**
      * @Route("/{id}", name="skill remove", methods={"DELETE"})
      */
     public function remove(int $id): JsonResponse
