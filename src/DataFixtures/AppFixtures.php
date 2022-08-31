@@ -217,9 +217,11 @@ class AppFixtures extends Fixture
         ->setLinkVideo($this->faker->url);
         return $coursePartDocument;
     }
-    public function createCoursePartQuiz(array $quiz) : CoursePartQuiz{
+    public function createCoursePartQuiz(array $quiz) : ?CoursePartQuiz{
+        static $i = 0;
+        if ($i-1 == count($quiz)) return null;
         $coursePartQuiz = new CoursePartQuiz();
-        $coursePartQuiz->setQuiz($this->faker->randomElement($quiz));
+        $coursePartQuiz->setQuiz($quiz[$i++]);
         return $coursePartQuiz;
     }
 
@@ -234,8 +236,13 @@ class AppFixtures extends Fixture
             $coursePart->setTitle($this->faker->sentence(3));
             if ($this->faker->boolean(75))
                 $coursePart->setCoursePartDocument($this->createCoursePartDocument());
-            else
-                $coursePart->setCoursePartQuiz($this->createCoursePartQuiz($quiz));
+            else{
+                $quizPart = $this->createCoursePartQuiz($quiz);
+                if ($quizPart) 
+                    $coursePart->setCoursePartQuiz($quizPart);
+                else
+                    $coursePart->setCoursePartDocument($this->createCoursePartDocument());
+            }
 
             $this->manager->persist($coursePart);
             $courseParts[] = $coursePart;

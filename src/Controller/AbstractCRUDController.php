@@ -11,8 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Service\DeleteTrait;
 
-use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
-
 abstract class AbstractCRUDController extends AbstractController
 {
     private $entityManager;

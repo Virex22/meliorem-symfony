@@ -104,7 +104,7 @@ class $controllerName extends AbstractCRUDController
      */
     public function getAllWithPage(int \$elemCount,int \$pageCount): JsonResponse
     {
-        return $this->getAll(\$elemCount,\$pageCount);
+        return \$this->getAll(\$elemCount,\$pageCount);
     }
     /**
      * @Route("/{id}", name="$camelCaseName show", methods={"GET"})
