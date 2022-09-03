@@ -48,18 +48,20 @@ class AppFixtures extends Fixture
         $this->faker = Factory::create('fr_FR');
         $this->userService = $userService;
     }
-
+    
     public function load(ObjectManager $manager): void
     {
+        define("USER_COUNT", 100);
+
         $this->manager = $manager;
         $users = [];
-        $skills = $this->createSkill(5);
+        $skills = $this->createSkill(50);
 
 
-        $users[]= $this->createStudent(5);
-        $users[]= $speakers = $this->createSpeaker(5);
-        $users[]= $this->createUser(["ROLE_ADMINISTRATION"],5,"administration");
-        $users[]= $this->createUser(["ROLE_SUPERADMIN"],5,"superadmin");
+        $users[]= $this->createStudent(USER_COUNT / 4);
+        $users[]= $speakers = $this->createSpeaker(USER_COUNT / 4);
+        $users[]= $this->createUser(["ROLE_ADMINISTRATION"],USER_COUNT / 4,"administration");
+        $users[]= $this->createUser(["ROLE_SUPERADMIN"],USER_COUNT / 4,"superadmin");
         $buff = $users;
         
         $users = []; // flat the user array
@@ -67,28 +69,28 @@ class AppFixtures extends Fixture
                 foreach ($user as $u) 
                     $users[]= $u;
 
-        $badges = $this->createBadge(5,$users);
+        $badges = $this->createBadge(15,$users);
         
-        [$quizs,$quizParts] = $this->createQuiz(15,$skills);
-        $notification = $this->createNotification(5);
+        [$quizs,$quizParts] = $this->createQuiz(200,$skills);
+        $notification = $this->createNotification(250);
         foreach ($notification as $notif)
-            $this->createReceivedNotification($this->faker->numberBetween(1,5) ,$notif,$this->faker->randomElement($users));
-        $contactTypes = $this->createContactType(5);
+            $this->createReceivedNotification($this->faker->numberBetween(1,20) ,$notif,$this->faker->randomElement($users));
+        $contactTypes = $this->createContactType(10);
         $contacts = [];
         foreach ($users as $user)
-            if ($this->faker->boolean(40))
+            if ($this->faker->boolean(70))
                 $contacts[] = $this->createContact($this->faker->randomElement($contactTypes) ,$user);
         foreach ($speakers as $speaker)
             $this->createSpeciality($this->faker->numberBetween(1,5),$speaker->getSpeaker());
-        $groups = $this->createGroup(5,$users);
-        $courses = $this->createCourse(5,$speakers,$groups);
+        $groups = $this->createGroup(15,$users);
+        $courses = $this->createCourse(125,$speakers,$groups);
         $this->createCourseCategory(15,$courses);
-        $courseSections = $this->createCourseSection(20,$courses,$quizs);
+        $courseSections = $this->createCourseSection(200,$courses,$quizs);
 
-        $this->createReadLater(25,$users,$courses);
-        $this->createFavoriteCourse(25,$users,$courses);
-        $this->createSkillUserXP(25,$users,$skills);
-        $this->createQuizPartPerform(25,$users,$quizParts);
+        $this->createReadLater(250,$users,$courses);
+        $this->createFavoriteCourse(250,$users,$courses);
+        $this->createSkillUserXP(250,$users,$skills);
+        $this->createQuizPartPerform(250,$users,$quizParts);
         
         $manager->flush();
     }

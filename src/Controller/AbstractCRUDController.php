@@ -40,7 +40,7 @@ abstract class AbstractCRUDController extends AbstractController
                 ->getSingleScalarResult();
             $entities = $repository->findBy([], [], $elementCount, ($pageCount-1)*$elementCount);
             $maxPage = ceil($totalCount / $elementCount);
-            return $this->json(["MaxPage" => $maxPage ,$entities]);
+            return $this->json(["totalPage" => $maxPage ,"data" => $entities]);
         }
         $entities = $repository->findAll();
         return $this->json($entities);

@@ -63,7 +63,7 @@ class UserController extends AbstractController
             $userDTO->hydrate($user);
             $usersDTO[] = $userDTO->getData();
         }
-        return $this->json(["MaxPage" => $maxPage ,$usersDTO], Response::HTTP_OK);
+        return $this->json(["totalPage" => $maxPage ,"data" => $usersDTO], Response::HTTP_OK);
     }
     /**
      * @Route("/{id}", name="user show", methods={"GET"})
