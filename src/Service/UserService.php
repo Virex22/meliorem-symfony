@@ -73,14 +73,20 @@ class UserService
             throw new \Exception('First name is required');
         if (empty($parameters['name']))
             throw new \Exception('Last name is required');
-        if (empty($parameters['roles']))
-            throw new \Exception('Role is required');
 
         $user->setEmail($parameters['email']);
         $user->setPassword($parameters['password']);
         $user->setFirstName($parameters['firstname']);
         if (isset($parameters['image']))
             $user->setImage($parameters['image']);
+        if (isset($parameters['createdAt']))
+            $user->setCreatedAt($parameters['createdAt']);
+        else 
+            $user->setCreatedAt(new \DateTime());
+        if (isset($parameters['activated']))
+            $user->setActivated($parameters['activated']);
+        else
+            $user->setActivated(false);
         $user->setName($parameters['name']);
         $user->setRoles($parameters['roles']);
         if(in_array('ROLE_STUDENT', $parameters['roles']))
@@ -112,6 +118,8 @@ class UserService
             $user->setRoles($parameters['roles']);
             $this->createPair($user);
         }
+        if (isset($parameters['activated']))
+            $user->setActivated($parameters['activated']);
         $this->em->persist($user);
         $this->em->flush();
         return $user;

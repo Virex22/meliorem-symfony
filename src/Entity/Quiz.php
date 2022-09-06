@@ -54,6 +54,11 @@ class Quiz
      */
     private $title;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Speaker::class, inversedBy="quizzes")
+     */
+    private $speaker;
+
     public function __construct()
     {
         $this->quizParts = new ArrayCollection();
@@ -183,5 +188,24 @@ class Quiz
         $this->title = $title;
 
         return $this;
+    }
+
+    public function getSpeaker(): ?Speaker
+    {
+        return $this->speaker;
+    }
+
+    public function setSpeaker(?Speaker $speaker): self
+    {
+        $this->speaker = $speaker;
+
+        return $this;
+    }
+
+    public function getSpeakerName(): ?string
+    {
+        if ($this->speaker === null ||$this->speaker->getUser() === null)
+            return null;
+        return $this->speaker->getUser()->getFirstname() . ' ' . $this->speaker->getUser()->getName();
     }
 }

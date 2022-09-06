@@ -76,4 +76,11 @@ class Student
             'name' => $this->group->getName()
         ];
     }
+
+    public function getGroupName() : ?string
+    {
+        if (!$this->group)
+            return null;
+        return $this->group->getName();
+    }
 }

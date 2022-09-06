@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ReceivedNotificationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @ORM\Entity(repositoryClass=ReceivedNotificationRepository::class)
@@ -29,6 +30,7 @@ class ReceivedNotification
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="receivedNotifications")
+     * @Ignore
      */
     private $user;
 
@@ -71,5 +73,12 @@ class ReceivedNotification
         $this->user = $user;
 
         return $this;
+    }
+
+    public function getUserId(): ?int
+    {
+        if ($this->user === null)
+            return null;
+        return $this->user->getId();
     }
 }
