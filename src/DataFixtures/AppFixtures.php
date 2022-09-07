@@ -75,7 +75,7 @@ class AppFixtures extends Fixture
 
         $badges = $this->createBadge(15,$users);
         
-        [$quizs,$quizParts] = $this->createQuiz(200,$skills,$speakers);
+        [$quizs,$quizParts] = $this->createQuiz(100,$skills,$speakers);
         $notification = $this->createNotification(250);
         foreach ($notification as $notif)
             $this->createReceivedNotification($this->faker->numberBetween(1,20) ,$notif,$this->faker->randomElement($users));
@@ -88,14 +88,15 @@ class AppFixtures extends Fixture
             $this->createSpeciality($this->faker->numberBetween(1,5),$speaker->getSpeaker());
         $courses = $this->createCourse(125,$speakers,$groups);
         $this->createCourseCategory(15,$courses);
-        $courseSections = $this->createCourseSection(200,$courses,$quizs);
+        $courseSections = $this->createCourseSection(100,$courses,$quizs);
 
-        $this->createReadLater(250,$users,$courses);
-        $this->createFavoriteCourse(250,$users,$courses);
-        $this->createSkillUserXP(250,$users,$skills);
-        $this->createQuizPartPerform(250,$users,$quizParts);
+        $this->createReadLater(100,$users,$courses);
+        $this->createFavoriteCourse(100,$users,$courses);
+        $this->createSkillUserXP(100,$users,$skills);
+        $this->createQuizPartPerform(100,$users,$quizParts);
+
+        $this->manager->flush();
         
-        $manager->flush();
     }
 
      public function createQuizPartPerform(int $count,array $users, array $quizParts ): array

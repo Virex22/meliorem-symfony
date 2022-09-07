@@ -47,6 +47,7 @@ class ControllerGetTest extends WebTestCase
 
 
     public function provideUrls(){
+        
         yield [[
             "path" => 'badge',
             "class" => Badge::class,
@@ -160,6 +161,7 @@ class ControllerGetTest extends WebTestCase
                 "description" => "test",
                 "public" => true,
                 "timeToPerformAll" => 245,
+                "speakerId" => $this->getEntityId(Speaker::class),
             ],
             "edit-data" => ["title" => "test2"]
             ]];

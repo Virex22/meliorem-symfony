@@ -73,6 +73,8 @@ class UserService
             throw new \Exception('First name is required');
         if (empty($parameters['name']))
             throw new \Exception('Last name is required');
+        if (empty($parameters['roles']))
+            throw new \Exception('Roles name is required');
 
         $user->setEmail($parameters['email']);
         $user->setPassword($parameters['password']);

@@ -21,7 +21,9 @@ class SpeakerRepositoryTest extends KernelTestCase {
             ->setRoles(["ROLE_USER", "ROLE_SUPERADMIN"])
             ->setName("test")
             ->setFirstName("test")
-            ->setImage("test");
+            ->setImage("test")
+            ->setActivated(true)
+            ->setCreatedAt(new \DateTime());
         $userRepository->add($user,true);
 
         $speaker = new Speaker();
