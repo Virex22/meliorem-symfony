@@ -11,6 +11,7 @@ class testRouteTest extends WebTestCase
 
     public function testPing()
     {
+        self::ensureKernelShutdown();
         $client = static::createClient();
         $client->request('GET', 'http://localhost:8000/api/test/ping');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());

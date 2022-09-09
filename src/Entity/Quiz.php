@@ -6,6 +6,7 @@ use App\Repository\QuizRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @ORM\Entity(repositoryClass=QuizRepository::class)
@@ -53,6 +54,12 @@ class Quiz
      * @ORM\Column(type="string", length=255)
      */
     private $title;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Speaker::class, inversedBy="quizzes")
+     * @Ignore
+     */
+    private $speaker;
 
     public function __construct()
     {
@@ -183,5 +190,24 @@ class Quiz
         $this->title = $title;
 
         return $this;
+    }
+
+    public function getSpeaker(): ?Speaker
+    {
+        return $this->speaker;
+    }
+
+    public function setSpeaker(?Speaker $speaker): self
+    {
+        $this->speaker = $speaker;
+
+        return $this;
+    }
+
+    public function getSpeakerName(): ?string
+    {
+        if ($this->speaker === null ||$this->speaker->getUser() === null)
+            return null;
+        return $this->speaker->getUser()->getFirstname() . ' ' . $this->speaker->getUser()->getName();
     }
 }

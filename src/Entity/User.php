@@ -104,6 +104,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $speaker;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $activated;
+
 
     public function __construct()
     {
@@ -479,6 +489,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->speaker = $speaker;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function isActivated(): ?bool
+    {
+        return $this->activated;
+    }
+
+    public function setActivated(bool $activated): self
+    {
+        $this->activated = $activated;
 
         return $this;
     }

@@ -20,6 +20,8 @@ class FavoriteCourseRepositoryTest extends KernelTestCase {
             ->setRoles(["ROLE_USER", "ROLE_SUPERADMIN"])
             ->setName("test")
             ->setFirstName("test")
+            ->setActivated(true)
+            ->setCreatedAt(new \DateTime())
             ->setImage("test");
         $date = new \DateTime();
         $userRepository->add($user,true);

@@ -56,13 +56,17 @@ class AppFixtures extends Fixture
         $this->manager = $manager;
         $users = [];
         $skills = $this->createSkill(50);
+        $groups = $this->createGroup(15,$users);
 
 
-        $users[]= $this->createStudent(USER_COUNT / 4);
+        $users[]= $students = $this->createStudent(USER_COUNT / 4);
         $users[]= $speakers = $this->createSpeaker(USER_COUNT / 4);
         $users[]= $this->createUser(["ROLE_ADMINISTRATION"],USER_COUNT / 4,"administration");
         $users[]= $this->createUser(["ROLE_SUPERADMIN"],USER_COUNT / 4,"superadmin");
         $buff = $users;
+
+        foreach ($students as $student)
+            $student->getStudent()->setGroup($this->faker->randomElement($groups));
         
         $users = []; // flat the user array
             foreach ($buff as $user)
@@ -71,7 +75,7 @@ class AppFixtures extends Fixture
 
         $badges = $this->createBadge(15,$users);
         
-        [$quizs,$quizParts] = $this->createQuiz(200,$skills);
+        [$quizs,$quizParts] = $this->createQuiz(100,$skills,$speakers);
         $notification = $this->createNotification(250);
         foreach ($notification as $notif)
             $this->createReceivedNotification($this->faker->numberBetween(1,20) ,$notif,$this->faker->randomElement($users));
@@ -82,17 +86,17 @@ class AppFixtures extends Fixture
                 $contacts[] = $this->createContact($this->faker->randomElement($contactTypes) ,$user);
         foreach ($speakers as $speaker)
             $this->createSpeciality($this->faker->numberBetween(1,5),$speaker->getSpeaker());
-        $groups = $this->createGroup(15,$users);
         $courses = $this->createCourse(125,$speakers,$groups);
         $this->createCourseCategory(15,$courses);
-        $courseSections = $this->createCourseSection(200,$courses,$quizs);
+        $courseSections = $this->createCourseSection(100,$courses,$quizs);
 
-        $this->createReadLater(250,$users,$courses);
-        $this->createFavoriteCourse(250,$users,$courses);
-        $this->createSkillUserXP(250,$users,$skills);
-        $this->createQuizPartPerform(250,$users,$quizParts);
+        $this->createReadLater(100,$users,$courses);
+        $this->createFavoriteCourse(100,$users,$courses);
+        $this->createSkillUserXP(100,$users,$skills);
+        $this->createQuizPartPerform(100,$users,$quizParts);
+
+        $this->manager->flush();
         
-        $manager->flush();
     }
 
      public function createQuizPartPerform(int $count,array $users, array $quizParts ): array
@@ -161,6 +165,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < $count; $i++) {
             $group = new Group();
             $group->setName($this->faker->name);
+
             $this->manager->persist($group);
             $groups[] = $group;
         }
@@ -361,7 +366,7 @@ class AppFixtures extends Fixture
         return $receivedNotifications;
     }
 
-    public function createQuiz(int $count, array $skills) : array{
+    public function createQuiz(int $count, array $skills,array $speakers) : array{
         $quizzes = [];
         $quizParts = [];
         for ($i=0; $i < $count; $i++) { 
@@ -372,7 +377,8 @@ class AppFixtures extends Fixture
             ->setPublic(true)
             ->setTitle($this->faker->sentence(3))
             ->setCreatedAt($this->faker->dateTime)
-            ->setTimeToPerformAll($this->faker->numberBetween(100,1000));
+            ->setTimeToPerformAll($this->faker->numberBetween(100,1000))
+            ->setSpeaker($this->faker->randomElement($speakers)->getSpeaker());
             
             $quizParts[] = $this->createQuizPart($quiz,$quizPartCount,$skills);
 
@@ -426,7 +432,9 @@ class AppFixtures extends Fixture
             ->setFirstname($this->faker->firstName())
             ->setName($this->faker->name())
             ->setImage("https://picsum.photos/id/". $this->faker->numberBetween(1,1000) ."/500/500")
-            ->setPassword($this->hasher->hashPassword($user, 'azerty'));
+            ->setPassword($this->hasher->hashPassword($user, 'azerty'))
+            ->setCreatedAt($this->faker->dateTime)
+            ->setActivated(true);
 
             $returnUsers[] = $user;
             $this->manager->persist($user);
@@ -444,7 +452,9 @@ class AppFixtures extends Fixture
             ->setFirstname($this->faker->firstName())
             ->setName($this->faker->name())
             ->setImage("https://picsum.photos/id/". $this->faker->numberBetween(1,1000) ."/500/500")
-            ->setPassword($this->hasher->hashPassword($user, 'azerty'));
+            ->setPassword($this->hasher->hashPassword($user, 'azerty'))
+            ->setCreatedAt($this->faker->dateTime)
+            ->setActivated(true);
 
             $this->userService->createPair($user);
             $returnUsers[] = $user;
@@ -463,7 +473,9 @@ class AppFixtures extends Fixture
             ->setFirstname($this->faker->firstName())
             ->setName($this->faker->name())
             ->setImage("https://picsum.photos/id/". $this->faker->numberBetween(1,1000) ."/500/500")
-            ->setPassword($this->hasher->hashPassword($user, 'azerty'));
+            ->setPassword($this->hasher->hashPassword($user, 'azerty'))
+            ->setCreatedAt($this->faker->dateTime)
+            ->setActivated(true);
 
             $this->userService->createPair($user);
             $returnUsers[] = $user;

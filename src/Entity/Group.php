@@ -140,4 +140,8 @@ class Group
         }
         return $coursesInfo;
     }
+    public function getStudentCount() : int
+    {
+        return count($this->student);
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\SkillUserXPRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @ORM\Entity(repositoryClass=SkillUserXPRepository::class)
@@ -29,6 +30,7 @@ class SkillUserXP
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="skillUserXPs")
+     * @Ignore
      */
     private $user;
 
@@ -71,5 +73,11 @@ class SkillUserXP
         $this->user = $user;
 
         return $this;
+    }
+    public function getUserId(): ?int
+    {
+        if ($this->user == null)
+            return null;
+        return $this->user->getId();
     }
 }

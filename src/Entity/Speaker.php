@@ -37,10 +37,16 @@ class Speaker
      */
     private $courses;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Quiz::class, mappedBy="speaker")
+     */
+    private $quizzes;
+
     public function __construct()
     {
         $this->specialities = new ArrayCollection();
         $this->courses = new ArrayCollection();
+        $this->quizzes = new ArrayCollection();
     }
 
 
@@ -126,5 +132,35 @@ class Speaker
         foreach ($this->specialities as $speciality)
             $specialitiesId[] = $speciality->getId();
         return $specialitiesId;
+    }
+
+    /**
+     * @return Collection<int, Quiz>
+     */
+    public function getQuizzes(): Collection
+    {
+        return $this->quizzes;
+    }
+
+    public function addQuiz(Quiz $quiz): self
+    {
+        if (!$this->quizzes->contains($quiz)) {
+            $this->quizzes[] = $quiz;
+            $quiz->setSpeaker($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuiz(Quiz $quiz): self
+    {
+        if ($this->quizzes->removeElement($quiz)) {
+            // set the owning side to null (unless already changed)
+            if ($quiz->getSpeaker() === $this) {
+                $quiz->setSpeaker(null);
+            }
+        }
+
+        return $this;
     }
 }

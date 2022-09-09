@@ -22,7 +22,8 @@ class UserServiceTest extends KernelTestCase {
             "password"=>"passwordsuperbienhash",
             "firstname"=>"test",
             "name"=>"lenamemegauniq354354",
-            "image"=>"https://picsum.photos/1000/700"
+            "image"=>"https://picsum.photos/1000/700",
+            
         ]);
         $user = $repository->findBy(['name' => 'lenamemegauniq354354'])[0];
         $this->assertEquals('lenamemegauniq354354', $user->getName());

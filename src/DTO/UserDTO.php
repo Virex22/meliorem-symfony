@@ -28,6 +28,8 @@ class UserDTO
     private $quizPartPerforms;
     private $readLaters;
     private $favoriteCourses;
+    private $createdAt;
+    private $activated;
 
     public function hydrate(User $user)
     {
@@ -46,16 +48,21 @@ class UserDTO
         $this->quizPartPerforms = $user->getQuizPartPerforms();
         $this->readLaters = $user->getReadLaters();
         $this->favoriteCourses = $user->getFavoriteCourses();
+        $this->createdAt = $user->getCreatedAt();
+        $this->activated = $user->isActivated();
     }
 
     public function getData()
     {
+        $receivedNotifications = array_map(function (ReceivedNotification $receivedNotification) {
+            return $receivedNotification->getId();
+        }, $this->receivedNotifications->toArray());
         return [
             'id' => $this->id,
             'email' => $this->email,
             'roles' => $this->roles,
             'contact' => $this->contact,
-            'receivedNotifications' => $this->receivedNotifications,
+            'receivedNotifications' => $receivedNotifications,
             'student' => $this->student,
             'speaker' => $this->speaker,
             'name' => $this->name,
@@ -63,6 +70,8 @@ class UserDTO
             'image' => $this->image,
             'badges' => $this->badges,
             'skillUserXPs' => $this->skillUserXPs,
+            'createdAt' => $this->createdAt,
+            'activated' => $this->activated,
         ];
     }
 }
