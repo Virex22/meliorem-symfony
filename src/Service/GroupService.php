@@ -5,7 +5,7 @@ use App\Entity\Group;
 
 class GroupService extends AbstractEntityService
 {
-    use DeleteTrait;
+    use UnlinkTrait;
     
     protected function getEntityClass() : string
     {
