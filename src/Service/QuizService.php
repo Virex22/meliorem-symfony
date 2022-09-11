@@ -6,6 +6,13 @@ use DateTime;
 
 class QuizService extends AbstractEntityService
 {
+    use DeleteTrait;
+
+    public function getDeleteAttributes() : array
+    {
+        return ['quizParts'];
+    }
+    
     protected function getEntityClass() : string
     {
         return Quiz::class;

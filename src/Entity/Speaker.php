@@ -163,4 +163,14 @@ class Speaker
 
         return $this;
     }
+
+    public function getUserInfo(): array
+    {
+        return [
+            'id' => $this->user->getId(),
+            'firstName' => $this->user->getFirstName(),
+            'name' => $this->user->getName(),
+            'email' => $this->user->getEmail(),
+        ];
+    }
 }

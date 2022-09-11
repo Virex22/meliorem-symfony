@@ -11,36 +11,41 @@ use Doctrine\ORM\EntityManagerInterface;
 
 trait DeleteTrait
 {
-    private function findPlurialsMethodName(string $methodName,object $entity) : string
-    {
-        $allGetMethod = array_filter(get_class_methods($entity), function($method) {
-            return strpos($method, 'get') === 0;
-        });
-        $plurials = array_filter($allGetMethod, function($method) use ($methodName) {
-            return strpos($method, substr($methodName,-2)) !== false;
-        });
-        return reset($plurials);
+    use UnlinkTrait{
+        UnlinkTrait::delete as unlink;
     }
-
+    
     public function delete(object $entity,EntityManagerInterface $entityManager){
-        $removeMethods = array_filter(get_class_methods($entity), function($method) {
-            return strpos($method, 'remove') === 0;
-        });
-        if(count($removeMethods) == 0){
-            $entityManager->remove($entity);
-            $entityManager->flush();
-            return;
-        }
-        foreach($removeMethods as $removeMethod){
-            $attribute = substr($removeMethod, 6);
-            $getMethod = 'get'.$attribute;
-            $getMethod = $this->findPlurialsMethodName($getMethod,$entity);
+        $this->unlink($entity,$entityManager);
+        $attributes = $this->getDeleteEntities();
+        foreach($attributes as $attribute){
+            $isSetFunction = false;
+            $removeMethod = 'remove'. ucfirst($attribute);
+            if(!method_exists($entity,$removeMethod)){
+                $removeMethod = 'set'. ucfirst($attribute);
+                $isSetFunction = true;
+                if(!method_exists($entity,$removeMethod))continue;
+            }
+            if (!method_exists($entity,'get'. ucfirst($attribute)))
+                $getMethod = 'get'. ucfirst($attribute);
+            else if (!method_exists($entity,'is'. ucfirst($attribute)))
+                $getMethod = 'is'. ucfirst($attribute);
+            else continue;
             $relationnal = $entity->$getMethod();
+            if($isSetFunction){
+                $entity->$removeMethod(null);
+                continue;
+            }
             if(count($relationnal) == 0)continue;
             foreach($relationnal as $relation)
                 $entity->$removeMethod($relation);
+
         }
-        $entityManager->remove($entity);
-        $entityManager->flush();
     }
+
+
+    /**
+     * @exemple : return ['quizParts','speaker'];
+     */
+    abstract public function getDeleteAttributes() : array;
 }
