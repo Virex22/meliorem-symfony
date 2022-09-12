@@ -10,7 +10,7 @@ class QuizService extends AbstractEntityService
 
     public function getDeleteAttributes() : array
     {
-        return ['quizParts'];
+        return ['quizParts','CoursePartQuiz'];
     }
     
     protected function getEntityClass() : string
