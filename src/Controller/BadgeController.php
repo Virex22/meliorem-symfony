@@ -36,7 +36,7 @@ class BadgeController extends AbstractCRUDController
      */
     public function getAllWithPage(Request $request,int $elemCount,int $pageCount): JsonResponse
     {
-        return $this->getAll($request,$pageCount,$elemCount);
+        return $this->getAll($request,$elemCount,$pageCount);
     }
     /**
      * @Route("/{id}", name="badge show", methods={"GET"})
