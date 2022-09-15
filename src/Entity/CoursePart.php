@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CoursePartRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Ignore;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=CoursePartRepository::class)

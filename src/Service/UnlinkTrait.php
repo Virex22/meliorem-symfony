@@ -1,6 +1,7 @@
 <?php 
 namespace App\Service;
 
+use Countable;
 use Doctrine\ORM\EntityManagerInterface;
 
 
@@ -36,7 +37,7 @@ trait UnlinkTrait
             $getMethod = 'get'.$attribute;
             $getMethod = $this->findPlurialsMethodName($getMethod,$entity);
             $relationnal = $entity->$getMethod();
-            if(count($relationnal) == 0)continue;
+            if(!$relationnal instanceof Countable || count($relationnal) == 0)continue;
             foreach($relationnal as $relation)
                 $entity->$removeMethod($relation);
         }

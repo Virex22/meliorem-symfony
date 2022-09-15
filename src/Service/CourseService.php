@@ -5,6 +5,21 @@ use App\Entity\Course;
 
 class CourseService extends AbstractEntityService
 {
+    use DeleteTrait;
+
+    public function getEntitiesArray($id) : array{
+        $course = $this->em->getRepository(Course::class)->find($id);
+        $courseSection = $course->getCourseSections();
+        $courseParts = array_map(function($courseSection){
+            return $courseSection->getCourseParts();
+        }, $courseSection->toArray());
+        return [
+           $courseParts,
+           $courseSection,
+           $courseParts,
+        ];
+    }
+
     protected function getEntityClass() : string
     {
         return Course::class;

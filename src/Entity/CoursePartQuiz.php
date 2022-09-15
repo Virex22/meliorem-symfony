@@ -6,6 +6,7 @@ use App\Repository\CoursePartQuizRepository;
 use App\Entity\CoursePart;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Ignore;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=CoursePartQuizRepository::class)

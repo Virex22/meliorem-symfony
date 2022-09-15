@@ -19,3 +19,8 @@ launch test with html coverage
 ```
 ./vendor/bin/phpunit --coverage-html ./coverage
 ```
+
+launch phpstan
+```
+./vendor/bin/phpstan analyse src/
+```

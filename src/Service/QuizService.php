@@ -2,15 +2,29 @@
 namespace App\Service;
 
 use App\Entity\Quiz;
+use App\Repository\QuizRepository;
 use DateTime;
 
 class QuizService extends AbstractEntityService
 {
     use DeleteTrait;
 
-    public function getDeleteAttributes() : array
+    public function getEntitiesArray($id) : array
     {
-        return ['quizParts','CoursePartQuiz'];
+        $quiz = $this->em->getRepository(Quiz::class)->find($id);
+        if (!$quiz)
+            throw new \Exception('Quiz not found');
+        $quizParts = $quiz->getQuizParts();
+        $quizPartPerform = array_map(function($quizPart){
+            return $quizPart->getQuizPartPerforms();
+        }, $quizParts->toArray());
+        
+        $entities = [
+            $quizParts,
+            $quizPartPerform,
+            $quiz->getCoursePartQuizzes(),
+        ];
+        return $entities;
     }
     
     protected function getEntityClass() : string

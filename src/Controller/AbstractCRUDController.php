@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Service\UnlinkTrait;
+use App\Service\DeleteTrait;
 
 abstract class AbstractCRUDController extends AbstractController
 {
@@ -65,7 +66,7 @@ abstract class AbstractCRUDController extends AbstractController
             return new JsonResponse(['error' => 'You are not authorized to delete this element'], Response::HTTP_UNAUTHORIZED);
         
         $entityService = $this->getEntityService();
-        if (array_key_exists(UnlinkTrait::class, class_uses($entityService))) 
+        if (array_key_exists(UnlinkTrait::class, class_uses($entityService))|| array_key_exists(DeleteTrait::class, class_uses($entityService))) 
             try {
                 $entity = $this->getEntityService()->delete($entity,$this->entityManager);
             } catch (\Throwable $th) {
