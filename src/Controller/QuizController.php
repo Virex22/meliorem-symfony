@@ -18,18 +18,24 @@ class QuizController extends AbstractCRUDController
         return Quiz::class;
     }
     /**
+     * overhiding the search querry
+     */
+    public function getSearchQuerry():string{
+        return "u.description LIKE :search";
+    }
+    /**
      * @Route("/", name="quiz index", methods={"GET"})
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        return $this->getAll();
+        return $this->getAll($request);
     }
     /**
      * @Route("/{elemCount}/{pageCount}", name="quiz page", methods={"GET"})
      */
-    public function getAllWithPage(int $elemCount,int $pageCount): JsonResponse
+    public function getAllWithPage(Request $request,int $elemCount,int $pageCount): JsonResponse
     {
-        return $this->getAll($elemCount,$pageCount);
+        return $this->getAll($request,$elemCount,$pageCount);
     }
     /**
      * @Route("/{id}", name="quiz show", methods={"GET"})

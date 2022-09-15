@@ -92,19 +92,29 @@ class $controllerName extends AbstractCRUDController
     {
         return $pascalCaseName::class;
     }
+
+    /**
+     * overhiding the search querry
+     */
+    /*
+    public function getSearchQuerry():string{
+        return "u.name LIKE :search";
+    }
+    */
+    
     /**
      * @Route("/", name="$camelCaseName index", methods={"GET"})
      */
-    public function index(): JsonResponse
+    public function index(Request \$request): JsonResponse
     {
-        return \$this->getAll();
+        return \$this->getAll(\$request);
     }
     /**
      * @Route("/{elemCount}/{pageCount}", name="$camelCaseName page", methods={"GET"})
      */
-    public function getAllWithPage(int \$elemCount,int \$pageCount): JsonResponse
+    public function getAllWithPage(Request \$request,int \$elemCount,int \$pageCount): JsonResponse
     {
-        return \$this->getAll(\$elemCount,\$pageCount);
+        return \$this->getAll(\$request,\$elemCount,\$pageCount);
     }
     /**
      * @Route("/{id}", name="$camelCaseName show", methods={"GET"})

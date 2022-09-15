@@ -17,18 +17,24 @@ class CoursePartController extends AbstractCRUDController
         return CoursePart::class;
     }
     /**
+     * overhiding the search querry
+     */
+    public function getSearchQuerry():string{
+        return "u.title LIKE :search";
+    }
+    /**
      * @Route("/", name="coursePart index", methods={"GET"})
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        return $this->getAll();
+        return $this->getAll($request);
     }
     /**
      * @Route("/{elemCount}/{pageCount}", name="coursePart page", methods={"GET"})
      */
-    public function getAllWithPage(int $elemCount,int $pageCount): JsonResponse
+    public function getAllWithPage(Request $request,int $elemCount,int $pageCount): JsonResponse
     {
-        return $this->getAll($elemCount,$pageCount);
+        return $this->getAll($request,$elemCount,$pageCount);
     }
     /**
      * @Route("/{id}", name="coursePart show", methods={"GET"})

@@ -30,20 +30,43 @@ abstract class AbstractCRUDController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    public function getAll(?int $elementCount = null, ?int $pageCount = null) : JsonResponse
+
+    /**
+     * exemple : getSearchQuerry():string { return "u.name LIKE :search" }
+     */
+    public function getSearchQuerry():string{
+        return "u.name LIKE :search";
+    }
+
+    public function getAll(Request $request, ?int $elementCount = null, ?int $pageCount = null) : JsonResponse
     {
+        $search = $request->query->get('search');
+
         $repository = $this->entityManager->getRepository($this->getEntityClass());
-        
+
+        // with page
         if ($elementCount && $pageCount){
-            $totalCount = $repository->createQueryBuilder('u')
-                ->select('count(u.id)')
-                ->getQuery()
+            $querry = $repository->createQueryBuilder('u')
+                ->select('count(u.id)');
+            if( $search )
+                $querry->where($this->getSearchQuerry())
+                    ->setParameter('search', $search.'%');
+            $totalCount = $querry->getQuery()
                 ->getSingleScalarResult();
             $entities = $repository->findBy([], [], $elementCount, ($pageCount-1)*$elementCount);
             $maxPage = ceil($totalCount / $elementCount);
             return $this->json(["totalPage" => $maxPage ,"data" => $entities]);
         }
-        $entities = $repository->findAll();
+
+        // withous page
+        if ($search)
+            $entities = $repository->createQueryBuilder('u')
+                ->where($this->getSearchQuerry())
+                ->setParameter('search', $search.'%')
+                ->getQuery()
+                ->getResult();
+        else
+            $entities = $repository->findAll();
         return $this->json($entities);
         
     }

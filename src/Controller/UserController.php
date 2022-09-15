@@ -33,9 +33,18 @@ class UserController extends AbstractController
     /**
      * @Route("/", name="user index", methods={"GET"})
      */
-    public function index(UserRepository $userRepository): JsonResponse
+    public function index( Request $request,UserRepository $userRepository): JsonResponse
     {
-        $users = $userRepository->findAll();
+        if ($request->query->get('search')){
+            $users = $userRepository->createQueryBuilder('u')
+                ->where('u.name LIKE :search')
+                ->orWhere('u.email LIKE :search')
+                ->setParameter('search', $request->query->get('search').'%')
+                ->getQuery()
+                ->getResult();
+        }
+        else
+            $users = $userRepository->findAll();
         $usersDTO = [];
         foreach ($users as $user)
         {
@@ -48,11 +57,16 @@ class UserController extends AbstractController
     /**
      * @Route("/{elemCount}/{pageCount}", name="badge page", methods={"GET"})
      */
-    public function getAllWithPage(?int $elemCount,?int $pageCount,UserRepository $userRepository): JsonResponse
+    public function getAllWithPage(Request $request, ?int $elemCount,?int $pageCount,UserRepository $userRepository): JsonResponse
     { 
-        $totalCount = $userRepository->createQueryBuilder('u')
-            ->select('count(u.id)')
-            ->getQuery()
+        $querry = $userRepository->createQueryBuilder('u')
+        ->select('count(u.id)');
+        if ($request->query->get('search')){
+            $querry->where('u.name LIKE :search')
+                ->orWhere('u.email LIKE :search')
+                ->setParameter('search', $request->query->get('search').'%');
+        }
+        $totalCount = $querry->getQuery()
             ->getSingleScalarResult();
         $usersDTO = [];
         $users = $userRepository->findBy([], [], $elemCount, ($pageCount-1)*$elemCount);

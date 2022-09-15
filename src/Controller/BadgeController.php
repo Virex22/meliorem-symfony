@@ -19,16 +19,24 @@ class BadgeController extends AbstractCRUDController
     /**
      * @Route("/", name="badge index", methods={"GET"})
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        return $this->getAll();
+        return $this->getAll($request);
     }
+
+    /**
+     * overhiding the search querry
+     */
+    public function getSearchQuerry():string{
+        return "u.name LIKE :search";
+    }
+
     /**
      * @Route("/{elemCount}/{pageCount}", name="badge_page", methods={"GET"})
      */
-    public function getAllWithPage(int $elemCount,int $pageCount): JsonResponse
+    public function getAllWithPage(Request $request,int $elemCount,int $pageCount): JsonResponse
     {
-        return $this->getAll($elemCount,$pageCount);
+        return $this->getAll($request,$pageCount,$elemCount);
     }
     /**
      * @Route("/{id}", name="badge show", methods={"GET"})
