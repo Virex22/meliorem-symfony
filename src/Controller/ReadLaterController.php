@@ -19,16 +19,20 @@ class ReadLaterController extends AbstractCRUDController
     /**
      * @Route("/", name="readLater index", methods={"GET"})
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        return $this->getAll();
+        if ($request->query->has('search'))
+            throw new \Exception("search not implemented on this entity");
+        return $this->getAll($request);
     }
     /**
      * @Route("/{elemCount}/{pageCount}", name="readLater page", methods={"GET"})
      */
-    public function getAllWithPage(int $elemCount,int $pageCount): JsonResponse
+    public function getAllWithPage(Request $request,int $elemCount,int $pageCount): JsonResponse
     {
-        return $this->getAll($elemCount,$pageCount);
+        if ($request->query->has('search'))
+            throw new \Exception("search not implemented on this entity");
+        return $this->getAll($request,$elemCount,$pageCount);
     }
     /**
      * @Route("/{id}", name="readLater show", methods={"GET"})

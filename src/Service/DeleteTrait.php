@@ -1,12 +1,8 @@
 <?php 
 namespace App\Service;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
-
-
-/**
- * TODO : filtrate the relation entity for dependency deleting
- */
 
 
 trait DeleteTrait
@@ -14,38 +10,26 @@ trait DeleteTrait
     use UnlinkTrait{
         UnlinkTrait::delete as unlink;
     }
-    
-    public function delete(object $entity,EntityManagerInterface $entityManager){
-        $this->unlink($entity,$entityManager);
-        $attributes = $this->getDeleteEntities();
-        foreach($attributes as $attribute){
-            $isSetFunction = false;
-            $removeMethod = 'remove'. ucfirst($attribute);
-            if(!method_exists($entity,$removeMethod)){
-                $removeMethod = 'set'. ucfirst($attribute);
-                $isSetFunction = true;
-                if(!method_exists($entity,$removeMethod))continue;
-            }
-            if (!method_exists($entity,'get'. ucfirst($attribute)))
-                $getMethod = 'get'. ucfirst($attribute);
-            else if (!method_exists($entity,'is'. ucfirst($attribute)))
-                $getMethod = 'is'. ucfirst($attribute);
-            else continue;
-            $relationnal = $entity->$getMethod();
-            if($isSetFunction){
-                $entity->$removeMethod(null);
-                continue;
-            }
-            if(count($relationnal) == 0)continue;
-            foreach($relationnal as $relation)
-                $entity->$removeMethod($relation);
-
-        }
-    }
-
 
     /**
-     * @exemple : return ['quizParts','speaker'];
+     * @return array Collection
      */
-    abstract public function getDeleteAttributes() : array;
+    abstract public function getEntitiesArray($id) : array;
+
+    private function deleteRecursive($entities,$entityManager){
+        foreach ($entities as $entity) {
+            if ($entity instanceof Collection || is_array($entity)) {
+                $this->deleteRecursive($entity,$entityManager);
+            } else {
+                $entityManager->remove($entity);
+            }
+        }
+    }
+    
+    public function delete(object $entityToDelete,EntityManagerInterface $entityManager){
+        $entities = $this->getEntitiesArray($entityToDelete->getId());
+        $this->deleteRecursive($entities,$entityManager);
+        $entityManager->flush();
+        $this->unlink($entityToDelete, $entityManager);
+    }
 }

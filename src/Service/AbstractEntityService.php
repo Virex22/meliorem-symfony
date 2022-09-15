@@ -8,7 +8,7 @@ use TypeError;
 
 abstract class AbstractEntityService implements IService
 {
-    private $em;
+    protected $em;
 
     public function __construct(EntityManagerInterface $em)
     {

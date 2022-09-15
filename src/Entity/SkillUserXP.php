@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\SkillUserXPRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\SkillUserXPRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**

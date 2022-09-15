@@ -9,10 +9,23 @@ use Doctrine\ORM\EntityManagerInterface;
 class UserService
 {
     private $em;
+    use DeleteTrait;
 
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
+    }
+
+    public function getEntitiesArray($id) : array{
+        $user = $this->em->getRepository(User::class)->find($id);
+        $favoriteCourses = $user->getFavoriteCourses();
+        $readLaters = $user->getReadLaters();
+        $skillsUserXp = $user->getSkillUserXPs();
+        return [
+            $favoriteCourses,
+            $readLaters,
+            $skillsUserXp,
+        ];
     }
     
     /**
@@ -52,9 +65,8 @@ class UserService
             $this->em->remove($user->getStudent());
         if($user->getSpeaker() !== null)
             $this->em->remove($user->getSpeaker());
-            
-        $this->em->remove($user);
-        $this->em->flush();
+
+        $this->delete($user, $this->em);
     }
 
     /**
