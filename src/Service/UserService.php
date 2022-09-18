@@ -21,10 +21,14 @@ class UserService
         $favoriteCourses = $user->getFavoriteCourses();
         $readLaters = $user->getReadLaters();
         $skillsUserXp = $user->getSkillUserXPs();
+        $receivedNotification = $user->getReceivedNotifications();
+        $quizPartPerforms = $user->getQuizPartPerforms();
         return [
             $favoriteCourses,
             $readLaters,
             $skillsUserXp,
+            $receivedNotification,
+            $quizPartPerforms 
         ];
     }
     
@@ -53,6 +57,20 @@ class UserService
         return $user;
     }
 
+    public function deleteSpeaker(Speaker $speaker){
+
+        $courses = $speaker->getCourses();
+        $quiz = $speaker->getQuizzes();
+        $specialities = $speaker->getSpecialities();
+        foreach ($specialities as $speciality)
+            $this->em->remove($speciality);
+        foreach ($courses as $course)
+            $course->setSpeaker(null);
+        foreach ($quiz as $quiz)
+            $quiz->setSpeaker(null);
+        $this->em->remove($speaker);
+    }
+
     /**
      * @param User $user
      * @return void
@@ -64,7 +82,7 @@ class UserService
         if($user->getStudent() !== null)
             $this->em->remove($user->getStudent());
         if($user->getSpeaker() !== null)
-            $this->em->remove($user->getSpeaker());
+            $this->deleteSpeaker($user->getSpeaker());
 
         $this->delete($user, $this->em);
     }
