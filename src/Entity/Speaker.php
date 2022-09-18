@@ -28,17 +28,18 @@ class Speaker
 
     /**
      * @ORM\OneToMany(targetEntity=Speciality::class, mappedBy="speaker")
-     * @Ignore
      */
     private $specialities;
 
     /**
      * @ORM\OneToMany(targetEntity=Course::class, mappedBy="speaker")
+     * @Ignore
      */
     private $courses;
 
     /**
      * @ORM\OneToMany(targetEntity=Quiz::class, mappedBy="speaker")
+     * @Ignore
      */
     private $quizzes;
 
@@ -172,5 +173,21 @@ class Speaker
             'name' => $this->user->getName(),
             'email' => $this->user->getEmail(),
         ];
+    }
+
+    public function getCoursesId(): array
+    {
+        $coursesId = [];
+        foreach ($this->courses as $course)
+            $coursesId[] = $course->getId();
+        return $coursesId;
+    }
+
+    public function getQuizzesId(): array
+    {
+        $quizzesId = [];
+        foreach ($this->quizzes as $quiz)
+            $quizzesId[] = $quiz->getId();
+        return $quizzesId;
     }
 }
