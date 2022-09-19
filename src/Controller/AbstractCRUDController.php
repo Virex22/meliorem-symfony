@@ -53,7 +53,15 @@ abstract class AbstractCRUDController extends AbstractController
                     ->setParameter('search', $search.'%');
             $totalCount = $querry->getQuery()
                 ->getSingleScalarResult();
-            $entities = $repository->findBy([], [], $elementCount, ($pageCount-1)*$elementCount);
+
+            $querry = $repository->createQueryBuilder('u');
+            if( $search )
+                $querry->where($this->getSearchQuerry())
+                    ->setParameter('search', $search.'%');
+            $entities = $querry->setMaxResults($elementCount)
+                ->setFirstResult($elementCount * ($pageCount - 1))
+                ->getQuery()
+                ->getResult();
             $maxPage = ceil($totalCount / $elementCount);
             return $this->json(["totalPage" => $maxPage ,"data" => $entities]);
         }
