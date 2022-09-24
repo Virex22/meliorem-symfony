@@ -61,6 +61,11 @@ class Quiz
      */
     private $speaker;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $theme;
+
     public function __construct()
     {
         $this->quizParts = new ArrayCollection();
@@ -213,5 +218,17 @@ class Quiz
             'userName' => $this->speaker->getUser()->getName() . " " . $this->speaker->getUser()->getFirstname(),
             'email' => $this->speaker->getUser()->getEmail(),
         ];
+    }
+
+    public function getTheme(): ?string
+    {
+        return $this->theme;
+    }
+
+    public function setTheme(string $theme): self
+    {
+        $this->theme = $theme;
+
+        return $this;
     }
 }

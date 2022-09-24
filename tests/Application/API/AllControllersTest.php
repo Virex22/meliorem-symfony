@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\tests\Application\API;
 
@@ -31,23 +31,29 @@ class ControllerGetTest extends WebTestCase
     private $token;
     private $client;
 
-    public function setUp(): void{
+    public function setUp(): void
+    {
         self::ensureKernelShutdown();
         $client = static::createClient();
         $this->client = $client;
-        $client->request('POST', 'https://localhost:8000/api/login', array(),
-        array(),
-        array('CONTENT_TYPE' => 'application/json'),
-        '{"username":"superadmin0@meliorem.fr","password":"azerty"}');
-        
+        $client->request(
+            'POST',
+            'https://localhost:8000/api/login',
+            array(),
+            array(),
+            array('CONTENT_TYPE' => 'application/json'),
+            '{"username":"superadmin0@meliorem.fr","password":"azerty"}'
+        );
+
         $data = json_decode($client->getResponse()->getContent(), true);
         $this->token = $data["token"];
     }
 
 
 
-    public function provideUrls(){
-        
+    public function provideUrls()
+    {
+
         yield [[
             "path" => 'badge',
             "class" => Badge::class,
@@ -59,7 +65,7 @@ class ControllerGetTest extends WebTestCase
                 "ignoreMy" => "juste test for ignore path"
             ],
             "edit-data" => ["name" => "test2"]
-            ]];
+        ]];
         yield [[
             "path" => 'contact',
             "class" => TypeContact::class,
@@ -70,7 +76,7 @@ class ControllerGetTest extends WebTestCase
                 "typeContactId" => $this->getEntityId(TypeContact::class)
             ],
             "edit-data" => ["phone" => "test2"]
-            ]];
+        ]];
         yield [[
             "path" => 'course',
             "class" => Course::class,
@@ -84,7 +90,7 @@ class ControllerGetTest extends WebTestCase
                 "speakerId" => $this->getEntityId(Speaker::class)
             ],
             "edit-data" => ["phone" => "title"]
-            ]];
+        ]];
         yield [[
             "path" => 'course-category',
             "class" => CourseCategory::class,
@@ -93,7 +99,7 @@ class ControllerGetTest extends WebTestCase
                 "color" => "#058762",
             ],
             "edit-data" => ["color" => "#ffffff"]
-            ]];
+        ]];
         yield [[
             "path" => 'course-part',
             "class" => CoursePart::class,
@@ -101,38 +107,38 @@ class ControllerGetTest extends WebTestCase
                 "title" => "title",
                 "orderPart" => 1,
                 "estimatedTime" => 20,
-                "courseSectionId"=> $this->getEntityId(CourseSection::class),
+                "courseSectionId" => $this->getEntityId(CourseSection::class),
             ],
             "edit-data" => ["orderPart" => 2]
-            ]];
+        ]];
         yield [[
             "path" => 'course-part-document',
             "class" => CoursePartDocument::class
-            ]];
+        ]];
         yield [[
             "path" => 'course-part-quiz',
             "class" => CoursePartQuiz::class
-            ]];
+        ]];
         yield [[
             "path" => 'course-section',
             "class" => CourseSection::class,
             "data" => [
                 "name" => "test",
                 "courseOrder" => 1,
-                "courseId"=> $this->getEntityId(Course::class),
+                "courseId" => $this->getEntityId(Course::class),
             ],
             "edit-data" => ["courseOrder" => 2]
-            ]];
+        ]];
         yield [[
             "path" => 'favorite-course',
             "class" => FavoriteCourse::class,
             "data" => [
                 "courseId" => $this->getEntityId(Course::class),
-                "userId"=> $this->getEntityId(User::class),
+                "userId" => $this->getEntityId(User::class),
                 "addDate" => "2021-10-31T08:44:40+00:00",
             ],
             "edit-data" => ["addDate" => "2020-10-31T08:44:40+00:00"]
-            ]];
+        ]];
         yield [[
             "path" => 'group',
             "class" => Group::class,
@@ -142,7 +148,7 @@ class ControllerGetTest extends WebTestCase
                 "courseId" => $this->getEntityId(Course::class),
             ],
             "edit-data" => ["name" => "test2"]
-            ]];
+        ]];
         yield [[
             "path" => 'notification',
             "class" => Notification::class,
@@ -152,19 +158,20 @@ class ControllerGetTest extends WebTestCase
                 "interaction" => '[{"type":"link","value":"https://www.google.com/"}]',
             ],
             "edit-data" => ["title" => "test2"]
-            ]];
+        ]];
         yield [[
             "path" => 'quiz',
             "class" => Quiz::class,
             "data" => [
                 "title" => "test",
+                "theme" => "test",
                 "description" => "test",
                 "public" => true,
                 "timeToPerformAll" => 245,
                 "speakerId" => $this->getEntityId(Speaker::class),
             ],
             "edit-data" => ["title" => "test2"]
-            ]];
+        ]];
         yield [[
             "path" => 'quiz-part',
             "class" => QuizPart::class,
@@ -179,7 +186,7 @@ class ControllerGetTest extends WebTestCase
                 "quizId" => $this->getEntityId(Quiz::class),
             ],
             "edit-data" => ["question" => "test2"]
-            ]];
+        ]];
         yield [[
             "path" => 'quiz-part-perform',
             "class" => QuizPartPerform::class,
@@ -190,7 +197,7 @@ class ControllerGetTest extends WebTestCase
                 "quizPartId" => $this->getEntityId(QuizPart::class),
             ],
             "edit-data" => ["timeToResponse" => 456]
-            ]];
+        ]];
         yield [[
             "path" => 'read-later',
             "class" => ReadLater::class,
@@ -200,7 +207,7 @@ class ControllerGetTest extends WebTestCase
                 "courseId" => $this->getEntityId(Course::class),
             ],
             "edit-data" => ["positionOrder" => 2]
-            ]];
+        ]];
         yield [[
             "path" => 'received-notification',
             "class" => ReceivedNotification::class,
@@ -210,7 +217,7 @@ class ControllerGetTest extends WebTestCase
                 "viewed" => true,
             ],
             "edit-data" => ["viewed" => false]
-            ]];
+        ]];
         yield [[
             "path" => 'skill',
             "class" => Skill::class,
@@ -220,7 +227,7 @@ class ControllerGetTest extends WebTestCase
                 "xpRequiredForLevels" => "[{1:2},{2:5},{3:15},{4:50},{5:100}]",
             ],
             "edit-data" => ["name" => "test2"]
-            ]];
+        ]];
         yield [[
             "path" => 'skill-user-xp',
             "class" => SkillUserXP::class,
@@ -230,11 +237,11 @@ class ControllerGetTest extends WebTestCase
                 "xp" => 5,
             ],
             "edit-data" => ["xp" => 87]
-            ]];
+        ]];
         yield [[
             "path" => 'speaker',
             "class" => Speaker::class
-            ]];
+        ]];
         yield [[
             "path" => 'speciality',
             "class" => Speciality::class,
@@ -243,11 +250,11 @@ class ControllerGetTest extends WebTestCase
                 "speakerId" => $this->getEntityId(Speaker::class),
             ],
             "edit-data" => ["name" => "test2"]
-            ]];
+        ]];
         yield [[
             "path" => 'student',
             "class" => Student::class
-            ]];
+        ]];
         yield [[
             "path" => 'type-contact',
             "class" => TypeContact::class,
@@ -255,23 +262,25 @@ class ControllerGetTest extends WebTestCase
                 "name" => "test",
             ],
             "edit-data" => ["name" => "test2"]
-            ]];
+        ]];
         yield [[
             "path" => 'user',
             "class" => User::class
-            ]];
+        ]];
     }
-    protected function getEntityId($class){
+    protected function getEntityId($class)
+    {
         return $this->getContainer()->get('doctrine')->getRepository($class)->findAll()[0]->getId();
     }
 
     /**
      * @dataProvider provideUrls
      */
-    public function testCrud($data){
+    public function testCrud($data)
+    {
         // get all
         $this->client->request('GET', "https://localhost:8000/api/" . $data["path"] . "/", [], [], [
-            'HTTP_AUTHORIZATION' => 'Bearer '. $this->token
+            'HTTP_AUTHORIZATION' => 'Bearer ' . $this->token
         ]);
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $this->assertIsArray(json_decode($this->client->getResponse()->getContent(), true));
@@ -279,24 +288,24 @@ class ControllerGetTest extends WebTestCase
         // get all with page
 
         $this->client->request('GET', "https://localhost:8000/api/" . $data["path"] . "/2/1", [], [], [
-            'HTTP_AUTHORIZATION' => 'Bearer '. $this->token
+            'HTTP_AUTHORIZATION' => 'Bearer ' . $this->token
         ]);
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $this->assertIsArray(json_decode($this->client->getResponse()->getContent(), true));
 
         // get by id
         $this->client->request('GET', "https://localhost:8000/api/" . $data["path"] . "/" . $this->getEntityId($data["class"]), [], [], [
-            'HTTP_AUTHORIZATION' => 'Bearer '. $this->token
+            'HTTP_AUTHORIZATION' => 'Bearer ' . $this->token
         ]);
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $this->assertIsArray(json_decode($this->client->getResponse()->getContent(), true));
 
         // post
-        if (!isset($data["data"]))return;
+        if (!isset($data["data"])) return;
 
         $this->client->request('POST', "http://localhost:8000/api/" . $data["path"] . "/", [], [], [
-            'HTTP_AUTHORIZATION' => 'Bearer '. $this->token
-        ],json_encode($data["data"]));
+            'HTTP_AUTHORIZATION' => 'Bearer ' . $this->token
+        ], json_encode($data["data"]));
 
         $newEntity = json_decode($this->client->getResponse()->getContent(), true);
         $this->assertEquals(201, $this->client->getResponse()->getStatusCode());
@@ -304,22 +313,20 @@ class ControllerGetTest extends WebTestCase
         $id = $newEntity["id"];
 
         // patch
-        if (!isset($data["edit-data"]))return;
+        if (!isset($data["edit-data"])) return;
 
         $this->client->request('PATCH', "http://localhost:8000/api/" . $data["path"] . "/$id", [], [], [
-            'HTTP_AUTHORIZATION' => 'Bearer '. $this->token
-        ],json_encode($data["edit-data"]));
+            'HTTP_AUTHORIZATION' => 'Bearer ' . $this->token
+        ], json_encode($data["edit-data"]));
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         // delete
 
         $this->client->request('DELETE', "http://localhost:8000/api/" . $data["path"] . "/$id", [], [], [
-            'HTTP_AUTHORIZATION' => 'Bearer '. $this->token
+            'HTTP_AUTHORIZATION' => 'Bearer ' . $this->token
         ]);
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
-
-   
 }

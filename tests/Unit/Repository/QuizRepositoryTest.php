@@ -6,10 +6,12 @@ use App\Entity\Quiz;
 use App\Entity\QuizPart;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class QuizRepositoryTest extends KernelTestCase {
+class QuizRepositoryTest extends KernelTestCase
+{
 
 
-    public function testQuizRepository() {
+    public function testQuizRepository()
+    {
         $kernel = self::bootKernel();
         $em = $kernel->getContainer()->get('doctrine')->getManager();
         $quizRepository = $em->getRepository(Quiz::class);
@@ -20,19 +22,21 @@ class QuizRepositoryTest extends KernelTestCase {
         $quiz = new Quiz();
         $quiz->setDescription($randomDesc)
             ->setPublic(true)
+            ->setTheme("theme")
             ->setCreatedAt($date)
             ->setTimeToPerformAll(10)
             ->setTitle("je suis le numero 453");
 
-        $quizRepository->add($quiz,true);
+        $quizRepository->add($quiz, true);
         $newQuiz = $quizRepository->findBy(['description' => $randomDesc])[0];
         $this->assertEquals($randomDesc, $newQuiz->getDescription());
-        $quizRepository->remove($quiz,true);
+        $quizRepository->remove($quiz, true);
         $newQuiz = $quizRepository->findBy(['description' => $randomDesc]);
         $this->assertEmpty($newQuiz);
     }
 
-    public function testQuizPartRepository(){
+    public function testQuizPartRepository()
+    {
         $kernel = self::bootKernel();
         $em = $kernel->getContainer()->get('doctrine')->getManager();
         $quizPartRepository = $em->getRepository(QuizPart::class);
@@ -44,14 +48,11 @@ class QuizRepositoryTest extends KernelTestCase {
         $quizPart->setAnswer("answer");
         $quizPart->setTimeMaxToResponse(10);
         $quizPart->setQuizOrder(1);
-        $quizPartRepository->add($quizPart,true);
+        $quizPartRepository->add($quizPart, true);
         $newQuizPart = $quizPartRepository->findBy(['question' => $randomQuestion])[0];
         $this->assertEquals($randomQuestion, $newQuizPart->getQuestion());
-        $quizPartRepository->remove($quizPart,true);
+        $quizPartRepository->remove($quizPart, true);
         $newQuizPart = $quizPartRepository->findBy(['question' => $randomQuestion]);
         $this->assertEmpty($newQuizPart);
-
     }
-
-
 }
