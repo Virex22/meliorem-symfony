@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+
 use App\Repository\QuizRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -203,10 +204,14 @@ class Quiz
         return $this;
     }
 
-    public function getSpeakerName(): ?string
+    public function getSpeakerInfo(): ?array
     {
-        if ($this->speaker === null ||$this->speaker->getUser() === null)
+        if ($this->speaker === null || $this->speaker->getUser() === null)
             return null;
-        return $this->speaker->getUser()->getFirstname() . ' ' . $this->speaker->getUser()->getName();
+        return [
+            'id' => $this->speaker->getId(),
+            'userName' => $this->speaker->getUser()->getName() . " " . $this->speaker->getUser()->getFirstname(),
+            'email' => $this->speaker->getUser()->getEmail(),
+        ];
     }
 }

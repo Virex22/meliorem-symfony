@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\Security;
  * */
 class UserController extends AbstractController
 {
-    
+
     /**
      * @Route("/me", name="get_my_user", methods={"GET"})
      */
@@ -33,21 +33,19 @@ class UserController extends AbstractController
     /**
      * @Route("/", name="user index", methods={"GET"})
      */
-    public function index( Request $request,UserRepository $userRepository): JsonResponse
+    public function index(Request $request, UserRepository $userRepository): JsonResponse
     {
-        if ($request->query->get('search')){
+        if ($request->query->get('search')) {
             $users = $userRepository->createQueryBuilder('u')
                 ->where('u.name LIKE :search')
                 ->orWhere('u.email LIKE :search')
-                ->setParameter('search', $request->query->get('search').'%')
+                ->setParameter('search', $request->query->get('search') . '%')
                 ->getQuery()
                 ->getResult();
-        }
-        else
+        } else
             $users = $userRepository->findAll();
         $usersDTO = [];
-        foreach ($users as $user)
-        {
+        foreach ($users as $user) {
             $userDTO = new UserDTO();
             $userDTO->hydrate($user);
             $usersDTO[] = $userDTO->getData();
@@ -57,27 +55,35 @@ class UserController extends AbstractController
     /**
      * @Route("/{elemCount}/{pageCount}", name="badge page", methods={"GET"})
      */
-    public function getAllWithPage(Request $request, ?int $elemCount,?int $pageCount,UserRepository $userRepository): JsonResponse
-    { 
+    public function getAllWithPage(Request $request, ?int $elemCount, ?int $pageCount, UserRepository $userRepository): JsonResponse
+    {
         $querry = $userRepository->createQueryBuilder('u')
-        ->select('count(u.id)');
-        if ($request->query->get('search')){
+            ->select('count(u.id)');
+        if ($request->query->get('search')) {
             $querry->where('u.name LIKE :search')
                 ->orWhere('u.email LIKE :search')
-                ->setParameter('search', $request->query->get('search').'%');
+                ->setParameter('search', $request->query->get('search') . '%');
         }
         $totalCount = $querry->getQuery()
             ->getSingleScalarResult();
         $usersDTO = [];
-        $users = $userRepository->findBy([], [], $elemCount, ($pageCount-1)*$elemCount);
+        $users = $userRepository->createQueryBuilder('u');
+        if ($request->query->get('search')) {
+            $users->where('u.name LIKE :search')
+                ->orWhere('u.email LIKE :search')
+                ->setParameter('search', $request->query->get('search') . '%');
+        }
+        $users = $users->getQuery()
+            ->setMaxResults($elemCount)
+            ->setFirstResult($elemCount * ($pageCount - 1))
+            ->getResult();
         $maxPage = ceil($totalCount / $elemCount);
-        foreach ($users as $user)
-        {
+        foreach ($users as $user) {
             $userDTO = new UserDTO();
             $userDTO->hydrate($user);
             $usersDTO[] = $userDTO->getData();
         }
-        return $this->json(["totalPage" => $maxPage ,"data" => $usersDTO], Response::HTTP_OK);
+        return $this->json(["totalPage" => $maxPage, "data" => $usersDTO], Response::HTTP_OK);
     }
     /**
      * @Route("/{id}", name="user show", methods={"GET"})
@@ -90,10 +96,10 @@ class UserController extends AbstractController
         $userDTO->hydrate($user);
         return $this->json($userDTO->getData(), Response::HTTP_OK);
     }
-     /**
+    /**
      * @Route("/{id}", name="delete user", methods={"DELETE"})
      */
-    public function remove(?User $user,UserService $userService): JsonResponse
+    public function remove(?User $user, UserService $userService): JsonResponse
     {
         if (!$this->isGranted('ROLE_SUPERADMIN'))
             return new JsonResponse(['error' => 'You are not authorized to delete a user'], Response::HTTP_UNAUTHORIZED);
@@ -107,19 +113,19 @@ class UserController extends AbstractController
     /**
      * @Route("/", name="create user", methods={"POST"})
      */
-    public function create(Request $request,Security $security, UserService $userService): JsonResponse
+    public function create(Request $request, Security $security, UserService $userService): JsonResponse
     {
         if (!$security->isGranted('ROLE_SUPERADMIN'))
             return new JsonResponse(['error' => 'You are not authorized to create a user'], Response::HTTP_UNAUTHORIZED);
 
         $parameters = json_decode($request->getContent(), true);
-        
+
         try {
             $user = $userService->createUser($parameters);
         } catch (\Exception $e) {
             return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
         }
-        
+
         $userDTO = new UserDTO();
         $userDTO->hydrate($user);
         return $this->json($userDTO->getData(), Response::HTTP_CREATED);

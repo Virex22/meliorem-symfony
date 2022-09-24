@@ -20,8 +20,9 @@ class QuizController extends AbstractCRUDController
     /**
      * overhiding the search querry
      */
-    public function getSearchQuerry():string{
-        return "u.description LIKE :search";
+    public function getSearchQuerry(): string
+    {
+        return "u.title LIKE :search";
     }
     /**
      * @Route("/", name="quiz index", methods={"GET"})
@@ -33,9 +34,9 @@ class QuizController extends AbstractCRUDController
     /**
      * @Route("/{elemCount}/{pageCount}", name="quiz page", methods={"GET"})
      */
-    public function getAllWithPage(Request $request,int $elemCount,int $pageCount): JsonResponse
+    public function getAllWithPage(Request $request, int $elemCount, int $pageCount): JsonResponse
     {
-        return $this->getAll($request,$elemCount,$pageCount);
+        return $this->getAll($request, $elemCount, $pageCount);
     }
     /**
      * @Route("/{id}", name="quiz show", methods={"GET"})
