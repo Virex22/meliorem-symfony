@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Quiz;
+use App\Repository\QuizRepository;
 use App\Service\UnlinkTrait;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,6 +31,15 @@ class QuizController extends AbstractCRUDController
     public function index(Request $request): JsonResponse
     {
         return $this->getAll($request);
+    }
+    /**
+     * @Route("/public/{elemCount}/{pageCount}", name="quiz public page", methods={"GET"})
+     */
+    public function getAllPublishWithPage(int $elemCount, int $pageCount, Request $request, QuizRepository $quizRepository): JsonResponse
+    {
+        $data = $quizRepository->findBy(["public" => true], null, $elemCount, $pageCount);
+        $totalPage = ceil(count($data) / $elemCount);
+        return $this->json(["data" => $data, "totalPage" => $totalPage], 200);
     }
     /**
      * @Route("/{elemCount}/{pageCount}", name="quiz page", methods={"GET"})
