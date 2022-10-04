@@ -37,9 +37,33 @@ class QuizController extends AbstractCRUDController
      */
     public function getAllPublishWithPage(int $elemCount, int $pageCount, Request $request, QuizRepository $quizRepository): JsonResponse
     {
-        $data = $quizRepository->findBy(["public" => true], null, $elemCount, $pageCount);
-        $totalPage = ceil(count($data) / $elemCount);
-        return $this->json(["data" => $data, "totalPage" => $totalPage], 200);
+        $search = $request->query->get('search');
+
+        $querry = $quizRepository->createQueryBuilder('u')
+            ->select('count(u.id)');
+        if ($search)
+            $querry->where($this->getSearchQuerry())
+                ->setParameter('search', $search . '%')
+                ->andWhere('u.public = true');
+        else
+            $querry->where('u.public = true');
+        $totalCount = $querry->getQuery()
+            ->getSingleScalarResult();
+
+        $querry = $quizRepository->createQueryBuilder('u');
+        if ($search)
+            $querry->where($this->getSearchQuerry())
+                ->setParameter('search', $search . '%')
+                ->andWhere('u.public = true');
+        else
+            $querry->where('u.public = true');
+        $entities = $querry->setMaxResults($elemCount)
+            ->setFirstResult($elemCount * ($pageCount - 1))
+            ->getQuery()
+            ->getResult();
+        $maxPage = ceil($totalCount / $elemCount);
+
+        return $this->json(["data" => $entities, "totalPage" => $maxPage], 200);
     }
     /**
      * @Route("/{elemCount}/{pageCount}", name="quiz page", methods={"GET"})

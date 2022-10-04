@@ -404,20 +404,15 @@ class AppFixtures extends Fixture
         $quizParts = [];
         for ($i = 0; $i < $count; $i++) {
             $quizPart = new QuizPart();
+            $answer = [];
+            for ($j = 0; $j < $this->faker->numberBetween(1, 5); $j++)
+                $answer[] = [
+                    "text" => $this->faker->sentence(3),
+                    "valid" => $this->faker->boolean(50)
+                ];
             $quizPart->setQuestion($this->faker->paragraph)
-                ->setChoice(json_encode([
-                    $this->faker->sentence,
-                    $this->faker->sentence,
-                    $this->faker->sentence,
-                    $this->faker->sentence,
-                    $this->faker->sentence,
-                ]))
-                ->setAnswer(json_encode(
-                    [
-                        $this->faker->numberBetween(0, 3),
-                        $this->faker->numberBetween(0, 3),
-                    ]
-                ))
+                ->setChoice($this->faker->boolean() ? "radio" : "checkbox")
+                ->setAnswer(json_encode($answer))
                 ->setTimeMaxToResponse($this->faker->numberBetween(10, 100))
                 ->setQuizOrder($i)
                 ->setSkill($this->faker->randomElement($skills))

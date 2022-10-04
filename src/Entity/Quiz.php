@@ -231,4 +231,9 @@ class Quiz
 
         return $this;
     }
+
+    public function getQuizPartsCount(): int
+    {
+        return count($this->quizParts);
+    }
 }
